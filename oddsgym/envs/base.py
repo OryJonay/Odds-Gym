@@ -33,14 +33,12 @@ class BaseOddsEnv(gym.Env):
         info = {'action': action, 'current_step': self.current_step, 'balance': self.balance}
         if self.balance < 1:  # no more money :-(
             done = True
-        elif self.current_step == self._odds.shape[0]:  # no more games to bet
+        if self.current_step == self._odds.shape[0]:  # no more games to bet
             done = True
         else:
             bet = numpy.zeros(len(observation))
             bet.put(action, 1)
-            if numpy.count_nonzero(bet) > self.balance:  # can't place this bet- not enough money
-                pass
-            else:
+            if numpy.count_nonzero(bet) <= self.balance:  # making sure agent has enough money for the bet
                 if self._results:
                     result = self._results[self.current_step]
                     current_odds = self._odds[self.current_step]
