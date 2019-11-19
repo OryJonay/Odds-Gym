@@ -31,17 +31,22 @@ class BaseOddsEnv(gym.Env):
         reward = -float('Inf')
         done = False
         info = {'action': action, 'current_step': self.current_step, 'balance': self.balance}
-        if self.balance < 1:  # no more \ not enough money :-(
+        if self.balance < 1:  # no more money :-(
+            done = True
+        elif self.current_step == self._odds.shape[0]:  # no more games to bet
             done = True
         else:
             bet = numpy.zeros(len(observation))
             bet.put(action, 1)
-            if self._results:
-                result = self._results[self.current_step]
-                current_odds = self._odds[self.current_step]
-                reward = (bet * result * current_odds).sum() - numpy.count_nonzero(bet)
-                self.balance += reward
-            self.current_step += 1
+            if numpy.count_nonzero(bet) > self.balance:  # can't place this bet- not enough money
+                pass
+            else:
+                if self._results:
+                    result = self._results[self.current_step]
+                    current_odds = self._odds[self.current_step]
+                    reward = (bet * result * current_odds).sum() - numpy.count_nonzero(bet)
+                    self.balance += reward
+                self.current_step += 1
         return observation, reward, done, info
 
     def reset(self):
@@ -49,4 +54,4 @@ class BaseOddsEnv(gym.Env):
         self.current_step = 0
 
     def render(self, mode='human'):
-        print('Current Balance at step {}: {}'.format(self.current_step, self.balance))
+        return 'Current balance at step {}: {}'.format(self.current_step, self.balance)
