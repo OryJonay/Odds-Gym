@@ -89,6 +89,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+bin/
+share/
+include/
+pip-selfcheck.json
 
 # Spyder project settings
 .spyderproject
