@@ -4,7 +4,7 @@ class ThreeWaySoccerOddsEnv(BaseOddsEnv):
     """Environment for 3-way soccer betting"""
 
     def __init__(self, soccer_bets_dataframe):
-        odds_column_names = ['home', 'away', 'draw']
+        odds_column_names = ['home', 'draw', 'away']
         odds = soccer_bets_dataframe[odds_column_names].values
         results = soccer_bets_dataframe['result'].values if soccer_bets_dataframe['result'].notna().all() else None
         super().__init__(odds, odds_column_names, results)
