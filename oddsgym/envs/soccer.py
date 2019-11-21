@@ -11,6 +11,6 @@ class ThreeWaySoccerOddsEnv(BaseOddsEnv):
         self.teams = soccer_bets_dataframe[['home_team', 'away_team']].values
 
     def render(self, mode='human'):
-        return 'Home Team {} VS Away Team {}. {}'.format(self.teams[self.current_step][0],
-                                                         self.teams[self.current_step][1],
+        return 'Home Team {} VS Away Team {}. {}'.format(self.teams[self.current_step % self._odds.shape[0]][0],
+                                                         self.teams[self.current_step % self._odds.shape[0]][1],
                                                          super().render(mode))

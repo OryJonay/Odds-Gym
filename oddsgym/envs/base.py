@@ -26,31 +26,31 @@ class BaseOddsEnv(gym.Env):
         self._results = results
         self._verbose_actions = {act: verbose_act for verbose_act, act in zip(list(powerset(odds_column_names)),
                                                                               list(powerset(range(odds.shape[1]))))}
-        self._actions = list(self._verbose_actions.keys())
+        self.observation_space = gym.spaces.Box(low=1., high=float('Inf'), shape=(odds.shape[1],))
+        self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.STARTING_BANK
         self.current_step = 0
 
     def get_observation(self):
-        return self._odds[self.current_step]
+        return self._odds[self.current_step % self._odds.shape[0]]
 
     def step(self, action):
         observation = self.get_observation()
         reward = -float('Inf')
         done = False
         info = {'action': action, 'current_step': self.current_step, 'balance': self.balance,
-                'odds': self._odds[self.current_step]}
+                'odds': observation}
         if self.balance < 1:  # no more money :-(
             done = True
-        if self.current_step == self._odds.shape[0]:  # no more games to bet
-            done = True
+        # if self.current_step == self._odds.shape[0]:  # no more games to bet
+        #     done = True
         else:
-            bet = numpy.zeros(len(observation))
-            bet.put(action, 1)
+            bet = numpy.array([int(bit) for bit in bin(action)[2:].zfill(3)])
             if numpy.count_nonzero(bet) <= self.balance:  # making sure agent has enough money for the bet
                 if self._results is not None:
                     result = numpy.zeros_like(bet)
-                    result.put((self._results[self.current_step],), 1)
-                    current_odds = self._odds[self.current_step]
+                    result.put((self._results[self.current_step % self._odds.shape[0]],), 1)
+                    current_odds = observation
                     reward = (bet * result * current_odds).sum() - numpy.count_nonzero(bet)
                     self.balance += reward
                     info.update({'result': result.argmax()})
