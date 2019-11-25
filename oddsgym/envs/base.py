@@ -47,7 +47,7 @@ class BaseOddsEnv(gym.Env):
             done = True
         else:
             verbose_action = self._verbose_actions[action]
-            bet = numpy.array([1 if name in verbose_action else 0 for name in self._odds_columns_names])
+            bet = numpy.array([int(name in verbose_action) for name in self._odds_columns_names])
             if numpy.count_nonzero(bet) <= self.balance:  # making sure agent has enough money for the bet
                 result = numpy.zeros_like(bet)
                 result.put((self._results[self.current_step],), 1)
