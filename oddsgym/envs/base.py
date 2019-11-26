@@ -32,15 +32,15 @@ class BaseOddsEnv(gym.Env):
         self.balance = self.STARTING_BANK
         self.current_step = 0
 
-    def get_observation(self):
+    def get_odds(self):
         return self._odds[self.current_step]
 
     def step(self, action):
-        observation = self.get_observation()
+        odds = self.get_odds()
         reward = 0
         done = False
-        info = {'action': action, 'current_step': self.current_step, 'balance': self.balance,
-                'odds': observation}
+        info = {'action': self._verbose_actions[action], 'current_step': self.current_step, 'starting_balance': self.balance,
+                'odds': odds}
         if self.balance < 1:  # no more money :-(
             done = True
         if self.current_step == self._odds.shape[0]:  # no more games to bet
@@ -51,18 +51,18 @@ class BaseOddsEnv(gym.Env):
             if numpy.count_nonzero(bet) <= self.balance:  # making sure agent has enough money for the bet
                 result = numpy.zeros_like(bet)
                 result.put((self._results[self.current_step],), 1)
-                reward = (bet * result * observation).sum() - numpy.count_nonzero(bet)
+                reward = (bet * result * odds).sum() - numpy.count_nonzero(bet)
                 self.balance += reward
                 info.update({'result': result.argmax()})
                 self.current_step += 1
             else:
                 done = True
-        return self.get_observation(), reward, done, info
+        return self.get_odds(), reward, done, info
 
     def reset(self):
         self.balance = self.STARTING_BANK
         self.current_step = 0
-        return self.get_observation()
+        return self.get_odds()
 
     def render(self, mode='human'):
         return 'Current balance at step {}: {}'.format(self.current_step, self.balance)
