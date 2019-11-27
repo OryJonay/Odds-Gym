@@ -43,9 +43,6 @@ class BaseOddsEnv(gym.Env):
                 'odds': odds}
         if self.balance < 1:  # no more money :-(
             done = True
-        if self.current_step == self._odds.shape[0]:  # no more games to bet
-            done = True
-            self.current_step = 0
         else:
             verbose_action = self._verbose_actions[action]
             bet = numpy.array([int(name in verbose_action) for name in self._odds_columns_names])
@@ -56,6 +53,9 @@ class BaseOddsEnv(gym.Env):
                 self.balance += reward
                 info.update({'result': result.argmax()})
                 self.current_step += 1
+                if self.current_step == self._odds.shape[0]:  # no more games to bet
+                    done = True
+                    self.current_step = 0
             else:
                 reward = -numpy.count_nonzero(bet)
         return self.get_odds(), reward, done, info
