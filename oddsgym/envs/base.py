@@ -56,7 +56,7 @@ class BaseOddsEnv(gym.Env):
                 info.update({'result': result.argmax()})
                 self.current_step += 1
             else:
-                done = True
+                reward = -numpy.count_nonzero(bet)
         return self.get_odds(), reward, done, info
 
     def reset(self):
