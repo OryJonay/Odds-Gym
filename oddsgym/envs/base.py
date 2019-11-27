@@ -45,6 +45,7 @@ class BaseOddsEnv(gym.Env):
             done = True
         if self.current_step == self._odds.shape[0]:  # no more games to bet
             done = True
+            self.current_step = 0
         else:
             verbose_action = self._verbose_actions[action]
             bet = numpy.array([int(name in verbose_action) for name in self._odds_columns_names])
