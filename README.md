@@ -1,4 +1,4 @@
-# Sports odds betting environment
+# Sports odds betting environment ![build](https://github.com/OryJonay/Odds-Gym/workflows/build/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/OryJonay/Odds-Gym/badge.svg?branch=master)](https://coveralls.io/github/OryJonay/Odds-Gym?branch=master)
 A sports betting environment for OpenAI Gym.
 
 ## Installation
