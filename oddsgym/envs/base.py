@@ -31,6 +31,7 @@ class BaseOddsEnv(gym.Env):
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.STARTING_BANK
         self.current_step = 0
+        self.single_bet_size = 1
 
     def get_odds(self):
         return self._odds[self.current_step]
@@ -39,17 +40,18 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
-        info = {'action': self._verbose_actions[action], 'current_step': self.current_step, 'starting_balance': self.balance,
-                'odds': odds}
+        single_bet_size = self.single_bet_size
+        info = {'action': self._verbose_actions[action], 'current_step': self.current_step,
+                'starting_balance': self.balance, 'odds': odds, 'single_bet_size': single_bet_size}
         if self.balance < 1:  # no more money :-(
             done = True
         else:
             verbose_action = self._verbose_actions[action]
             bet = numpy.array([int(name in verbose_action) for name in self._odds_columns_names])
-            if numpy.count_nonzero(bet) <= self.balance:  # making sure agent has enough money for the bet
+            if numpy.count_nonzero(bet) * single_bet_size <= self.balance:  # making sure agent has enough money for the bet
                 result = numpy.zeros_like(bet)
                 result.put((self._results[self.current_step],), 1)
-                reward = (bet * result * odds).sum() - numpy.count_nonzero(bet)
+                reward = ((bet * result * odds).sum() * single_bet_size) - (numpy.count_nonzero(bet) * single_bet_size)
                 self.balance += reward
                 info.update({'result': result.argmax()})
                 self.current_step += 1
