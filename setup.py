@@ -7,4 +7,4 @@ setup(name='oddsgym',
       author_email='kriegsmeister@gmail.com',
       url='https://github.com/OryJonay/Odds-Gym',
       packages=find_packages(),
-      install_requires=['gym', 'more_itertools'])
+      install_requires=['gym', 'more_itertools', 'pandas'])
