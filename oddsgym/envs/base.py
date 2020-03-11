@@ -3,6 +3,7 @@ import numpy
 from more_itertools import powerset
 from pandas import DataFrame
 
+
 class BaseOddsEnv(gym.Env):
     """Base class for sports betting environments."""
 
@@ -55,7 +56,8 @@ class BaseOddsEnv(gym.Env):
             bet = self.get_bet(action)
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
                 results = self.get_results()
-                reward = ((bet * results * odds).values.sum() * single_bet_size) - (numpy.count_nonzero(bet) * single_bet_size)
+                reward = ((bet * results * odds).values.sum() * single_bet_size) - \
+                    (numpy.count_nonzero(bet) * single_bet_size)
                 self.balance += reward
                 info.update({'results': results.argmax()})
                 self.current_step += 1

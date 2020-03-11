@@ -7,13 +7,16 @@ from oddsgym.envs.base_percentage import BasePercentageGamblingEnv
 from oddsgym.envs.soccer import ThreeWaySoccerOddsEnv, ThreeWaySoccerPercentageOddsEnv
 from oddsgym.envs.daily_bets import DailyOddsEnv
 
+
 @fixture()
 def basic_env(request):
     return BaseOddsEnv(array([[1, 2], [3, 4]]), ['w', 'l'], [1, 0])
 
+
 @fixture()
 def basic_percentge_env(request):
     return BasePercentageGamblingEnv(array([[2, 1]]), ['w', 'l'], [0])
+
 
 @fixture()
 def three_way_env(request):
@@ -23,6 +26,7 @@ def three_way_env(request):
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 0}])
     return ThreeWaySoccerOddsEnv(soccer_bets_dataframe)
 
+
 @fixture()
 def three_way_percentage_env(request):
     soccer_bets_dataframe = DataFrame([{'home_team': 'FCB', 'away_team': 'PSG',
@@ -30,6 +34,7 @@ def three_way_percentage_env(request):
                                        {'home_team': 'MCB', 'away_team': 'MTA',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 0}])
     return ThreeWaySoccerPercentageOddsEnv(soccer_bets_dataframe)
+
 
 @fixture()
 def daily_bets_env(request):
@@ -39,6 +44,7 @@ def daily_bets_env(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            ])
     return DailyOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+
 
 @fixture()
 def daily_bets_env_non_uniform(request):

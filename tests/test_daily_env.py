@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import numpy
 from numpy import array, zeros
 
+
 def test_attributes(daily_bets_env):
     assert daily_bets_env.action_space == Box(low=0, high=2 ** 2 - 0.01, shape=(2,))
     assert daily_bets_env.observation_space == Box(low=1., high=float('Inf'), shape=(2, 2))
@@ -16,9 +17,11 @@ def test_attributes(daily_bets_env):
     assert daily_bets_env.days[0] == datetime.today().date() - timedelta(days=1)
     assert daily_bets_env.days[1] == datetime.today().date()
 
+
 def test_get_odds(daily_bets_env):
     odds = daily_bets_env.get_odds()
     assert odds.equals(DataFrame([{'w': 1, 'l': 2}, {'w': 4, 'l': 3}], dtype=numpy.float64))
+
 
 @pytest.mark.parametrize("actions,bets", [(array([0, 0]), array([[0, 0], [0, 0]])),
                                           (array([0, 1]), array([[0, 0], [1, 0]])),
@@ -40,6 +43,7 @@ def test_get_odds(daily_bets_env):
 def test_get_bet(daily_bets_env, actions, bets):
     assert numpy.array_equal(daily_bets_env.get_bet(actions), bets)
 
+
 def test_attributes_of_non_uniform(daily_bets_env_non_uniform):
     assert daily_bets_env_non_uniform.action_space == Box(low=0, high=2 ** 2 - 0.01, shape=(3,))
     assert daily_bets_env_non_uniform.observation_space == Box(low=1., high=float('Inf'), shape=(3, 2))
@@ -47,6 +51,7 @@ def test_attributes_of_non_uniform(daily_bets_env_non_uniform):
     assert daily_bets_env_non_uniform.days[0] == datetime.today().date() - timedelta(days=2)
     assert daily_bets_env_non_uniform.days[1] == datetime.today().date() - timedelta(days=1)
     assert daily_bets_env_non_uniform.days[2] == datetime.today().date()
+
 
 @pytest.mark.parametrize("current_step_value,excpected_odds",
                          [(0, DataFrame([{'w': 1, 'l': 2}, {'w': 0, 'l': 0}, {'w': 0, 'l': 0}],
@@ -59,6 +64,7 @@ def test_get_odds_non_uniform(daily_bets_env_non_uniform, current_step_value, ex
     daily_bets_env_non_uniform.current_step = current_step_value
     odds = daily_bets_env_non_uniform.get_odds()
     assert odds.equals(excpected_odds)
+
 
 @pytest.mark.parametrize("actions,bets", [(array([0]), zeros([3, 2])),
                                           (array([0] * 2), zeros([3, 2])),
@@ -116,6 +122,7 @@ def test_get_odds_non_uniform(daily_bets_env_non_uniform, current_step_value, ex
 def test_get_bet_non_uniform(daily_bets_env_non_uniform, actions, bets):
     assert numpy.array_equal(daily_bets_env_non_uniform.get_bet(actions), bets)
 
+
 @pytest.mark.parametrize("current_step_value,excpected_results",
                          [(0, array([[0, 1], [0, 0], [0, 0]], dtype=numpy.float64)),
                           (1, array([[1, 0], [0, 0], [0, 0]], dtype=numpy.float64)),
@@ -124,6 +131,7 @@ def test_get_results_non_uniform(daily_bets_env_non_uniform, current_step_value,
     daily_bets_env_non_uniform.current_step = current_step_value
     results = daily_bets_env_non_uniform.get_results()
     assert numpy.array_equal(results, excpected_results)
+
 
 @pytest.mark.parametrize("current_step_value,action,excpected_reward,finished",
                          [(0, array([0, 0]), 0, False),
@@ -141,6 +149,7 @@ def test_step(daily_bets_env, current_step_value, action, excpected_reward, fini
     odds, reward, done, info = daily_bets_env.step(action)
     assert reward == excpected_reward
     assert done == finished
+
 
 @pytest.mark.parametrize("current_step_value,action,excpected_reward,finished",
                          [(0, array([0] * 3), 0, False),

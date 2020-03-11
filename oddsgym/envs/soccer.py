@@ -1,6 +1,7 @@
 from .base import BaseOddsEnv
 from .base_percentage import BasePercentageGamblingEnv
 
+
 class ThreeWaySoccerOddsEnv(BaseOddsEnv):
     """Environment for 3-way soccer betting"""
 

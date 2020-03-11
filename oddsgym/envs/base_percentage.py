@@ -2,6 +2,7 @@ import numpy
 from gym import spaces
 from .base import BaseOddsEnv
 
+
 class BasePercentageGamblingEnv(BaseOddsEnv):
     """Base class for sports betting environments supporting non fixed bet size"""
 

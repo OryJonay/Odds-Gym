@@ -3,6 +3,7 @@ import numpy
 from pandas import DataFrame
 from .base import BaseOddsEnv
 
+
 class DailyOddsEnv(BaseOddsEnv):
 
     def __init__(self, odds, odds_column_names, results=None):
