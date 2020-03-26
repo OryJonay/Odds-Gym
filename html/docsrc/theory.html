@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>Theory behind the environment &#8212; oddsgym  documentation</title>
+
+    <link rel="stylesheet" href="../_static/material-icons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/notosanscjkjp.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/roboto.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.indigo-pink.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/sphinx_materialdesign_theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Documentation" href="api.html" />
+    <link rel="prev" title="Getting Started" href="basic.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active">Theory behind the environment</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+            <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/docsrc/theory.rst.txt" rel="nofollow">
+<i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <span class="title-text">
+                  oddsgym
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theory behind the environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Project Roadmap</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+<header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <span class="title-text">
+                  oddsgym
+              </span>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theory behind the environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Project Roadmap</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content">
+        
+  <div class="section" id="theory-behind-the-environment">
+<h1>Theory behind the environment<a class="headerlink" href="#theory-behind-the-environment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tl-dr-or-i-had-enough-of-math-for-a-lifetime">
+<h2>TL;DR (or, I had enough of math for a lifetime)<a class="headerlink" href="#tl-dr-or-i-had-enough-of-math-for-a-lifetime" title="Permalink to this headline">¶</a></h2>
+<p>The theory behind the environment is quite simple- placing a bet is choosing an
+possible outcome and a stake size, multiply it by the winning odds and subtract
+the initial bet and any losses.</p>
+</div>
+<div class="section" id="the-scenic-route">
+<h2>The scenic route<a class="headerlink" href="#the-scenic-route" title="Permalink to this headline">¶</a></h2>
+<p>After this (very) brief explanation, let’s get down to business:</p>
+<div class="section" id="definitions">
+<h3>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(g\)</span> be a game with <span class="math notranslate nohighlight">\(N\in\mathbb{N}\)</span> distinct possible outcomes, and let <span class="math notranslate nohighlight">\(p_i\)</span> be the probability
+of outcome <span class="math notranslate nohighlight">\(g_i\)</span>, so that <span class="math notranslate nohighlight">\(\sum\limits_{i \in N} p_i = 1\)</span>. Let <span class="math notranslate nohighlight">\(G\)</span> be the set of games so that <span class="math notranslate nohighlight">\(g_j\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> game.</p>
+<p>Let <span class="math notranslate nohighlight">\(o\)</span> be the decimal odds for a game <span class="math notranslate nohighlight">\(g\)</span>, so that <span class="math notranslate nohighlight">\(o_i\)</span> is the decimal odd for outcome <span class="math notranslate nohighlight">\(g_i\)</span>.
+Let <span class="math notranslate nohighlight">\(O\)</span> be the set of odds so that <span class="math notranslate nohighlight">\(o_j\)</span> is the odds for game <span class="math notranslate nohighlight">\(g_j\)</span> in <span class="math notranslate nohighlight">\(G\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[o \triangleq \{o_i| i \in I_N ,  1 \leq o_i \}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(r\)</span> be the result of game <span class="math notranslate nohighlight">\(g\)</span>, so that <span class="math notranslate nohighlight">\(r_i\)</span> is 1 if the outcome was <span class="math notranslate nohighlight">\(i\)</span> and 0 if not
+(in other words, <span class="math notranslate nohighlight">\(r\)</span> is the indicator of game <span class="math notranslate nohighlight">\(g\)</span>).
+Let <span class="math notranslate nohighlight">\(R\)</span> be the set of results so that <span class="math notranslate nohighlight">\(r_j\)</span> is the result for game <span class="math notranslate nohighlight">\(g_j\)</span> in <span class="math notranslate nohighlight">\(G\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}r_i \triangleq \begin{cases}
+    1 &amp; \text{if outcome i happened,}\\
+    0 &amp; \text{otherwise.}
+\end{cases}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[r \triangleq \{r_i | i \in I_N\}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(b\)</span> be the bet for game <span class="math notranslate nohighlight">\(g\)</span>, so that <span class="math notranslate nohighlight">\(b_i\)</span> is the amount of money to place on outcome <span class="math notranslate nohighlight">\(g_i\)</span>
+Let <span class="math notranslate nohighlight">\(B\)</span> be the set of bets so that <span class="math notranslate nohighlight">\(b_j\)</span> is the bets for game <span class="math notranslate nohighlight">\(g_j\)</span> in <span class="math notranslate nohighlight">\(G\)</span>, and let
+<span class="math notranslate nohighlight">\(BANK \in \mathbb{R}^+\)</span> be the limit of the bet, so that the sum of the money placed can not exceed <span class="math notranslate nohighlight">\(BANK\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[b \triangleq \left\{b_i | b_i \in \mathbb{R}, \sum\limits_{i \in N} b_i \leq BANK\right\}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(M_O\)</span> be a matrix of size <span class="math notranslate nohighlight">\(|G| \times N\)</span> of the numerical values of the set <span class="math notranslate nohighlight">\(O\)</span>. In a similar manner
+we’ll define <span class="math notranslate nohighlight">\(M_R\)</span> for the numerical values of <span class="math notranslate nohighlight">\(R\)</span> and <span class="math notranslate nohighlight">\(M_B\)</span> for the numerical values of the <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(W\)</span> be the winnings matrix, defined by the <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)" target="_blank">Hadamard product</a> of all the matrices defined above like this:</p>
+<div class="math notranslate nohighlight">
+\[W \triangleq M_B \circ M_R \circ M_O\]</div>
+<p>So, the winnings on the set of games <span class="math notranslate nohighlight">\(G\)</span> is grand sum (the sum of all elements) of <span class="math notranslate nohighlight">\(W\)</span>.</p>
+</div>
+<div class="section" id="the-environments">
+<h3>The Environments<a class="headerlink" href="#the-environments" title="Permalink to this headline">¶</a></h3>
+<p>All the environments implemented are a subclass of an <a href="http://gym.openai.com/docs/#environments" target="_blank">OpenAI Gym envrionment</a>,
+with an observation space that equals to the odds (<span class="math notranslate nohighlight">\(O\)</span>) and an action space that equals to the bets (<span class="math notranslate nohighlight">\(B\)</span>).
+A step in the environments is simply getting the current subset of odds and placing a bet on them, calculating the reward
+by using the grand sum of <span class="math notranslate nohighlight">\(W\)</span> and subtracting the total amount of the bet placed.
+An episode is reached when there are no more games or when the <span class="math notranslate nohighlight">\(BANK\)</span> is depleted.</p>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">Theory behind the environment</a><ul>
+<li><a class="reference internal" href="#tl-dr-or-i-had-enough-of-math-for-a-lifetime">TL;DR (or, I had enough of math for a lifetime)</a></li>
+<li><a class="reference internal" href="#the-scenic-route">The scenic route</a><ul>
+<li><a class="reference internal" href="#definitions">Definitions</a></li>
+<li><a class="reference internal" href="#the-environments">The Environments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="basic.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L material-icons">arrow_back</i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>Getting Started</div>
+         </div>
+     </a>
+     <a id="button-next" href="api.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+        <i class="pagenation-arrow-R material-icons">arrow_forward</i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>API Documentation</div>
+        </div>
+     </a>
+  </div>
+        <footer class="mdl-mini-footer">
+    <div class="mdl-mini-footer__left-section">
+      <div class="mdl-logo">oddsgym</div>
+      <div>
+        
+        <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theory behind the environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Project Roadmap</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="mdl-mini-footer__right-section">
+        <div>&copy; Copyright 2020, Ory Jonay.</div>
+      <div>Generated by <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.4.4 using <a href="https://github.com/myyasuda/sphinx_materialdesign_theme">sphinx_materialdesign_theme</a>.</div>
+    </div>
+</footer>
+        </main>
+    </div>
+  </body>
+</html>
