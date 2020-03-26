@@ -30,8 +30,7 @@ author = 'Ory Jonay'
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.mathjax',
               'sphinx.ext.napoleon',
-              'sphinx.ext.todo',
-              'sphinxcontrib.spelling']
+              'sphinx.ext.todo']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = []

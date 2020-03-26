@@ -70,9 +70,6 @@ A step in the environments is simply getting the current subset of odds and plac
 by using the grand sum of :math:`W` and subtracting the total amount of the bet placed.
 An episode is reached when there are no more games or when the :math:`BANK` is depleted.
 
-.. spelling::
-    Hadamard
-
 .. |Hadamard product link| raw:: html
 
    <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)" target="_blank">Hadamard product</a>
