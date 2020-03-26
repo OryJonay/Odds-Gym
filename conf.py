@@ -29,7 +29,6 @@ author = 'Ory Jonay'
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.mathjax',
               'sphinx.ext.napoleon',
-              'sphinx.ext.todo',
               'sphinx.ext.githubpages',
               'sphinx_rtd_theme']
 
