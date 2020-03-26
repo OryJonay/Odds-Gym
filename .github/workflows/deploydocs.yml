@@ -21,8 +21,7 @@ jobs:
         run: |
           make html
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.DOCS_ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: _build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_build
