@@ -21,7 +21,6 @@ project = 'oddsgym'
 copyright = '2020, Ory Jonay'
 author = 'Ory Jonay'
 
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -67,5 +66,3 @@ napoleon_use_admonition_for_references = False
 napoleon_use_ivar = False
 napoleon_use_param = False
 napoleon_use_rtype = False
-
-todo_include_todos = True
