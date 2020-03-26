@@ -1,3 +1,4 @@
+from bumpversion.cli import _load_configuration
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -20,6 +21,7 @@
 project = 'oddsgym'
 copyright = '2020, Ory Jonay'
 author = 'Ory Jonay'
+version = _load_configuration('setup.cfg', None, {})[0]['bumpversion']['current_version']
 
 # -- General configuration ---------------------------------------------------
 
@@ -65,3 +67,4 @@ napoleon_use_admonition_for_references = False
 napoleon_use_ivar = False
 napoleon_use_param = False
 napoleon_use_rtype = False
+
