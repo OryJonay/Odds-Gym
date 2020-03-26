@@ -8,6 +8,8 @@ class ThreeWaySoccerOddsEnv(BaseOddsEnv):
     def __init__(self, soccer_bets_dataframe):
         """Initializes a new environment.
 
+        .. versionadded: 0.1.0
+
         Parameters
         ----------
         soccer_bets_dataframe: dataframe of shape (n_games, n_odds + 3)
@@ -39,5 +41,8 @@ class ThreeWaySoccerOddsEnv(BaseOddsEnv):
 
 
 class ThreeWaySoccerPercentageOddsEnv(ThreeWaySoccerOddsEnv, BasePercentageGamblingEnv):
-    """Environment for 3-way soccer betting with a non fixed bet size."""
+    """Environment for 3-way soccer betting with a non fixed bet size.
+
+    .. versionadded: 0.2.0
+    """
     pass

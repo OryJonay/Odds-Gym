@@ -14,8 +14,7 @@ Welcome to oddsgym's documentation!
    docsrc/basic
    docsrc/theory
    docsrc/api
-
-
+   docsrc/roadmap
 
 
 Indices and tables
