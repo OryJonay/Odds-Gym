@@ -184,7 +184,8 @@ class BaseOddsEnv(gym.Env):
             value is 1 and the rest of the indexes values are 0.
         """
         result = numpy.zeros(shape=self.observation_space.shape)
-        result[numpy.arange(result.shape[0]), numpy.array([self._results[self.current_step]])] = 1
+        result[numpy.arange(result.shape[0], dtype=numpy.int32),
+               numpy.array([self._results[self.current_step]], dtype=numpy.int32)] = 1
         return result
 
     def legal_bet(self, bet):
