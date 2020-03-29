@@ -23,3 +23,7 @@ For example, in 3-way betting for soccer, the avilable actions are:
 A step is placing a bet on a single game. In each step, the agent knows the betting odds for this game.
 The reward for each step is the amount of money won (negative reward when losing money).
 An episode is betting for a whole year or when "striking out" (losing all the money).
+
+## Documentation
+
+The full documentation is hosted at: https://oryjonay.github.io/Odds-Gym

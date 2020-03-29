@@ -4,7 +4,26 @@ from .base import BaseOddsEnv
 
 
 class BasePercentageGamblingEnv(BaseOddsEnv):
-    """Base class for sports betting environments supporting non fixed bet size"""
+    """Base class for sports betting environments with non fixed bet size.
+
+    Creates an OpenAI Gym environment that supports betting a non fixed amount
+    on a single outcome for a single game.
+
+    The main difference between the BaseOddsEnv is that the action space is defined
+    differently (to accommodate that non fixed bet size).
+
+    .. versionadded:: 0.2.0
+    .. deprecated:: 0.4.0
+        This environment will be renamed "BasePercentageOddsEnv" in 0.4.5
+
+    Parameters
+    ----------
+    action_space : gym.spaces.Box of shape (2,)
+        A 2-tuple, where the first index is the action itself and the second
+        index is the percentage of the current balance to place on all the outcomes
+        specified in the action.
+
+    """
 
     def __init__(self, odds, odds_column_names, results=None):
         super().__init__(odds, odds_column_names, results)
