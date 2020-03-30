@@ -3,7 +3,7 @@ from pytest import fixture
 from numpy import array
 from pandas import DataFrame
 from oddsgym.envs.base import BaseOddsEnv
-from oddsgym.envs.base_percentage import BasePercentageGamblingEnv
+from oddsgym.envs.base_percentage import BasePercentageOddsEnv
 from oddsgym.envs.soccer import ThreeWaySoccerOddsEnv, ThreeWaySoccerPercentageOddsEnv
 from oddsgym.envs.daily_bets import DailyOddsEnv
 
@@ -15,7 +15,7 @@ def basic_env(request):
 
 @fixture()
 def basic_percentge_env(request):
-    return BasePercentageGamblingEnv(array([[2, 1]]), ['w', 'l'], [0])
+    return BasePercentageOddsEnv(array([[2, 1]]), ['w', 'l'], [0])
 
 
 @fixture()

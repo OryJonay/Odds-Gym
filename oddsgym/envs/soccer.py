@@ -1,5 +1,5 @@
 from .base import BaseOddsEnv
-from .base_percentage import BasePercentageGamblingEnv
+from .base_percentage import BasePercentageOddsEnv
 
 
 class ThreeWaySoccerOddsEnv(BaseOddsEnv):
@@ -40,7 +40,7 @@ class ThreeWaySoccerOddsEnv(BaseOddsEnv):
                                                          super().render(mode))
 
 
-class ThreeWaySoccerPercentageOddsEnv(ThreeWaySoccerOddsEnv, BasePercentageGamblingEnv):
+class ThreeWaySoccerPercentageOddsEnv(ThreeWaySoccerOddsEnv, BasePercentageOddsEnv):
     """Environment for 3-way soccer betting with a non fixed bet size.
 
     .. versionadded: 0.2.0

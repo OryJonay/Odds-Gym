@@ -3,7 +3,7 @@ from gym import spaces
 from .base import BaseOddsEnv
 
 
-class BasePercentageGamblingEnv(BaseOddsEnv):
+class BasePercentageOddsEnv(BaseOddsEnv):
     """Base class for sports betting environments with non fixed bet size.
 
     Creates an OpenAI Gym environment that supports betting a non fixed amount
@@ -15,6 +15,8 @@ class BasePercentageGamblingEnv(BaseOddsEnv):
     .. versionadded:: 0.2.0
     .. deprecated:: 0.4.0
         This environment will be renamed "BasePercentageOddsEnv" in 0.4.5
+    .. versionchanged:: 0.4.5
+        Name changed to "BasePercentageOddsEnv"
 
     Parameters
     ----------
