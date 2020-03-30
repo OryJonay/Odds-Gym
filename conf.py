@@ -1,4 +1,5 @@
-from bumpversion.cli import _load_configuration
+from os import path
+from configparser import ConfigParser
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -21,7 +22,10 @@ from bumpversion.cli import _load_configuration
 project = 'oddsgym'
 copyright = '2020, Ory Jonay'
 author = 'Ory Jonay'
-version = _load_configuration('setup.cfg', None, {})[0]['bumpversion']['current_version']
+with open(path.join(path.dirname(__file__), 'setup.cfg')) as setup_configuration_file:
+    parser = ConfigParser()
+    parser.read_string(setup_configuration_file.read())
+    version = parser['bumpversion']['current_version']
 
 # -- General configuration ---------------------------------------------------
 
