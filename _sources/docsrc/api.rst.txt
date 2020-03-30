@@ -12,9 +12,9 @@ BaseOddsEnv
 .. autoclass:: oddsgym.envs.base.BaseOddsEnv
     :members:
 
-BasePercentageGamblingEnv
+BasePercentageOddsEnv
 #########################
-.. autoclass:: oddsgym.envs.base_percentage.BasePercentageGamblingEnv
+.. autoclass:: oddsgym.envs.base_percentage.BasePercentageOddsEnv
 
 DailyOddsEnv
 ############

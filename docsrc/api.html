@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.4.1
+                0.4.5
               </div>
             
           
@@ -93,7 +93,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generic-environments">Generic Environments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#baseoddsenv">BaseOddsEnv</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#basepercentagegamblingenv">BasePercentageGamblingEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basepercentageoddsenv">BasePercentageOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dailyoddsenv">DailyOddsEnv</a></li>
 </ul>
 </li>
@@ -349,11 +349,11 @@ you are responsible for calling reset() to reset this environment’s state.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="basepercentagegamblingenv">
-<h3>BasePercentageGamblingEnv<a class="headerlink" href="#basepercentagegamblingenv" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="basepercentageoddsenv">
+<h3>BasePercentageOddsEnv<a class="headerlink" href="#basepercentageoddsenv" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
-<dt id="oddsgym.envs.base_percentage.BasePercentageGamblingEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base_percentage.</code><code class="sig-name descname">BasePercentageGamblingEnv</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base_percentage.BasePercentageGamblingEnv" title="Permalink to this definition">¶</a></dt>
+<dt id="oddsgym.envs.base_percentage.BasePercentageOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base_percentage.</code><code class="sig-name descname">BasePercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments with non fixed bet size.</p>
 <p>Creates an OpenAI Gym environment that supports betting a non fixed amount
 on a single outcome for a single game.</p>
@@ -364,6 +364,9 @@ differently (to accommodate that non fixed bet size).</p>
 </div>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 0.4.0: </span>This environment will be renamed “BasePercentageOddsEnv” in 0.4.5</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.4.5: </span>Name changed to “BasePercentageOddsEnv”</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
