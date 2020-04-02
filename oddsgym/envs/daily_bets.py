@@ -72,6 +72,7 @@ class DailyOddsEnv(BaseOddsEnv):
         self.action_space = gym.spaces.Box(low=0,
                                            high=2 ** self._odds.shape[1] - 0.01,
                                            shape=(max_number_of_games,))
+        self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
     def get_odds(self):
         """Returns the odds for the current step.
@@ -169,4 +170,35 @@ class DailyOddsEnv(BaseOddsEnv):
                 'current_step': self.current_step,
                 'starting_balance': self.balance,
                 'odds': self.get_odds(),
-                'single_bet_size': self.single_bet_size}
+                'bet_size_matrix': self.bet_size_matrix}
+
+
+class DailyPercentageOddsEnv(DailyOddsEnv):
+    """Base class for sports betting environments multiple games with a non fixed
+    bet size.
+
+    Creates an OpenAI Gym environment that supports betting a non fixed amount
+    on a single outcome but for multiple games.
+
+    .. versionadded:: 0.5.0
+
+    Parameters
+    ----------
+    action_space: gym.spaces.Box of shape (n_games, n_odds + 1)
+        The first index is the the number representing on which outcomes
+        to place the bet, and the rest indexes represents the percentage
+        of the balance to place on that outcome, so that action[i + 1] is
+        the percentage of the balance to place on outcome[i].
+    """
+
+    def __init__(self, odds, odds_column_names, results=None):
+        super().__init__(odds, odds_column_names, results)
+        self.action_space = gym.spaces.Box(low=numpy.array([[self.action_space.low[0]] + [0.] * self._odds.shape[1]
+                                                            for i in numpy.arange(self.action_space.shape[0])]),
+                                           high=numpy.array([[self.action_space.high[0]] + [1.] * self._odds.shape[1]
+                                                             for i in numpy.arange(self.action_space.shape[0])]))
+
+    def step(self, action):
+        form = action[numpy.arange(self.action_space.shape[0]), 0]
+        self.bet_size_matrix = action[numpy.arange(self.action_space.shape[0]), 1:] * self.balance
+        return super().step(form)

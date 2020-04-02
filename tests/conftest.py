@@ -5,7 +5,7 @@ from pandas import DataFrame
 from oddsgym.envs.base import BaseOddsEnv
 from oddsgym.envs.base_percentage import BasePercentageOddsEnv
 from oddsgym.envs.soccer import ThreeWaySoccerOddsEnv, ThreeWaySoccerPercentageOddsEnv
-from oddsgym.envs.daily_bets import DailyOddsEnv
+from oddsgym.envs.daily_bets import DailyOddsEnv, DailyPercentageOddsEnv
 
 
 @fixture()
@@ -55,3 +55,24 @@ def daily_bets_env_non_uniform(request):
                            {'w': 5, 'l': 4, 'date': datetime.today().date(), 'result': 0},
                            ])
     return DailyOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+
+
+@fixture()
+def daily_bets_percentage_env(request):
+    dataframe = DataFrame([{'w': 1, 'l': 2, 'date': datetime.today().date() - timedelta(days=1), 'result': 1},
+                           {'w': 4, 'l': 3, 'date': datetime.today().date() - timedelta(days=1), 'result': 0},
+                           {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
+                           {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
+                           ])
+    return DailyPercentageOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+
+
+@fixture()
+def daily_bets_percentage_env_non_uniform(request):
+    dataframe = DataFrame([{'w': 1, 'l': 2, 'date': datetime.today().date() - timedelta(days=2), 'result': 1},
+                           {'w': 4, 'l': 3, 'date': datetime.today().date() - timedelta(days=1), 'result': 0},
+                           {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
+                           {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
+                           {'w': 5, 'l': 4, 'date': datetime.today().date(), 'result': 0},
+                           ])
+    return DailyPercentageOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])

@@ -17,22 +17,26 @@ class BasePercentageOddsEnv(BaseOddsEnv):
         This environment will be renamed "BasePercentageOddsEnv" in 0.4.5
     .. versionchanged:: 0.4.5
         Name changed to "BasePercentageOddsEnv"
+    .. versionchanged:: 0.5.0
+        Chage action space so that each outcome has it's own independent bet
+        percentage.
 
     Parameters
     ----------
-    action_space : gym.spaces.Box of shape (2,)
-        A 2-tuple, where the first index is the action itself and the second
-        index is the percentage of the current balance to place on all the outcomes
-        specified in the action.
+    action_space : gym.spaces.Box of shape (4,)
+        A 4-tuple, where the first index is the action itself and the rest of the
+        indexes are the percentage of the current balance to place on matching
+        outcome, so that action[i + 1] is the bet percentage for outcome[i].
 
     """
 
     def __init__(self, odds, odds_column_names, results=None):
         super().__init__(odds, odds_column_names, results)
-        self.action_space = spaces.Box(low=numpy.array([0., 0.01]),
-                                       high=numpy.array([self.action_space.n - 0.01, 1 / odds.shape[1]]))
+        self.bet_size_matrix = None
+        self.action_space = spaces.Box(low=numpy.array([0.] * (odds.shape[1] + 1)),
+                                       high=numpy.array([self.action_space.n - 0.01] + [1.] * odds.shape[1]))
 
     def step(self, action):
         form = int(numpy.floor(action[0]))
-        self.single_bet_size = action[1] * self.balance
+        self.bet_size_matrix = numpy.array(action[1:]) * self.balance
         return super().step(form)

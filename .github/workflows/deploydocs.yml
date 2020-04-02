@@ -19,7 +19,7 @@ jobs:
           python-version: 3.8
       - name: Install Sphinx
         run: |
-          python -m pip install --upgrade pip Sphinx sphinx-rtd-theme bump2version
+          python -m pip install --upgrade pip Sphinx sphinx-rtd-theme
       - name: Install oddsgym
         run: |
           python -m pip install .

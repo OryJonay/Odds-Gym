@@ -9,7 +9,7 @@ def test_attributes(three_way_env):
     assert three_way_env.STARTING_BANK == 10
     assert three_way_env.balance == three_way_env.STARTING_BANK
     assert three_way_env.current_step == 0
-    assert three_way_env.single_bet_size == 1
+    assert numpy.array_equal(three_way_env.bet_size_matrix, numpy.ones(shape=(1, 3)))
     assert numpy.array_equal(three_way_env.teams, numpy.array([['FCB', 'PSG'], ['MCB', 'MTA']]))
 
 

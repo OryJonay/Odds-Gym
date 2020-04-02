@@ -63,7 +63,7 @@ class BaseOddsEnv(gym.Env):
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.STARTING_BANK
         self.current_step = 0
-        self.single_bet_size = 1
+        self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
     def get_odds(self):
         """Returns the odds for the current step.
@@ -120,7 +120,7 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
-        single_bet_size = self.single_bet_size
+        bet_size_matrix = self.bet_size_matrix
         info = self.create_info(action)
         if self.balance < 1:  # no more money :-(
             done = True
@@ -128,8 +128,7 @@ class BaseOddsEnv(gym.Env):
             bet = self.get_bet(action)
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
                 results = self.get_results()
-                reward = ((bet * results * odds).values.sum() * single_bet_size) - \
-                    (numpy.count_nonzero(bet) * single_bet_size)
+                reward = ((bet * bet_size_matrix * results * odds).values.sum()) - (bet * bet_size_matrix).sum()
                 self.balance += reward
                 info.update({'results': results.argmax()})
                 self.current_step += 1
@@ -203,7 +202,7 @@ class BaseOddsEnv(gym.Env):
         legal : bool
             True if the bet is legal, False otherwise.
         """
-        return numpy.count_nonzero(bet) * self.single_bet_size <= self.balance
+        return (bet * self.bet_size_matrix).sum() <= self.balance
 
     def create_info(self, action):
         """Creates the info dictionary for the given action.
@@ -227,4 +226,4 @@ class BaseOddsEnv(gym.Env):
         """
         return {'action': self._verbose_actions[action], 'current_step': self.current_step,
                 'starting_balance': self.balance, 'odds': self.get_odds(),
-                'single_bet_size': self.single_bet_size}
+                'bet_size_matrix': self.bet_size_matrix}

@@ -9,7 +9,7 @@ def test_attributes(basic_env):
     assert basic_env.STARTING_BANK == 10
     assert basic_env.balance == basic_env.STARTING_BANK
     assert basic_env.current_step == 0
-    assert basic_env.single_bet_size == 1
+    assert numpy.array_equal(basic_env.bet_size_matrix, numpy.ones(shape=(1, 2)))
 
 
 @pytest.mark.parametrize("action,expected_reward", [(0, 0), (1, -1), (2, 1), (3, 0)])
