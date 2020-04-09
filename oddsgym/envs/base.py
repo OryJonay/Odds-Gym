@@ -120,7 +120,6 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
-        bet_size_matrix = self.bet_size_matrix
         info = self.create_info(action)
         if self.balance < 1:  # no more money :-(
             done = True
@@ -128,7 +127,7 @@ class BaseOddsEnv(gym.Env):
             bet = self.get_bet(action)
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
                 results = self.get_results()
-                reward = ((bet * bet_size_matrix * results * odds).values.sum()) - (bet * bet_size_matrix).sum()
+                reward = self.get_reward(bet, odds, results)
                 self.balance += reward
                 info.update({'results': results.argmax()})
                 self.current_step += 1
@@ -137,7 +136,29 @@ class BaseOddsEnv(gym.Env):
                     self.current_step = 0
             else:
                 reward = -numpy.inf
-        return self.get_odds(), reward, done, info
+        return odds, reward, done, info
+
+    def get_reward(self, bet, odds, results):
+        """ Calculates the reward, while taking to account invalid bets
+
+        Parameters
+        ----------
+        bet : array of shape (1, n_odds)
+        odds: dataframe of shape (n_games, n_odds)
+            A list of games, with their betting odds.
+        results : array of shape (1, n_odds)
+
+        Returns
+        -------
+        reward : float
+            The amount of reward returned after previous action
+        """
+        used_results = numpy.ones_like(results)
+        zero_rows_count = numpy.sum(~results.any(1))
+        if zero_rows_count > 0:
+            used_results[-zero_rows_count:, :] = 0
+        return ((bet * self.bet_size_matrix * results * odds).values.sum()) - \
+               (bet * used_results * self.bet_size_matrix).sum()
 
     def reset(self):
         """Resets the state of the environment and returns an initial observation.

@@ -17,14 +17,13 @@ class DailyOddsEnv(BaseOddsEnv):
     ----------
     observation_space : gym.spaces.Box
         The observation space for the environment.
-        The observation space shape is (M, N) where N is the number of possible
-        outcomes for the game and M is the maximum number of games in a single
-        day.
+        The observation space shape is (M, N) where M is the maximum number of games in a single
+        day and N is the number of possible outcomes for the game.
 
     action_space : gym.spaces.Box
         The action space for the environment.
-        The action space shape is (M,), a list of numbers in [0, 2 ** N), represneting
-        on what outcomes to place a bet by conversion to a binary represenation,
+        The action space shape is (M,), a list of numbers in [0, 2 ** N), representing
+        on what outcomes to place a bet by conversion to a binary representation,
         where actions[i] is the action for odds[i].
 
     balance : float
@@ -43,14 +42,14 @@ class DailyOddsEnv(BaseOddsEnv):
 
         We initialize the days array (because this environment doesn't iterate
         the games a single game at a time, but by a group of games that happened
-        in the same date) and calculate the day with the most games in it so we
+        in the same date) and calculate the day with the most games in it so
         that the observation & action spaces will be defined correctly.
 
         Parameters
         ----------
         odds: dataframe of shape (n_games, n_odds + 1)
             A list of games, with their betting odds and the date in which
-            the game occures.
+            the game occurs.
 
             .. warning::
                 Please note that the environment expects the date column
@@ -196,7 +195,7 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
         self.action_space = gym.spaces.Box(low=numpy.array([[self.action_space.low[0]] + [0.] * self._odds.shape[1]
                                                             for i in numpy.arange(self.action_space.shape[0])]),
                                            high=numpy.array([[self.action_space.high[0]] + [1.] * self._odds.shape[1]
-                                                             for i in numpy.arange(self.action_space.shape[0])]))
+                                                            for i in numpy.arange(self.action_space.shape[0])]))
 
     def step(self, action):
         form = action[numpy.arange(self.action_space.shape[0]), 0]

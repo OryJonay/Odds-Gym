@@ -44,7 +44,7 @@ def test_get_bet(daily_bets_percentage_env, actions, bets):
     assert numpy.array_equal(daily_bets_percentage_env.get_bet(actions), bets)
 
 
-@pytest.mark.parametrize("current_step_value,action,excpected_reward,finished",
+@pytest.mark.parametrize("current_step_value,action,expected_reward,finished",
                          [(0, array([[0, 0.1, 0.1], [0, 0.1, 0.1]]), 0, False),
                           (1, array([[0, 0.1, 0.1], [0, 0.1, 0.1]]), 0, True),
                           (0, array([[1, 0.1, 0.1], [1, 0.1, 0.1]]), 2, False),
@@ -65,10 +65,10 @@ def test_get_bet(daily_bets_percentage_env, actions, bets):
                           (1, array([[2, 0., 0.], [2, 0., 0.]]), 0, True),
                           (0, array([[3, 0., 0.], [3, 0., 0.]]), 0, False),
                           (1, array([[3, 0., 0.], [3, 0., 0.]]), 0, True)])
-def test_step(daily_bets_percentage_env, current_step_value, action, excpected_reward, finished):
+def test_step(daily_bets_percentage_env, current_step_value, action, expected_reward, finished):
     daily_bets_percentage_env.current_step = current_step_value
     odds, reward, done, info = daily_bets_percentage_env.step(action)
-    assert reward == excpected_reward
+    assert reward == expected_reward
     assert done == finished
 
 
@@ -166,17 +166,17 @@ def test_get_results_non_uniform(daily_bets_percentage_env_non_uniform, current_
                          [(0, array([0] * 3 + [0.1] * 6).reshape(3, 3).T, 0, False),
                           (1, array([0] * 3 + [0.1] * 6).reshape(3, 3).T, 0, False),
                           (2, array([0] * 3 + [0.1] * 6).reshape(3, 3).T, 0, True),
-                          (0, array([1] * 3 + [0.1] * 6).reshape(3, 3).T, -3, False),
-                          (1, array([1] * 3 + [0.1] * 6).reshape(3, 3).T, 1, False),
+                          (0, array([1] * 3 + [0.1] * 6).reshape(3, 3).T, -1, False),
+                          (1, array([1] * 3 + [0.1] * 6).reshape(3, 3).T, 3, False),
                           (2, array([1] * 3 + [0.1] * 6).reshape(3, 3).T, 10, True),
-                          (0, array([3] * 3 + [0.1] * 6).reshape(3, 3).T, -4, False),
-                          (1, array([3] * 3 + [0.1] * 6).reshape(3, 3).T, -2, False),
+                          (0, array([3] * 3 + [0.1] * 6).reshape(3, 3).T, 0, False),
+                          (1, array([3] * 3 + [0.1] * 6).reshape(3, 3).T, 2, False),
                           (2, array([3] * 3 + [0.1] * 6).reshape(3, 3).T, 7, True),
-                          (0, array([1, 1] + [0] + [0.1] * 6).reshape(3, 3).T, -2, False),
-                          (1, array([1, 2] + [0] + [0.1] * 6).reshape(3, 3).T, 2, False),
+                          (0, array([1, 1] + [0] + [0.1] * 6).reshape(3, 3).T, -1, False),
+                          (1, array([1, 2] + [0] + [0.1] * 6).reshape(3, 3).T, 3, False),
                           (2, array([1, 3] + [0] + [0.1] * 6).reshape(3, 3).T, 5, True),
-                          (0, array([2, 1] + [0] + [0.1] * 6).reshape(3, 3).T, 0, False),
-                          (1, array([2, 2] + [0] + [0.1] * 6).reshape(3, 3).T, -2, False),
+                          (0, array([2, 1] + [0] + [0.1] * 6).reshape(3, 3).T, 1, False),
+                          (1, array([2, 2] + [0] + [0.1] * 6).reshape(3, 3).T, -1, False),
                           (2, array([2, 3] + [0] + [0.1] * 6).reshape(3, 3).T, 1, True),
                           (0, array([0] * 3 + [0] * 6).reshape(3, 3).T, 0, False),
                           (1, array([0] * 3 + [0] * 6).reshape(3, 3).T, 0, False),

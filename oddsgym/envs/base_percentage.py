@@ -18,13 +18,14 @@ class BasePercentageOddsEnv(BaseOddsEnv):
     .. versionchanged:: 0.4.5
         Name changed to "BasePercentageOddsEnv"
     .. versionchanged:: 0.5.0
-        Chage action space so that each outcome has it's own independent bet
+        Change action space so that each outcome has it's own independent bet
         percentage.
 
     Parameters
     ----------
-    action_space : gym.spaces.Box of shape (4,)
-        A 4-tuple, where the first index is the action itself and the rest of the
+    action_space : gym.spaces.Box of shape (N+1,), where N is the number of possible
+        outcomes for the game.
+        The (N+1)-tuple first index is the action itself and the rest of the
         indexes are the percentage of the current balance to place on matching
         outcome, so that action[i + 1] is the bet percentage for outcome[i].
 

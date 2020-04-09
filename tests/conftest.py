@@ -14,7 +14,7 @@ def basic_env(request):
 
 
 @fixture()
-def basic_percentge_env(request):
+def basic_percentage_env(request):
     return BasePercentageOddsEnv(array([[2, 1]]), ['w', 'l'], [0])
 
 
