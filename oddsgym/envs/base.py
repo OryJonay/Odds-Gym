@@ -139,13 +139,13 @@ class BaseOddsEnv(gym.Env):
         return odds, reward, done, info
 
     def get_reward(self, bet, odds, results):
-        """ Calculates the reward, while taking to account invalid bets
+        """ Calculates the reward
 
         Parameters
         ----------
         bet : array of shape (1, n_odds)
-        odds: dataframe of shape (n_games, n_odds)
-            A list of games, with their betting odds.
+        odds: dataframe of shape (1, n_odds)
+            A games with its betting odds.
         results : array of shape (1, n_odds)
 
         Returns
@@ -153,12 +153,9 @@ class BaseOddsEnv(gym.Env):
         reward : float
             The amount of reward returned after previous action
         """
-        used_results = numpy.ones_like(results)
-        zero_rows_count = numpy.sum(~results.any(1))
-        if zero_rows_count > 0:
-            used_results[-zero_rows_count:, :] = 0
-        return ((bet * self.bet_size_matrix * results * odds).values.sum()) - \
-               (bet * used_results * self.bet_size_matrix).sum()
+        reward = ((bet * self.bet_size_matrix * results * odds).values.sum())
+        expense = (bet * self.bet_size_matrix).sum()
+        return reward - expense
 
     def reset(self):
         """Resets the state of the environment and returns an initial observation.

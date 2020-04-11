@@ -133,6 +133,51 @@ class DailyOddsEnv(BaseOddsEnv):
                                      numpy.array([current_results.shape[0], 0]))
         return numpy.concatenate([results, filler_results])
 
+    def get_reward(self, bet, odds, results):
+        """ Calculates the reward, while taking to account invalid bets
+
+        Parameters
+        ----------
+        bet : array of shape (n_games, n_odds)
+        odds: dataframe of shape (n_games, n_odds)
+            A list of games, with their betting odds.
+        results : array of shape (max_games, n_odds)
+
+        Returns
+        -------
+        reward : float
+            The amount of reward returned after previous action
+        """
+        used_results = numpy.ones_like(results)
+        zero_rows_count = numpy.sum(~results.any(1))
+        if zero_rows_count > 0:
+            used_results[-zero_rows_count:, :] = 0
+        reward = ((bet * self.bet_size_matrix * results * odds).values.sum())
+        expense = (bet * used_results * self.bet_size_matrix).sum()
+        return reward - expense
+
+    def legal_bet(self, bet):
+        """Checks if the bet is legal, while taking to account invalid bets.
+
+        Checks that the bet does not exceed the current balance.
+
+        Parameters
+        ----------
+        bet : array of shape (n_games, n_odds)
+            The bet to check.
+
+        Returns
+        -------
+        legal : bool
+            True if the bet is legal, False otherwise.
+        """
+        results = self.get_results()
+        used_results = numpy.ones_like(results)
+        zero_rows_count = numpy.sum(~results.any(1))
+        if zero_rows_count > 0:
+            used_results[-zero_rows_count:, :] = 0
+        return (bet * used_results * self.bet_size_matrix).sum() <= self.balance
+
     def finish(self):
         """Checks if the episode has reached an end.
 
@@ -198,6 +243,11 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
                                                             for i in numpy.arange(self.action_space.shape[0])]))
 
     def step(self, action):
-        form = action[numpy.arange(self.action_space.shape[0]), 0]
-        self.bet_size_matrix = action[numpy.arange(self.action_space.shape[0]), 1:] * self.balance
+        form = action[numpy.arange(action.shape[0]), 0]
+
+        current_bet_size_matrix = action[numpy.arange(action.shape[0]), 1:] * self.balance
+        full_bet_size_matrix = numpy.zeros([*self.observation_space.shape])
+        full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
+
+        self.bet_size_matrix = full_bet_size_matrix
         return super().step(form)
