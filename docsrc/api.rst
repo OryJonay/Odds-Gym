@@ -39,3 +39,13 @@ ThreeWaySoccerPercentageOddsEnv
 ###############################
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv
     :members:
+
+ThreeWaySoccerDailyOddsEnv
+##########################
+.. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv
+    :members:
+
+ThreeWaySoccerDailyPercentageOddsEnv
+####################################
+.. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv
+    :members:

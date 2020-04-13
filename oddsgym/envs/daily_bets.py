@@ -73,6 +73,10 @@ class DailyOddsEnv(BaseOddsEnv):
                                            shape=(max_number_of_games,))
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
+    def _get_current_index(self):
+        current_day = self.days[self.current_step]
+        return self._odds_with_dates[self._odds_with_dates['date'] == current_day].index
+
     def get_odds(self):
         """Returns the odds for the current step.
 
@@ -84,8 +88,7 @@ class DailyOddsEnv(BaseOddsEnv):
             dataframe is appended with (max_games - current_games) zeroed rows
             (rows with only 0).
         """
-        current_day = self.days[self.current_step]
-        current_odds = self._odds.iloc[self._odds_with_dates[self._odds_with_dates['date'] == current_day].index]
+        current_odds = self._odds.iloc[self._get_current_index()]
         filler_odds = DataFrame(numpy.zeros(numpy.array([*self.observation_space.shape]) -
                                             numpy.array([current_odds.shape[0], 0])),
                                 columns=self._odds_columns_names)
@@ -124,8 +127,7 @@ class DailyOddsEnv(BaseOddsEnv):
             matrix is appended with (max_games - current_games) zeroed rows
             (rows with only 0).
         """
-        current_day = self.days[self.current_step]
-        index = self._odds_with_dates[self._odds_with_dates['date'] == current_day].index
+        index = self._get_current_index()
         current_results = self._results.iloc[index]
         results = numpy.zeros(shape=(current_results.shape[0], self._odds.shape[1]))
         results[numpy.arange(results.shape[0]), current_results.values] = 1
@@ -240,7 +242,7 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
         self.action_space = gym.spaces.Box(low=numpy.array([[self.action_space.low[0]] + [0.] * self._odds.shape[1]
                                                             for i in numpy.arange(self.action_space.shape[0])]),
                                            high=numpy.array([[self.action_space.high[0]] + [1.] * self._odds.shape[1]
-                                                            for i in numpy.arange(self.action_space.shape[0])]))
+                                                             for i in numpy.arange(self.action_space.shape[0])]))
 
     def step(self, action):
         form = action[numpy.arange(action.shape[0]), 0]

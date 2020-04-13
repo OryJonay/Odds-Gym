@@ -10,7 +10,7 @@ class BaseOddsEnv(gym.Env):
     Creates an OpenAI Gym environment that supports betting a fixed amount (1)
     on a single outcome for a single game.
 
-    .. versionadded: 0.1.0
+    .. versionadded:: 0.1.0
 
     Parameters
     ----------
@@ -19,15 +19,15 @@ class BaseOddsEnv(gym.Env):
         The observation space shape is (1, N) where N is the number of possible
         outcomes for the game.
 
-        .. versionchanged: 0.3.0
+        .. versionchanged:: 0.3.0
             Changed definition of space
 
     action_space : gym.spaces.Discrete
         The action space for the environment.
-        The action space is a single number in [0, 2 ** N), represneting
-        on what outcomes to place a bet by conversion to a binary represenation.
+        The action space is a single number in [0, 2 ** N), representing
+        on what outcomes to place a bet by conversion to a binary representation.
 
-        .. versionchanged: 0.3.0
+        .. versionchanged:: 0.3.0
             Changed definition of space
 
     balance : float
