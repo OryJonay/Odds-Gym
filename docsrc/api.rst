@@ -21,8 +21,12 @@ DailyOddsEnv
 .. autoclass:: oddsgym.envs.daily_bets.DailyOddsEnv
     :members:
 
-Generic Environments
-********************
+DailyPercentageOddsEnv
+######################
+.. autoclass:: oddsgym.envs.daily_bets.DailyPercentageOddsEnv
+
+Sports Specific Environments
+****************************
 
 Environment that are sport specific.
 
@@ -36,4 +40,12 @@ ThreeWaySoccerPercentageOddsEnv
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv
     :members:
 
+ThreeWaySoccerDailyOddsEnv
+##########################
+.. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv
+    :members:
 
+ThreeWaySoccerDailyPercentageOddsEnv
+####################################
+.. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv
+    :members:

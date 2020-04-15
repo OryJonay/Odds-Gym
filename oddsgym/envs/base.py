@@ -10,7 +10,7 @@ class BaseOddsEnv(gym.Env):
     Creates an OpenAI Gym environment that supports betting a fixed amount (1)
     on a single outcome for a single game.
 
-    .. versionadded: 0.1.0
+    .. versionadded:: 0.1.0
 
     Parameters
     ----------
@@ -19,15 +19,15 @@ class BaseOddsEnv(gym.Env):
         The observation space shape is (1, N) where N is the number of possible
         outcomes for the game.
 
-        .. versionchanged: 0.3.0
+        .. versionchanged:: 0.3.0
             Changed definition of space
 
     action_space : gym.spaces.Discrete
         The action space for the environment.
-        The action space is a single number in [0, 2 ** N), represneting
-        on what outcomes to place a bet by conversion to a binary represenation.
+        The action space is a single number in [0, 2 ** N), representing
+        on what outcomes to place a bet by conversion to a binary representation.
 
-        .. versionchanged: 0.3.0
+        .. versionchanged:: 0.3.0
             Changed definition of space
 
     balance : float
@@ -63,7 +63,7 @@ class BaseOddsEnv(gym.Env):
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.STARTING_BANK
         self.current_step = 0
-        self.single_bet_size = 1
+        self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
     def get_odds(self):
         """Returns the odds for the current step.
@@ -120,7 +120,6 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
-        single_bet_size = self.single_bet_size
         info = self.create_info(action)
         if self.balance < 1:  # no more money :-(
             done = True
@@ -128,8 +127,7 @@ class BaseOddsEnv(gym.Env):
             bet = self.get_bet(action)
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
                 results = self.get_results()
-                reward = ((bet * results * odds).values.sum() * single_bet_size) - \
-                    (numpy.count_nonzero(bet) * single_bet_size)
+                reward = self.get_reward(bet, odds, results)
                 self.balance += reward
                 info.update({'results': results.argmax()})
                 self.current_step += 1
@@ -138,7 +136,26 @@ class BaseOddsEnv(gym.Env):
                     self.current_step = 0
             else:
                 reward = -numpy.inf
-        return self.get_odds(), reward, done, info
+        return odds, reward, done, info
+
+    def get_reward(self, bet, odds, results):
+        """ Calculates the reward
+
+        Parameters
+        ----------
+        bet : array of shape (1, n_odds)
+        odds: dataframe of shape (1, n_odds)
+            A games with its betting odds.
+        results : array of shape (1, n_odds)
+
+        Returns
+        -------
+        reward : float
+            The amount of reward returned after previous action
+        """
+        reward = ((bet * self.bet_size_matrix * results * odds).values.sum())
+        expense = (bet * self.bet_size_matrix).sum()
+        return reward - expense
 
     def reset(self):
         """Resets the state of the environment and returns an initial observation.
@@ -203,7 +220,7 @@ class BaseOddsEnv(gym.Env):
         legal : bool
             True if the bet is legal, False otherwise.
         """
-        return numpy.count_nonzero(bet) * self.single_bet_size <= self.balance
+        return (bet * self.bet_size_matrix).sum() <= self.balance
 
     def create_info(self, action):
         """Creates the info dictionary for the given action.
@@ -227,4 +244,4 @@ class BaseOddsEnv(gym.Env):
         """
         return {'action': self._verbose_actions[action], 'current_step': self.current_step,
                 'starting_balance': self.balance, 'odds': self.get_odds(),
-                'single_bet_size': self.single_bet_size}
+                'bet_size_matrix': self.bet_size_matrix}

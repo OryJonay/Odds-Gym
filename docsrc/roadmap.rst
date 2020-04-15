@@ -13,4 +13,4 @@ If you have a new idea, please raise an new issue in the issue tracker.
 - Daily percentage environment - betting on multiple games at a time (grouped by date), non fixed bet size (will be integrated in 0.5.0)
 - 3-way soccer daily environment - daily environment for 3-way soccer (will be integrated in 0.5.0)
 - 3-way soccer percentage environment - daily environment for 3-way soccer (will be integrated in 0.5.0)
-- Percentage environment - different bet size for each outcome (will be integrated in 0.5.5)
+- Percentage environment - different bet size for each outcome (will be integrated in 0.5.0)

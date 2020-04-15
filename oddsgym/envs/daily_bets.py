@@ -17,14 +17,13 @@ class DailyOddsEnv(BaseOddsEnv):
     ----------
     observation_space : gym.spaces.Box
         The observation space for the environment.
-        The observation space shape is (M, N) where N is the number of possible
-        outcomes for the game and M is the maximum number of games in a single
-        day.
+        The observation space shape is (M, N) where M is the maximum number of games in a single
+        day and N is the number of possible outcomes for the game.
 
     action_space : gym.spaces.Box
         The action space for the environment.
-        The action space shape is (M,), a list of numbers in [0, 2 ** N), represneting
-        on what outcomes to place a bet by conversion to a binary represenation,
+        The action space shape is (M,), a list of numbers in [0, 2 ** N), representing
+        on what outcomes to place a bet by conversion to a binary representation,
         where actions[i] is the action for odds[i].
 
     balance : float
@@ -43,14 +42,14 @@ class DailyOddsEnv(BaseOddsEnv):
 
         We initialize the days array (because this environment doesn't iterate
         the games a single game at a time, but by a group of games that happened
-        in the same date) and calculate the day with the most games in it so we
+        in the same date) and calculate the day with the most games in it so
         that the observation & action spaces will be defined correctly.
 
         Parameters
         ----------
         odds: dataframe of shape (n_games, n_odds + 1)
             A list of games, with their betting odds and the date in which
-            the game occures.
+            the game occurs.
 
             .. warning::
                 Please note that the environment expects the date column
@@ -72,6 +71,11 @@ class DailyOddsEnv(BaseOddsEnv):
         self.action_space = gym.spaces.Box(low=0,
                                            high=2 ** self._odds.shape[1] - 0.01,
                                            shape=(max_number_of_games,))
+        self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
+
+    def _get_current_index(self):
+        current_day = self.days[self.current_step]
+        return self._odds_with_dates[self._odds_with_dates['date'] == current_day].index
 
     def get_odds(self):
         """Returns the odds for the current step.
@@ -84,8 +88,7 @@ class DailyOddsEnv(BaseOddsEnv):
             dataframe is appended with (max_games - current_games) zeroed rows
             (rows with only 0).
         """
-        current_day = self.days[self.current_step]
-        current_odds = self._odds.iloc[self._odds_with_dates[self._odds_with_dates['date'] == current_day].index]
+        current_odds = self._odds.iloc[self._get_current_index()]
         filler_odds = DataFrame(numpy.zeros(numpy.array([*self.observation_space.shape]) -
                                             numpy.array([current_odds.shape[0], 0])),
                                 columns=self._odds_columns_names)
@@ -124,14 +127,58 @@ class DailyOddsEnv(BaseOddsEnv):
             matrix is appended with (max_games - current_games) zeroed rows
             (rows with only 0).
         """
-        current_day = self.days[self.current_step]
-        index = self._odds_with_dates[self._odds_with_dates['date'] == current_day].index
+        index = self._get_current_index()
         current_results = self._results.iloc[index]
         results = numpy.zeros(shape=(current_results.shape[0], self._odds.shape[1]))
         results[numpy.arange(results.shape[0]), current_results.values] = 1
         filler_results = numpy.zeros(numpy.array([*self.observation_space.shape]) -
                                      numpy.array([current_results.shape[0], 0]))
         return numpy.concatenate([results, filler_results])
+
+    def get_reward(self, bet, odds, results):
+        """ Calculates the reward, while taking to account invalid bets
+
+        Parameters
+        ----------
+        bet : array of shape (n_games, n_odds)
+        odds: dataframe of shape (n_games, n_odds)
+            A list of games, with their betting odds.
+        results : array of shape (max_games, n_odds)
+
+        Returns
+        -------
+        reward : float
+            The amount of reward returned after previous action
+        """
+        used_results = numpy.ones_like(results)
+        zero_rows_count = numpy.sum(~results.any(1))
+        if zero_rows_count > 0:
+            used_results[-zero_rows_count:, :] = 0
+        reward = ((bet * self.bet_size_matrix * results * odds).values.sum())
+        expense = (bet * used_results * self.bet_size_matrix).sum()
+        return reward - expense
+
+    def legal_bet(self, bet):
+        """Checks if the bet is legal, while taking to account invalid bets.
+
+        Checks that the bet does not exceed the current balance.
+
+        Parameters
+        ----------
+        bet : array of shape (n_games, n_odds)
+            The bet to check.
+
+        Returns
+        -------
+        legal : bool
+            True if the bet is legal, False otherwise.
+        """
+        results = self.get_results()
+        used_results = numpy.ones_like(results)
+        zero_rows_count = numpy.sum(~results.any(1))
+        if zero_rows_count > 0:
+            used_results[-zero_rows_count:, :] = 0
+        return (bet * used_results * self.bet_size_matrix).sum() <= self.balance
 
     def finish(self):
         """Checks if the episode has reached an end.
@@ -169,4 +216,40 @@ class DailyOddsEnv(BaseOddsEnv):
                 'current_step': self.current_step,
                 'starting_balance': self.balance,
                 'odds': self.get_odds(),
-                'single_bet_size': self.single_bet_size}
+                'bet_size_matrix': self.bet_size_matrix}
+
+
+class DailyPercentageOddsEnv(DailyOddsEnv):
+    """Base class for sports betting environments multiple games with a non fixed
+    bet size.
+
+    Creates an OpenAI Gym environment that supports betting a non fixed amount
+    on a single outcome but for multiple games.
+
+    .. versionadded:: 0.5.0
+
+    Parameters
+    ----------
+    action_space: gym.spaces.Box of shape (n_games, n_odds + 1)
+        The first index is the the number representing on which outcomes
+        to place the bet, and the rest indexes represents the percentage
+        of the balance to place on that outcome, so that action[i + 1] is
+        the percentage of the balance to place on outcome[i].
+    """
+
+    def __init__(self, odds, odds_column_names, results=None):
+        super().__init__(odds, odds_column_names, results)
+        self.action_space = gym.spaces.Box(low=numpy.array([[self.action_space.low[0]] + [0.] * self._odds.shape[1]
+                                                            for i in numpy.arange(self.action_space.shape[0])]),
+                                           high=numpy.array([[self.action_space.high[0]] + [1.] * self._odds.shape[1]
+                                                             for i in numpy.arange(self.action_space.shape[0])]))
+
+    def step(self, action):
+        form = action[numpy.arange(action.shape[0]), 0]
+
+        current_bet_size_matrix = action[numpy.arange(action.shape[0]), 1:] * self.balance
+        full_bet_size_matrix = numpy.zeros([*self.observation_space.shape])
+        full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
+
+        self.bet_size_matrix = full_bet_size_matrix
+        return super().step(form)
