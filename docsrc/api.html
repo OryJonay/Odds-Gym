@@ -95,11 +95,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#baseoddsenv">BaseOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#basepercentageoddsenv">BasePercentageOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dailyoddsenv">DailyOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dailypercentageoddsenv">DailyPercentageOddsEnv</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Generic Environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sports-specific-environments">Sports Specific Environments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#threewaysocceroddsenv">ThreeWaySoccerOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerpercentageoddsenv">ThreeWaySoccerPercentageOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailyoddsenv">ThreeWaySoccerDailyOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailypercentageoddsenv">ThreeWaySoccerDailyPercentageOddsEnv</a></li>
 </ul>
 </li>
 </ul>
@@ -176,31 +179,40 @@
 <p>Environment that are agnostic to the sport game of chance.</p>
 <div class="section" id="baseoddsenv">
 <h3>BaseOddsEnv<a class="headerlink" href="#baseoddsenv" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="oddsgym.envs.base.BaseOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base.</code><code class="sig-name descname">BaseOddsEnv</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base.</code><code class="sig-name descname">BaseOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments.</p>
 <p>Creates an OpenAI Gym environment that supports betting a fixed amount (1)
 on a single outcome for a single game.</p>
-<dl class="field-list simple">
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.1.0.</span></p>
+</div>
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
+<dd class="field-odd"><ul>
 <li><p><strong>observation_space</strong> (<em>gym.spaces.Box</em>) – The observation space for the environment.
 The observation space shape is (1, N) where N is the number of possible
 outcomes for the game.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.3.0: </span>Changed definition of space</p>
+</div>
 </li>
 <li><p><strong>action_space</strong> (<em>gym.spaces.Discrete</em>) – The action space for the environment.
-The action space is a single number in [0, 2 ** N), represneting
-on what outcomes to place a bet by conversion to a binary represenation.</p>
+The action space is a single number in [0, 2 ** N), representing
+on what outcomes to place a bet by conversion to a binary representation.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.3.0: </span>Changed definition of space</p>
+</div>
 </li>
 <li><p><strong>balance</strong> (<em>float</em>) – The current balance of the environment.</p></li>
 <li><p><strong>STARTING_BANK</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes a new environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -213,9 +225,9 @@ on what outcomes to place a bet by conversion to a binary represenation.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.create_info">
-<code class="sig-name descname">create_info</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.create_info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.create_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the info dictionary for the given action.</p>
 <dl class="simple">
 <dt>The info dictionary holds the following information:</dt><dd><ul class="simple">
@@ -237,7 +249,7 @@ on what outcomes to place a bet by conversion to a binary represenation.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.finish">
 <code class="sig-name descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.finish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the episode has reached an end.</p>
@@ -249,9 +261,9 @@ on what outcomes to place a bet by conversion to a binary represenation.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.get_bet">
-<code class="sig-name descname">get_bet</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_bet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_bet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_bet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the betting matrix for the action provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -264,7 +276,7 @@ has a value of 1 and 0 otherwise.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.get_odds">
 <code class="sig-name descname">get_odds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_odds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the odds for the current step.</p>
@@ -275,7 +287,7 @@ has a value of 1 and 0 otherwise.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.get_results">
 <code class="sig-name descname">get_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the results matrix for the current step.</p>
@@ -287,9 +299,27 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="oddsgym.envs.base.BaseOddsEnv.get_reward">
+<code class="sig-name descname">get_reward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bet</span></em>, <em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">results</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the reward</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bet</strong> (<em>array of shape (1, n_odds)</em>)</p></li>
+<li><p><strong>odds</strong> (<em>dataframe of shape (1, n_odds)</em>) – A games with its betting odds.</p></li>
+<li><p><strong>results</strong> (<em>array of shape (1, n_odds)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>reward</strong> (<em>float</em>) – The amount of reward returned after previous action</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.legal_bet">
-<code class="sig-name descname">legal_bet</code><span class="sig-paren">(</span><em class="sig-param">bet</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.legal_bet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">legal_bet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bet</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.legal_bet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the bet is legal.</p>
 <p>Checks that the bet does not exceed the current balance.</p>
 <dl class="field-list simple">
@@ -302,9 +332,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">mode='human'</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.render" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'human'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Outputs the current balance and the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -313,7 +343,7 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.reset">
 <code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the state of the environment and returns an initial observation.</p>
@@ -324,9 +354,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.step">
-<code class="sig-name descname">step</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.step" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run one timestep of the environment’s dynamics. When end of episode is reached,
 you are responsible for calling reset() to reset this environment’s state.</p>
 <p>Accepts an action and returns a tuple (observation, reward, done, info).</p>
@@ -351,9 +381,9 @@ you are responsible for calling reset() to reset this environment’s state.</p>
 </div>
 <div class="section" id="basepercentageoddsenv">
 <h3>BasePercentageOddsEnv<a class="headerlink" href="#basepercentageoddsenv" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="oddsgym.envs.base_percentage.BasePercentageOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base_percentage.</code><code class="sig-name descname">BasePercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base_percentage.</code><code class="sig-name descname">BasePercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments with non fixed bet size.</p>
 <p>Creates an OpenAI Gym environment that supports betting a non fixed amount
 on a single outcome for a single game.</p>
@@ -368,11 +398,16 @@ differently (to accommodate that non fixed bet size).</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.4.5: </span>Name changed to “BasePercentageOddsEnv”</p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.5.0: </span>Change action space so that each outcome has it’s own independent bet
+percentage.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (2,)</em>) – A 2-tuple, where the first index is the action itself and the second
-index is the percentage of the current balance to place on all the outcomes
-specified in the action.</p>
+<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (N+1,), where N is the number of possible</em>) – outcomes for the game.
+The (N+1)-tuple first index is the action itself and the rest of the
+indexes are the percentage of the current balance to place on matching
+outcome, so that action[i + 1] is the bet percentage for outcome[i].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -380,9 +415,9 @@ specified in the action.</p>
 </div>
 <div class="section" id="dailyoddsenv">
 <h3>DailyOddsEnv<a class="headerlink" href="#dailyoddsenv" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.daily_bets.</code><code class="sig-name descname">DailyOddsEnv</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.daily_bets.</code><code class="sig-name descname">DailyOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments multiple games with a fixed
 bet size.</p>
 <p>Creates an OpenAI Gym environment that supports betting a fixed amount (1)
@@ -394,12 +429,11 @@ on a single outcome but for multiple games.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>observation_space</strong> (<em>gym.spaces.Box</em>) – The observation space for the environment.
-The observation space shape is (M, N) where N is the number of possible
-outcomes for the game and M is the maximum number of games in a single
-day.</p></li>
+The observation space shape is (M, N) where M is the maximum number of games in a single
+day and N is the number of possible outcomes for the game.</p></li>
 <li><p><strong>action_space</strong> (<em>gym.spaces.Box</em>) – The action space for the environment.
-The action space shape is (M,), a list of numbers in [0, 2 ** N), represneting
-on what outcomes to place a bet by conversion to a binary represenation,
+The action space shape is (M,), a list of numbers in [0, 2 ** N), representing
+on what outcomes to place a bet by conversion to a binary representation,
 where actions[i] is the action for odds[i].</p></li>
 <li><p><strong>balance</strong> (<em>float</em>) – The current balance of the environment.</p></li>
 <li><p><strong>STARTING_BANK</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
@@ -407,19 +441,19 @@ where actions[i] is the action for odds[i].</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">odds</em>, <em class="sig-param">odds_column_names</em>, <em class="sig-param">results=None</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes a new environment.</p>
 <p>We initialize the days array (because this environment doesn’t iterate
 the games a single game at a time, but by a group of games that happened
-in the same date) and calculate the day with the most games in it so we
+in the same date) and calculate the day with the most games in it so
 that the observation &amp; action spaces will be defined correctly.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul>
 <li><p><strong>odds</strong> (<em>dataframe of shape (n_games, n_odds + 1)</em>) – A list of games, with their betting odds and the date in which
-the game occures.</p>
+the game occurs.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please note that the environment expects the date column
@@ -433,9 +467,9 @@ in the dataframe to be named ‘date’ (lower cased).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv.create_info">
-<code class="sig-name descname">create_info</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.create_info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.create_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the info dictionary for the given action.</p>
 <dl class="simple">
 <dt>The info dictionary holds the following information:</dt><dd><ul class="simple">
@@ -457,7 +491,7 @@ in the dataframe to be named ‘date’ (lower cased).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv.finish">
 <code class="sig-name descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.finish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the episode has reached an end.</p>
@@ -469,9 +503,9 @@ in the dataframe to be named ‘date’ (lower cased).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv.get_bet">
-<code class="sig-name descname">get_bet</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.get_bet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_bet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.get_bet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the betting matrix for the action provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -484,7 +518,7 @@ action[row] has a value of 1 and 0 otherwise.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv.get_odds">
 <code class="sig-name descname">get_odds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.get_odds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the odds for the current step.</p>
@@ -498,7 +532,7 @@ dataframe is appended with (max_games - current_games) zeroed rows
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.daily_bets.DailyOddsEnv.get_results">
 <code class="sig-name descname">get_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.get_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the results matrix for the current step.</p>
@@ -514,26 +548,85 @@ matrix is appended with (max_games - current_games) zeroed rows
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="oddsgym.envs.daily_bets.DailyOddsEnv.get_reward">
+<code class="sig-name descname">get_reward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bet</span></em>, <em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">results</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.get_reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the reward, while taking to account invalid bets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bet</strong> (<em>array of shape (n_games, n_odds)</em>)</p></li>
+<li><p><strong>odds</strong> (<em>dataframe of shape (n_games, n_odds)</em>) – A list of games, with their betting odds.</p></li>
+<li><p><strong>results</strong> (<em>array of shape (max_games, n_odds)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>reward</strong> (<em>float</em>) – The amount of reward returned after previous action</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="oddsgym.envs.daily_bets.DailyOddsEnv.legal_bet">
+<code class="sig-name descname">legal_bet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bet</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.legal_bet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the bet is legal, while taking to account invalid bets.</p>
+<p>Checks that the bet does not exceed the current balance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bet</strong> (<em>array of shape (n_games, n_odds)</em>) – The bet to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>legal</strong> (<em>bool</em>) – True if the bet is legal, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dailypercentageoddsenv">
+<h3>DailyPercentageOddsEnv<a class="headerlink" href="#dailypercentageoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.daily_bets.DailyPercentageOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.daily_bets.</code><code class="sig-name descname">DailyPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for sports betting environments multiple games with a non fixed
+bet size.</p>
+<p>Creates an OpenAI Gym environment that supports betting a non fixed amount
+on a single outcome but for multiple games.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.5.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (n_games, n_odds + 1)</em>) – The first index is the the number representing on which outcomes
+to place the bet, and the rest indexes represents the percentage
+of the balance to place on that outcome, so that action[i + 1] is
+the percentage of the balance to place on outcome[i].</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 </div>
-<div class="section" id="id1">
-<h2>Generic Environments<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sports-specific-environments">
+<h2>Sports Specific Environments<a class="headerlink" href="#sports-specific-environments" title="Permalink to this headline">¶</a></h2>
 <p>Environment that are sport specific.</p>
 <div class="section" id="threewaysocceroddsenv">
 <h3>ThreeWaySoccerOddsEnv<a class="headerlink" href="#threewaysocceroddsenv" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="oddsgym.envs.soccer.ThreeWaySoccerOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerOddsEnv</code><span class="sig-paren">(</span><em class="sig-param">soccer_bets_dataframe</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting with a fixed bet size.</p>
-<dl class="method">
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.1.0.</span></p>
+</div>
+<dl class="py method">
 <dt id="oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">soccer_bets_dataframe</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes a new environment.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>soccer_bets_dataframe</strong> (<em>dataframe of shape (n_games, n_odds + 3)</em>) – A list of games, with their betting odds, results and the teams playing.</p>
+<dd class="field-odd"><p><strong>soccer_bets_dataframe</strong> (<em>dataframe of shape (n_games, n_odds + 3), n_odds == 3</em>) – A list of games, with their betting odds, results and the teams playing.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please make sure that the odds columns are named “home, draw, away”,
@@ -544,9 +637,9 @@ columns are named “home_team, away_team” respectively.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">mode='human'</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.render" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'human'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Outputs the current team names, balance and step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -560,10 +653,66 @@ columns are named “home_team, away_team” respectively.</p>
 </div>
 <div class="section" id="threewaysoccerpercentageoddsenv">
 <h3>ThreeWaySoccerPercentageOddsEnv<a class="headerlink" href="#threewaysoccerpercentageoddsenv" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param">soccer_bets_dataframe</em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting with a non fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.2.0.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="threewaysoccerdailyoddsenv">
+<h3>ThreeWaySoccerDailyOddsEnv<a class="headerlink" href="#threewaysoccerdailyoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerDailyOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for 3-way soccer betting, grouped by day, with a fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.5.0.</span></p>
+</div>
+<dl class="py method">
+<dt id="oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new environment.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>soccer_bets_dataframe</strong> (<em>dataframe of shape (n_games, n_odds + 4), n_odds == 3</em>) – A list of games, with their betting odds, results, the teams playing and the dates.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please make sure that the odds columns are named “home, draw, away”,
+that the results column is named “result”, that the team names
+columns are named “home_team, away_team” respectively and that the
+date column is named “date”.</p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'human'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs the current team names, balance and step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>str</em>) – A string with the current team names, balance and step.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="threewaysoccerdailypercentageoddsenv">
+<h3>ThreeWaySoccerDailyPercentageOddsEnv<a class="headerlink" href="#threewaysoccerdailypercentageoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerDailyPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for 3-way soccer betting, grouped by date, with a non fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.5.0.</span></p>
+</div>
 </dd></dl>
 
 </div>
