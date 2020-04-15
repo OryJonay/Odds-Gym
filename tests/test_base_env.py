@@ -54,9 +54,9 @@ def test_step_illegal_action(basic_env):
     assert basic_env.current_step == 0
 
 
-@pytest.mark.parametrize("current_step_value,excpected_results", [(0, numpy.array([[0, 1]], dtype=numpy.float64)),
+@pytest.mark.parametrize("current_step,expected_results", [(0, numpy.array([[0, 1]], dtype=numpy.float64)),
                                                                   (1, numpy.array([[1, 0]], dtype=numpy.float64))])
-def test_get_results(basic_env, current_step_value, excpected_results):
-    basic_env.current_step = current_step_value
+def test_get_results(basic_env, current_step, expected_results):
+    basic_env.current_step = current_step
     results = basic_env.get_results()
-    assert numpy.array_equal(results, excpected_results)
+    assert numpy.array_equal(results, expected_results)
