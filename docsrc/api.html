@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.5.1
               </div>
             
           
@@ -596,12 +596,15 @@ on a single outcome but for multiple games.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.5.0.</span></p>
 </div>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (n_games, n_odds + 1)</em>) – The first index is the the number representing on which outcomes
-to place the bet, and the rest indexes represents the percentage
-of the balance to place on that outcome, so that action[i + 1] is
-the percentage of the balance to place on outcome[i].</p>
+<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (n_games * (n_odds + 1),)</em>) – A vector with the action and the percentage for each outcome, so that:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}a[i] = \begin{cases}
+    \text{the action} &amp; i\mod\text{(n_odds + 1)}\equiv 0\\
+    \text{percentage of outcome j} &amp; i\mod\text{(n_odds + 1)}\equiv j
+\end{cases}\end{split}\]</div>
+<p>For the game <span class="math notranslate nohighlight">\(\lfloor \frac{i}{\text{n_games}} \rfloor\)</span>.</p>
 </dd>
 </dl>
 </dd></dl>
