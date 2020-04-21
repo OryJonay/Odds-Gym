@@ -7,7 +7,7 @@ from numpy import array
 def test_attributes(three_way_daily_percentage_env):
     assert three_way_daily_percentage_env.action_space == Box(low=array([[0] * 4] * 2).reshape(8),
                                                               high=array([[2 ** 3 - 0.01] + [1] * 3] * 2).reshape(8))
-    assert three_way_daily_percentage_env.observation_space == Box(low=1., high=float('Inf'), shape=(2, 3))
+    assert three_way_daily_percentage_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 3))
     assert three_way_daily_percentage_env.STARTING_BANK == 10
     assert three_way_daily_percentage_env.balance == three_way_daily_percentage_env.STARTING_BANK
     assert three_way_daily_percentage_env.current_step == 0

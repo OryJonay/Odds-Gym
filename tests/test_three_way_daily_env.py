@@ -6,7 +6,7 @@ from numpy import array
 
 def test_attributes(three_way_daily_env):
     assert three_way_daily_env.action_space == Box(low=0, high=2 ** 3 - 0.01, shape=(2,))
-    assert three_way_daily_env.observation_space == Box(low=1., high=float('Inf'), shape=(2, 3))
+    assert three_way_daily_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 3))
     assert three_way_daily_env.STARTING_BANK == 10
     assert three_way_daily_env.balance == three_way_daily_env.STARTING_BANK
     assert three_way_daily_env.current_step == 0

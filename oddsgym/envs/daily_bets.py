@@ -66,7 +66,7 @@ class DailyOddsEnv(BaseOddsEnv):
         self.days = odds['date'].unique()
         self.days.sort()
         self.max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
-        self.observation_space = gym.spaces.Box(low=1., high=float('Inf'),
+        self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
                                                 shape=(self.max_number_of_games, self._odds.shape[1]))
         self.action_space = gym.spaces.Box(low=0,
                                            high=2 ** self._odds.shape[1] - 0.01,

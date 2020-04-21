@@ -8,7 +8,7 @@ from numpy import array, zeros
 
 def test_attributes(daily_bets_env):
     assert daily_bets_env.action_space == Box(low=0, high=2 ** 2 - 0.01, shape=(2,))
-    assert daily_bets_env.observation_space == Box(low=1., high=float('Inf'), shape=(2, 2))
+    assert daily_bets_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 2))
     assert daily_bets_env.STARTING_BANK == 10
     assert daily_bets_env.balance == daily_bets_env.STARTING_BANK
     assert daily_bets_env.current_step == 0
@@ -46,7 +46,7 @@ def test_get_bet(daily_bets_env, actions, bets):
 
 def test_attributes_of_non_uniform(daily_bets_env_non_uniform):
     assert daily_bets_env_non_uniform.action_space == Box(low=0, high=2 ** 2 - 0.01, shape=(3,))
-    assert daily_bets_env_non_uniform.observation_space == Box(low=1., high=float('Inf'), shape=(3, 2))
+    assert daily_bets_env_non_uniform.observation_space == Box(low=0., high=float('Inf'), shape=(3, 2))
     assert len(daily_bets_env_non_uniform.days) == 3
     assert daily_bets_env_non_uniform.days[0] == datetime.today().date() - timedelta(days=2)
     assert daily_bets_env_non_uniform.days[1] == datetime.today().date() - timedelta(days=1)
@@ -173,3 +173,15 @@ def test_step_non_uniform(daily_bets_env_non_uniform, current_step, action, expe
     odds, reward, done, info = daily_bets_env_non_uniform.step(action)
     assert reward == expected_reward
     assert done == finished
+
+
+@pytest.mark.parametrize("current_step_value", [0, 1])
+def test_get_odds_in_observation_space(daily_bets_env, current_step_value):
+    daily_bets_env.current_step = current_step_value
+    assert daily_bets_env.observation_space.contains(daily_bets_env.get_odds())
+
+
+@pytest.mark.parametrize("current_step_value", [0, 1, 2])
+def test_get_odds_in_observation_space_non_uniform(daily_bets_env_non_uniform, current_step_value):
+    daily_bets_env_non_uniform.current_step = current_step_value
+    assert daily_bets_env_non_uniform.observation_space.contains(daily_bets_env_non_uniform.get_odds())

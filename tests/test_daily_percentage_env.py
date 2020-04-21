@@ -9,7 +9,7 @@ from numpy import array, zeros
 def test_attributes(daily_bets_percentage_env):
     assert daily_bets_percentage_env.action_space == Box(low=zeros(shape=(6,)),
                                                          high=array([2 ** 2 - 0.01, 1, 1] * 2).reshape(6))
-    assert daily_bets_percentage_env.observation_space == Box(low=1., high=float('Inf'), shape=(2, 2))
+    assert daily_bets_percentage_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 2))
     assert daily_bets_percentage_env.STARTING_BANK == 10
     assert daily_bets_percentage_env.balance == daily_bets_percentage_env.STARTING_BANK
     assert daily_bets_percentage_env.current_step == 0
@@ -75,7 +75,7 @@ def test_step(daily_bets_percentage_env, current_step, action, expected_reward, 
 def test_attributes_of_non_uniform(daily_bets_percentage_env_non_uniform):
     assert daily_bets_percentage_env_non_uniform.action_space == Box(low=zeros(shape=(9)),
                                                                      high=array([2 ** 2 - 0.01, 1., 1.] * 3).reshape(9))
-    assert daily_bets_percentage_env_non_uniform.observation_space == Box(low=1., high=float('Inf'), shape=(3, 2))
+    assert daily_bets_percentage_env_non_uniform.observation_space == Box(low=0., high=float('Inf'), shape=(3, 2))
     assert len(daily_bets_percentage_env_non_uniform.days) == 3
     assert daily_bets_percentage_env_non_uniform.days[0] == datetime.today().date() - timedelta(days=2)
     assert daily_bets_percentage_env_non_uniform.days[1] == datetime.today().date() - timedelta(days=1)
