@@ -120,12 +120,16 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
-        info = self.create_info(action)
+        info = {'current_step': self.current_step, 'starting_balance': self.balance,
+                'odds': odds, 'bet_size_matrix': self.bet_size_matrix}
         if self.balance < 1:  # no more money :-(
             done = True
+        elif numpy.isnan(action).any():
+            pass
         else:
             bet = self.get_bet(action)
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
+                info = self.create_info(action)
                 results = self.get_results()
                 reward = self.get_reward(bet, odds, results)
                 self.balance += reward
@@ -135,7 +139,7 @@ class BaseOddsEnv(gym.Env):
                     done = True
                     self.current_step = 0
             else:
-                reward = -numpy.inf
+                reward = -(bet * self.bet_size_matrix).sum()
         return odds, reward, done, info
 
     def get_reward(self, bet, odds, results):

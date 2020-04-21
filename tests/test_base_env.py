@@ -49,13 +49,13 @@ def test_step_when_balance_is_0(basic_env, action):
 def test_step_illegal_action(basic_env):
     basic_env.balance = 1
     odds, reward, done, _ = basic_env.step(3)  # illegal - making a double when when the balance is 1
-    assert reward == -float('inf')
+    assert reward == -2
     assert not done
     assert basic_env.current_step == 0
 
 
 @pytest.mark.parametrize("current_step,expected_results", [(0, numpy.array([[0, 1]], dtype=numpy.float64)),
-                                                                  (1, numpy.array([[1, 0]], dtype=numpy.float64))])
+                                                           (1, numpy.array([[1, 0]], dtype=numpy.float64))])
 def test_get_results(basic_env, current_step, expected_results):
     basic_env.current_step = current_step
     results = basic_env.get_results()

@@ -65,12 +65,12 @@ class DailyOddsEnv(BaseOddsEnv):
         self._odds_with_dates = odds.copy()
         self.days = odds['date'].unique()
         self.days.sort()
-        max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
+        self.max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
         self.observation_space = gym.spaces.Box(low=1., high=float('Inf'),
-                                                shape=(max_number_of_games, self._odds.shape[1]))
+                                                shape=(self.max_number_of_games, self._odds.shape[1]))
         self.action_space = gym.spaces.Box(low=0,
                                            high=2 ** self._odds.shape[1] - 0.01,
-                                           shape=(max_number_of_games,))
+                                           shape=(self.max_number_of_games,))
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
     def _get_current_index(self):
@@ -230,24 +230,37 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
 
     Parameters
     ----------
-    action_space: gym.spaces.Box of shape (n_games, n_odds + 1)
-        The first index is the the number representing on which outcomes
-        to place the bet, and the rest indexes represents the percentage
-        of the balance to place on that outcome, so that action[i + 1] is
-        the percentage of the balance to place on outcome[i].
+    action_space: gym.spaces.Box of shape (n_games * (n_odds + 1),)
+        A vector with the action and the percentage for each outcome, so that:
+
+        .. math::
+
+            a[i] = \\begin{cases}
+                \\text{the action} & i\\mod\\text{(n_odds + 1)}\\equiv 0\\\\
+                \\text{percentage of outcome j} & i\\mod\\text{(n_odds + 1)}\\equiv j
+            \\end{cases}
+
+        For the game :math:`\\lfloor \\frac{i}{\\text{n_games}} \\rfloor`.
     """
 
     def __init__(self, odds, odds_column_names, results=None):
         super().__init__(odds, odds_column_names, results)
-        self.action_space = gym.spaces.Box(low=numpy.array([[self.action_space.low[0]] + [0.] * self._odds.shape[1]
-                                                            for i in numpy.arange(self.action_space.shape[0])]),
-                                           high=numpy.array([[self.action_space.high[0]] + [1.] * self._odds.shape[1]
-                                                             for i in numpy.arange(self.action_space.shape[0])]))
+        lower_bound = [[self.action_space.low[0]] + [0.] * self._odds.shape[1]
+                       for i in numpy.arange(self.max_number_of_games)]
+        upper_bound = [[self.action_space.high[0]] + [1.] * self._odds.shape[1]
+                       for i in numpy.arange(self.max_number_of_games)]
+        vector_size = self.max_number_of_games * (self._odds.shape[1] + 1)
+        self.action_space = gym.spaces.Box(low=numpy.array(lower_bound).reshape(vector_size),
+                                           high=numpy.array(upper_bound).reshape(vector_size))
 
     def step(self, action):
-        form = action[numpy.arange(action.shape[0]), 0]
+        full_action = numpy.zeros(self.max_number_of_games * (self._odds.shape[1] + 1))
+        full_action[numpy.arange(action.shape[0])] = action
+        full_action = full_action.reshape(self.max_number_of_games, (self._odds.shape[1] + 1))
 
-        current_bet_size_matrix = action[numpy.arange(action.shape[0]), 1:] * self.balance
+        form = full_action[numpy.arange(full_action.shape[0]), 0]
+
+        current_bet_size_matrix = full_action[numpy.arange(full_action.shape[0]), 1:] * self.balance
         full_bet_size_matrix = numpy.zeros([*self.observation_space.shape])
         full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
 
