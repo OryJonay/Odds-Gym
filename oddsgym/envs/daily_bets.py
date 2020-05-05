@@ -37,7 +37,7 @@ class DailyOddsEnv(BaseOddsEnv):
 
     """
 
-    def __init__(self, odds, odds_column_names, results=None):
+    def __init__(self, odds, odds_column_names, results=None, max_number_of_games='auto'):
         """Initializes a new environment.
 
         We initialize the days array (because this environment doesn't iterate
@@ -60,12 +60,25 @@ class DailyOddsEnv(BaseOddsEnv):
 
         results: list of int, default=None
             A list of the results, where results[i] is the outcome of odds[i].
+
+        max_number_of_games: int or str, default='auto'
+            The maximum number of games in a single name that the environment
+            will support. The value 'auto' will calculate this value from the
+            odds dataframe.
         """
         super().__init__(odds.drop('date', 'columns'), odds_column_names, results)
         self._odds_with_dates = odds.copy()
         self.days = odds['date'].unique()
         self.days.sort()
-        self.max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
+        self._max_number_of_games = None
+        if max_number_of_games == 'auto':
+            self.max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
+        elif isinstance(max_number_of_games, int) and max_number_of_games > 0:
+            self.max_number_of_games = max_number_of_games
+        else:
+            raise ValueError("Invalid value for max_number_of_games: {}.\nPass 'auto' for automatic "
+                             "calculation of the maximum number of games"
+                             ", or an integer higher than 0".format(max_number_of_games))
         self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
                                                 shape=(self.max_number_of_games, self._odds.shape[1]))
         self.action_space = gym.spaces.Box(low=0,
@@ -243,8 +256,8 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
         For the game :math:`\\lfloor \\frac{i}{\\text{n_games}} \\rfloor`.
     """
 
-    def __init__(self, odds, odds_column_names, results=None):
-        super().__init__(odds, odds_column_names, results)
+    def __init__(self, odds, odds_column_names, results=None, *args, **kwargs):
+        super().__init__(odds, odds_column_names, results, *args, **kwargs)
         lower_bound = [[self.action_space.low[0]] + [0.] * self._odds.shape[1]
                        for i in numpy.arange(self.max_number_of_games)]
         upper_bound = [[self.action_space.high[0]] + [1.] * self._odds.shape[1]

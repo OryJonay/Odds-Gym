@@ -124,8 +124,6 @@ class BaseOddsEnv(gym.Env):
                 'odds': odds, 'bet_size_matrix': self.bet_size_matrix}
         if self.balance < 1:  # no more money :-(
             done = True
-        elif numpy.isnan(action).any():
-            pass
         else:
             bet = self.get_bet(action)
             if self.legal_bet(bet):  # making sure agent has enough money for the bet

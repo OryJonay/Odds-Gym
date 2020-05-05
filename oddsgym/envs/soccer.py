@@ -56,7 +56,7 @@ class ThreeWaySoccerDailyOddsEnv(DailyOddsEnv):
     .. versionadded:: 0.5.0
     """
 
-    def __init__(self, soccer_bets_dataframe):
+    def __init__(self, soccer_bets_dataframe, *args, **kwargs):
         """Initializes a new environment.
 
 
@@ -76,7 +76,7 @@ class ThreeWaySoccerDailyOddsEnv(DailyOddsEnv):
         odds_column_names = ['home', 'draw', 'away']
         odds = soccer_bets_dataframe[odds_column_names + ['date']]
         results = soccer_bets_dataframe['result'] if soccer_bets_dataframe['result'].notna().all() else None
-        super().__init__(odds, odds_column_names, results)
+        super().__init__(odds, odds_column_names, results, *args, **kwargs)
         self.teams = soccer_bets_dataframe[['home_team', 'away_team']]
 
     def render(self, mode='human'):  # pragma: no cover

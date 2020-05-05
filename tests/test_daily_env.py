@@ -4,6 +4,20 @@ from pandas import DataFrame
 from datetime import datetime, timedelta
 import numpy
 from numpy import array, zeros
+from oddsgym.envs.daily_bets import DailyOddsEnv
+
+
+@pytest.mark.parametrize("max_number_of_games", ['auto', 1])
+def test_max_number_of_games_valid(max_number_of_games):
+    dataframe = DataFrame([{'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0}])
+    DailyOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'], max_number_of_games)
+
+
+@pytest.mark.parametrize("max_number_of_games", [0, None, 3.5, 'some random string'])
+def test_max_number_of_games_invalid(max_number_of_games):
+    dataframe = DataFrame([{'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0}])
+    with pytest.raises(ValueError):
+        DailyOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'], max_number_of_games)
 
 
 def test_attributes(daily_bets_env):
