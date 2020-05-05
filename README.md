@@ -3,7 +3,7 @@ A sports betting environment for OpenAI Gym.
 
 ## Installation
 
-    pip install git+https://github.com/OryJonay/Odds-Gym.git
+    pip install oddsgym
 
 ## Environment
 
