@@ -1,0 +1,27 @@
+name: Publish Python 🐍 distributions 📦 to PyPI
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install setuptools
+        run: |
+          pip install -U setuptools
+      - name: Build source archive
+        run: |
+          python setup.py sdist
+      - name: Publish 📦 PyPi
+        uses: pypa/gh-action-pypi-publish@v1.1.0
+        with:
+          password: ${{ secrets.pypi_password }}
