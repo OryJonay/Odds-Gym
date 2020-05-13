@@ -20,7 +20,7 @@ jobs:
     - name: Install package
       run: |
         python -m pip install --upgrade pip
-        pip install .
+        pip install .[tests]
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -30,7 +30,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pip install pytest pytest-cov coveralls
         pytest -v tests --cov=oddsgym
     - name: Post to Coveralls.io
       env:

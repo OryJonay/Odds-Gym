@@ -17,7 +17,7 @@ def _get_version():
         return parser['bumpversion']['current_version']
 
 
-setup(packages=find_packages(),
+setup(packages=find_packages(exclude=["tests*"]),
       install_requires=requirements['install_requires'],
       version=_get_version(),
       python_requires=">=3.6",
