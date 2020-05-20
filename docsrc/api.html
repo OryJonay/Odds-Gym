@@ -392,22 +392,29 @@ differently (to accommodate that non fixed bet size).</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.2.0.</span></p>
 </div>
-<div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 0.4.0: </span>This environment will be renamed “BasePercentageOddsEnv” in 0.4.5</p>
-</div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.4.5: </span>Name changed to “BasePercentageOddsEnv”</p>
 </div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 0.5.0: </span>Change action space so that each outcome has it’s own independent bet
-percentage.</p>
-</div>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (N+1,), where N is the number of possible</em>) – outcomes for the game.
 The (N+1)-tuple first index is the action itself and the rest of the
 indexes are the percentage of the current balance to place on matching
 outcome, so that action[i + 1] is the bet percentage for outcome[i].</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.5.0: </span>Change action space so that each outcome has it’s own independent bet
+percentage.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.6.0: </span>Change action space bounds to [-1, 1] and rescale the action back
+inside the step method.</p>
+</div>
+<p>The rescaling an action <span class="math notranslate nohighlight">\((a, p_0, ..., p_{N-1}) \in \text{action_space}, -1 \leq a, p_0, ..., p_{N-1} \leq 1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+    a' = \lfloor (a + 1) * (2^{N-1}) \rfloor\\
+    p_i' = |p_i|
+\end{cases}\end{split}\]</div>
 </dd>
 </dl>
 </dd></dl>
@@ -425,16 +432,22 @@ on a single outcome but for multiple games.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.3.0.</span></p>
 </div>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
+<dd class="field-odd"><ul>
 <li><p><strong>observation_space</strong> (<em>gym.spaces.Box</em>) – The observation space for the environment.
 The observation space shape is (M, N) where M is the maximum number of games in a single
 day and N is the number of possible outcomes for the game.</p></li>
 <li><p><strong>action_space</strong> (<em>gym.spaces.Box</em>) – The action space for the environment.
 The action space shape is (M,), a list of numbers in [0, 2 ** N), representing
 on what outcomes to place a bet by conversion to a binary representation,
-where actions[i] is the action for odds[i].</p></li>
+where actions[i] is the action for odds[i].</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.6.0: </span>Change action space bounds to [-1, 1] and rescale the action back
+inside the step method.
+For explanation on how the rescaling works, see <a class="reference internal" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="oddsgym.envs.base_percentage.BasePercentageOddsEnv"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePercentageOddsEnv</span></code></a></p>
+</div>
+</li>
 <li><p><strong>balance</strong> (<em>float</em>) – The current balance of the environment.</p></li>
 <li><p><strong>STARTING_BANK</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
 <li><p><strong>days</strong> (<em>array, dtype=np.datetime64</em>) – Sorted array of the days.</p></li>
@@ -584,6 +597,28 @@ matrix is appended with (max_games - current_games) zeroed rows
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="oddsgym.envs.daily_bets.DailyOddsEnv.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run one timestep of the environment’s dynamics. When end of episode is reached,
+you are responsible for calling reset() to reset this environment’s state.</p>
+<p>Accepts an action and returns a tuple (observation, reward, done, info).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>int</em>) – An action provided by the agent.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>observation</strong> (<em>dataframe of shape (1, n_odds)</em>) – The agent’s observation of the current environment</p></li>
+<li><p><strong>reward</strong> (<em>float</em>) – The amount of reward returned after previous action</p></li>
+<li><p><strong>done</strong> (<em>bool</em>) – Whether the episode has ended, in which case further step() calls will return undefined results</p></li>
+<li><p><strong>info</strong> (<em>dict</em>) – Contains auxiliary diagnostic information (helpful for debugging, and sometimes learning)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -608,6 +643,11 @@ on a single outcome but for multiple games.</p>
     \text{percentage of outcome j} &amp; i\mod\text{(n_odds + 1)}\equiv j
 \end{cases}\end{split}\]</div>
 <p>For the game <span class="math notranslate nohighlight">\(\lfloor \frac{i}{\text{n_games}} \rfloor\)</span>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.6.0: </span>Change action space bounds to [-1, 1] and rescale the action back
+inside the step method.
+For explanation on how the rescaling works, see <a class="reference internal" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="oddsgym.envs.base_percentage.BasePercentageOddsEnv"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePercentageOddsEnv</span></code></a></p>
+</div>
 </dd>
 </dl>
 </dd></dl>
