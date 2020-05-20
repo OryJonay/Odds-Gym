@@ -7,6 +7,10 @@ from numpy import array, zeros
 from oddsgym.envs.daily_bets import DailyOddsEnv
 
 
+def _(action):
+    return numpy.linspace(-1, 1, 2 ** 2)[action]
+
+
 @pytest.mark.parametrize("max_number_of_games", ['auto', 1])
 def test_max_number_of_games_valid(max_number_of_games):
     dataframe = DataFrame([{'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0}])
@@ -21,7 +25,7 @@ def test_max_number_of_games_invalid(max_number_of_games):
 
 
 def test_attributes(daily_bets_env):
-    assert daily_bets_env.action_space == Box(low=0, high=2 ** 2 - 0.01, shape=(2,))
+    assert daily_bets_env.action_space == Box(low=-1, high=1, shape=(2,))
     assert daily_bets_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 2))
     assert daily_bets_env.STARTING_BANK == 10
     assert daily_bets_env.balance == daily_bets_env.STARTING_BANK
@@ -59,7 +63,7 @@ def test_get_bet(daily_bets_env, actions, bets):
 
 
 def test_attributes_of_non_uniform(daily_bets_env_non_uniform):
-    assert daily_bets_env_non_uniform.action_space == Box(low=0, high=2 ** 2 - 0.01, shape=(3,))
+    assert daily_bets_env_non_uniform.action_space == Box(low=-1, high=1, shape=(3,))
     assert daily_bets_env_non_uniform.observation_space == Box(low=0., high=float('Inf'), shape=(3, 2))
     assert len(daily_bets_env_non_uniform.days) == 3
     assert daily_bets_env_non_uniform.days[0] == datetime.today().date() - timedelta(days=2)
@@ -148,16 +152,16 @@ def test_get_results_non_uniform(daily_bets_env_non_uniform, current_step, expec
 
 
 @pytest.mark.parametrize("current_step,action,expected_reward,finished",
-                         [(0, array([0, 0]), 0, False),
-                          (1, array([0, 0]), 0, True),
-                          (0, array([1, 1]), 2, False),
-                          (1, array([1, 1]), 6, True),
-                          (0, array([1, 2]), -2, False),
-                          (1, array([1, 2]), 2, True),
-                          (0, array([2, 2]), 0, False),
-                          (1, array([2, 2]), -2, True),
-                          (0, array([3, 3]), 2, False),
-                          (1, array([3, 3]), 4, True)])
+                         [(0, array([_(0), _(0)]), 0, False),
+                          (1, array([_(0), _(0)]), 0, True),
+                          (0, array([_(1), _(1)]), 2, False),
+                          (1, array([_(1), _(1)]), 6, True),
+                          (0, array([_(1), _(2)]), -2, False),
+                          (1, array([_(1), _(2)]), 2, True),
+                          (0, array([_(2), _(2)]), 0, False),
+                          (1, array([_(2), _(2)]), -2, True),
+                          (0, array([_(3), _(3)]), 2, False),
+                          (1, array([_(3), _(3)]), 4, True)])
 def test_step(daily_bets_env, current_step, action, expected_reward, finished):
     daily_bets_env.current_step = current_step
     odds, reward, done, info = daily_bets_env.step(action)
@@ -166,21 +170,21 @@ def test_step(daily_bets_env, current_step, action, expected_reward, finished):
 
 
 @pytest.mark.parametrize("current_step,action,expected_reward,finished",
-                         [(0, array([0] * 3), 0, False),
-                          (1, array([0] * 3), 0, False),
-                          (2, array([0] * 3), 0, True),
-                          (0, array([1] * 3), -1, False),
-                          (1, array([1] * 3), 3, False),
-                          (2, array([1] * 3), 10, True),
-                          (0, array([3] * 3), 0, False),
-                          (1, array([3] * 3), 2, False),
-                          (2, array([3] * 3), 7, True),
-                          (0, array([1, 1]), -1, False),
-                          (1, array([1, 2]), 3, False),
-                          (2, array([1, 3]), 5, True),
-                          (0, array([2, 1]), 1, False),
-                          (1, array([2, 2]), -1, False),
-                          (2, array([2, 3]), 1, True)
+                         [(0, array([_(0)] * 3), 0, False),
+                          (1, array([_(0)] * 3), 0, False),
+                          (2, array([_(0)] * 3), 0, True),
+                          (0, array([_(1)] * 3), -1, False),
+                          (1, array([_(1)] * 3), 3, False),
+                          (2, array([_(1)] * 3), 10, True),
+                          (0, array([_(3)] * 3), 0, False),
+                          (1, array([_(3)] * 3), 2, False),
+                          (2, array([_(3)] * 3), 7, True),
+                          (0, array([_(1), _(1)]), -1, False),
+                          (1, array([_(1), _(2)]), 3, False),
+                          (2, array([_(1), _(3)]), 5, True),
+                          (0, array([_(2), _(1)]), 1, False),
+                          (1, array([_(2), _(2)]), -1, False),
+                          (2, array([_(2), _(3)]), 1, True)
                           ])
 def test_step_non_uniform(daily_bets_env_non_uniform, current_step, action, expected_reward, finished):
     daily_bets_env_non_uniform.current_step = current_step
