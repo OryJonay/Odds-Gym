@@ -26,6 +26,11 @@ class DailyOddsEnv(BaseOddsEnv):
         on what outcomes to place a bet by conversion to a binary representation,
         where actions[i] is the action for odds[i].
 
+        .. versionchanged:: 0.6.0
+            Change action space bounds to [-1, 1] and rescale the action back
+            inside the step method.
+            For explanation on how the rescaling works, see :py:class:`~oddsgym.envs.base_percentage.BasePercentageOddsEnv`
+
     balance : float
         The current balance of the environment.
 
@@ -81,8 +86,8 @@ class DailyOddsEnv(BaseOddsEnv):
                              ", or an integer higher than 0".format(max_number_of_games))
         self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
                                                 shape=(self.max_number_of_games, self._odds.shape[1]))
-        self.action_space = gym.spaces.Box(low=0,
-                                           high=2 ** self._odds.shape[1] - 0.01,
+        self.action_space = gym.spaces.Box(low=-1,
+                                           high=1,
                                            shape=(self.max_number_of_games,))
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
@@ -231,6 +236,9 @@ class DailyOddsEnv(BaseOddsEnv):
                 'odds': self.get_odds(),
                 'bet_size_matrix': self.bet_size_matrix}
 
+    def step(self, action):
+        return super().step(numpy.array([self._rescale_form(form) for form in action]))
+
 
 class DailyPercentageOddsEnv(DailyOddsEnv):
     """Base class for sports betting environments multiple games with a non fixed
@@ -254,28 +262,37 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
             \\end{cases}
 
         For the game :math:`\\lfloor \\frac{i}{\\text{n_games}} \\rfloor`.
+
+        .. versionchanged:: 0.6.0
+            Change action space bounds to [-1, 1] and rescale the action back
+            inside the step method.
+            For explanation on how the rescaling works, see :py:class:`~oddsgym.envs.base_percentage.BasePercentageOddsEnv`
+
     """
 
     def __init__(self, odds, odds_column_names, results=None, *args, **kwargs):
         super().__init__(odds, odds_column_names, results, *args, **kwargs)
-        lower_bound = [[self.action_space.low[0]] + [0.] * self._odds.shape[1]
-                       for i in numpy.arange(self.max_number_of_games)]
-        upper_bound = [[self.action_space.high[0]] + [1.] * self._odds.shape[1]
-                       for i in numpy.arange(self.max_number_of_games)]
+        lower_bound = [[-1] * (self._odds.shape[1] + 1) for i in numpy.arange(self.max_number_of_games)]
+        upper_bound = [[1] * (self._odds.shape[1] + 1) for i in numpy.arange(self.max_number_of_games)]
         vector_size = self.max_number_of_games * (self._odds.shape[1] + 1)
         self.action_space = gym.spaces.Box(low=numpy.array(lower_bound).reshape(vector_size),
                                            high=numpy.array(upper_bound).reshape(vector_size))
 
     def step(self, action):
         full_action = numpy.zeros(self.max_number_of_games * (self._odds.shape[1] + 1))
+        full_action[numpy.arange(full_action.shape[0], step=self._odds.shape[1] + 1)] = -1
         full_action[numpy.arange(action.shape[0])] = action
         full_action = full_action.reshape(self.max_number_of_games, (self._odds.shape[1] + 1))
 
         form = full_action[numpy.arange(full_action.shape[0]), 0]
 
-        current_bet_size_matrix = full_action[numpy.arange(full_action.shape[0]), 1:] * self.balance
+        current_bet_size_matrix = self._rescale_matrix(full_action[numpy.arange(full_action.shape[0]), 1:]) * self.balance
         full_bet_size_matrix = numpy.zeros([*self.observation_space.shape])
         full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
 
         self.bet_size_matrix = full_bet_size_matrix
         return super().step(form)
+
+    def legal_bet(self, bet):
+        legal_percentage_bet = numpy.logical_xor(bet, numpy.where(self.bet_size_matrix != 0, 1, 0)).sum() == 0
+        return legal_percentage_bet and super().legal_bet(bet)

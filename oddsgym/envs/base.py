@@ -247,3 +247,11 @@ class BaseOddsEnv(gym.Env):
         return {'action': self._verbose_actions[action], 'current_step': self.current_step,
                 'starting_balance': self.balance, 'odds': self.get_odds(),
                 'bet_size_matrix': self.bet_size_matrix}
+
+    def _rescale_form(self, form):
+        if form == 1:
+            form -= numpy.finfo(numpy.float64).eps
+        return int(numpy.floor((form + 1) * (2 ** (self._odds.shape[1] - 1))))
+
+    def _rescale_matrix(self, bet_size_matrix):
+        return numpy.abs(bet_size_matrix)

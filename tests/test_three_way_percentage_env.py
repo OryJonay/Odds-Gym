@@ -3,17 +3,22 @@ import numpy
 from gym.spaces import Box
 
 
+def _(action):
+    return numpy.linspace(-1, 1, 2 ** 3)[action]
+
+
 def test_attributes(three_way_percentage_env):
     assert three_way_percentage_env.observation_space == Box(low=1., high=float('Inf'), shape=(1, 3))
-    assert three_way_percentage_env.action_space == Box(low=numpy.array([0.] * 4),
-                                                        high=numpy.array([2 ** 3 - 0.01] + [1.] * 3))
+    assert three_way_percentage_env.action_space == Box(low=numpy.array([-1] * 4),
+                                                        high=numpy.array([1.] * 4))
     assert numpy.array_equal(three_way_percentage_env.teams, numpy.array([['FCB', 'PSG'], ['MCB', 'MTA']]))
 
 
-@pytest.mark.parametrize("action,expected_reward", [((0, 0.1, 0.1, 0.1), 0),
-                                                    ((1, 0.1, 0.1, 0.1), -1),
-                                                    ((2, 0.1, 0.1, 0.1), 1),
-                                                    ((3, 0.1, 0.1, 0.1), -1)])
+@pytest.mark.parametrize("action,expected_reward", [((_(0), 0, 0, 0), 0),
+                                                    ((_(1), 0.1, 0, 0), -1),
+                                                    ((_(2), 0, 0.1, 0), 1),
+                                                    ((_(3), 0, 0, 0.1), -1),
+                                                    ((_(7), 0.1, 0.1, 0.1), -1)])
 def test_step(three_way_percentage_env, action, expected_reward):
     odds, reward, done, _ = three_way_percentage_env.step(action)
     assert reward == expected_reward
