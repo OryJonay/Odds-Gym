@@ -107,3 +107,7 @@ pip-selfcheck.json
 
 # mypy
 .mypy_cache/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace

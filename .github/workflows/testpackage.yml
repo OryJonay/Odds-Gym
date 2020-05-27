@@ -30,9 +30,19 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -v tests --cov=oddsgym
+        pytest -v tests -k "not integration" --cov=oddsgym
     - name: Post to Coveralls.io
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
         coveralls
+    - name: Install integration tests apt dependencies
+      run: |
+        apt-get update
+        apt-get install -y cmake libopenmpi-dev python3-dev zlib1g-dev
+    - name: Install integration tests Python dependencies
+      run: |
+        pip install .[integration]
+    - name: Run integration tests
+      run: |
+        pytest -v tests -k "integration"
