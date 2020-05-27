@@ -34,7 +34,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -v tests -k "not integration" --cov=oddsgym
+        pytest -v tests -k "not integration" --cov=oddsgym -W ignore::UserWarning
     - name: Post to Coveralls.io
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
@@ -42,4 +42,4 @@ jobs:
         coveralls
     - name: Run integration tests
       run: |
-        pytest -v tests -k "integration"
+        pytest -v tests -k "integration" -W ignore::UserWarning
