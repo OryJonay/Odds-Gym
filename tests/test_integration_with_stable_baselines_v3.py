@@ -1,5 +1,9 @@
 import pytest
-from stable_baselines3 import A2C, PPO, SAC, TD3
+try:
+    from stable_baselines3 import A2C, PPO, SAC, TD3
+except ImportError:
+    pytest.skip("skipping stable-baselines3 integration tests because package is not installed",
+                allow_module_level=True)
 
 
 # supported RL algorithems by environment

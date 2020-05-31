@@ -1,5 +1,8 @@
 import pytest
-from stable_baselines import A2C, ACKTR, DQN, DDPG, PPO1, PPO2, SAC, TD3, TRPO
+try:
+    from stable_baselines import A2C, ACKTR, DQN, DDPG, PPO1, PPO2, SAC, TD3, TRPO
+except ImportError:
+    pytest.skip("skipping stable-baselines integration tests because package is not installed", allow_module_level=True)
 
 
 # supported RL algorithems by environment
