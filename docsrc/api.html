@@ -282,7 +282,7 @@ has a value of 1 and 0 otherwise.</p>
 <dd><p>Returns the odds for the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>odds</strong> (<em>dataframe of shape (1, n_odds)</em>) – The odds for the current step.</p>
+<dd class="field-odd"><p><strong>odds</strong> (<em>numpy.ndarray of shape (1, n_odds)</em>) – The odds for the current step.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -409,7 +409,7 @@ percentage.</p>
 <p><span class="versionmodified changed">Changed in version 0.6.0: </span>Change action space bounds to [-1, 1] and rescale the action back
 inside the step method.</p>
 </div>
-<p>The rescaling an action <span class="math notranslate nohighlight">\((a, p_0, ..., p_{N-1}) \in \text{action_space}, -1 \leq a, p_0, ..., p_{N-1} \leq 1\)</span>:</p>
+<p>The rescaling an action <span class="math notranslate nohighlight">\((a, p_0, ..., p_{N-1})\in\text{action_space}, -1 \leq a, p_0, ..., p_{N-1} \leq 1\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{cases}
     a' = \lfloor (a + 1) * (2^{N-1}) \rfloor\\
@@ -540,7 +540,7 @@ action[row] has a value of 1 and 0 otherwise.</p>
 <dd><p>Returns the odds for the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>odds</strong> (<em>dataframe of shape (max_games, n_odds)</em>) – The odds for the current step.
+<dd class="field-odd"><p><strong>odds</strong> (<em>numpy.ndarray of shape (max_games, n_odds)</em>) – The odds for the current step.
 If in the current step there were less then max_games, the odds
 dataframe is appended with (max_games - current_games) zeroed rows
 (rows with only 0).</p>
