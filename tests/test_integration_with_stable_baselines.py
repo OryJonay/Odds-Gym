@@ -30,7 +30,7 @@ def test_daily_env_with_(daily_bets_env, alg):
     model.learn(total_timesteps=10)
 
 
-@pytest.mark.parametrize("alg", ENV_DICT['DailyOddsEnv'])
+@pytest.mark.parametrize("alg", ENV_DICT['DailyPercentageOddsEnv'])
 def test_daily_percentage_env_with_(daily_bets_percentage_env, alg):
     model = alg('MlpPolicy', daily_bets_percentage_env)
     model.learn(total_timesteps=10)
