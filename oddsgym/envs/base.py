@@ -70,7 +70,7 @@ class BaseOddsEnv(gym.Env):
 
         Returns
         -------
-        odds : dataframe of shape (1, n_odds)
+        odds : numpy.ndarray of shape (1, n_odds)
             The odds for the current step.
         """
         return DataFrame([self._odds[self.current_step]]).values

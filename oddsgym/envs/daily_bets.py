@@ -100,7 +100,7 @@ class DailyOddsEnv(BaseOddsEnv):
 
         Returns
         -------
-        odds : dataframe of shape (max_games, n_odds)
+        odds : numpy.ndarray of shape (max_games, n_odds)
             The odds for the current step.
             If in the current step there were less then max_games, the odds
             dataframe is appended with (max_games - current_games) zeroed rows
