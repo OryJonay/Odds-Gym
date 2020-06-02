@@ -103,6 +103,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerpercentageoddsenv">ThreeWaySoccerPercentageOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailyoddsenv">ThreeWaySoccerDailyOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailypercentageoddsenv">ThreeWaySoccerDailyPercentageOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#footballdatadailypercentageenv">FootballDataDailyPercentageEnv</a></li>
 </ul>
 </li>
 </ul>
@@ -759,6 +760,34 @@ date column is named “date”.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.5.0.</span></p>
 </div>
+</dd></dl>
+
+</div>
+<div class="section" id="footballdatadailypercentageenv">
+<h3>FootballDataDailyPercentageEnv<a class="headerlink" href="#footballdatadailypercentageenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.footballdata.FootballDataDailyPercentageEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.footballdata.</code><code class="sig-name descname">FootballDataDailyPercentageEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Daily percentage environment that uses data from from www.football-data.co.uk</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.6.2.</span></p>
+</div>
+<dl class="py method">
+<dt id="oddsgym.envs.footballdata.FootballDataDailyPercentageEnv.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new environment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country</strong> (<em>str, defaults to “England”</em>) – The name of the country in which the league is playing.</p></li>
+<li><p><strong>league</strong> (<em>str, defaults to “Premier League”</em>) – The name of the league.</p></li>
+<li><p><strong>start</strong> (<em>int, defaults to 2010</em>) – Start year of the league to use.</p></li>
+<li><p><strong>end</strong> (<em>int, defaults to 2011</em>) – End year of the league to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
