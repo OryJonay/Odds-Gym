@@ -70,10 +70,10 @@ class BaseOddsEnv(gym.Env):
 
         Returns
         -------
-        odds : dataframe of shape (1, n_odds)
+        odds : numpy.ndarray of shape (1, n_odds)
             The odds for the current step.
         """
-        return DataFrame([self._odds[self.current_step]])
+        return DataFrame([self._odds[self.current_step]]).values
 
     def get_bet(self, action):
         """Returns the betting matrix for the action provided.
@@ -155,7 +155,7 @@ class BaseOddsEnv(gym.Env):
         reward : float
             The amount of reward returned after previous action
         """
-        reward = ((bet * self.bet_size_matrix * results * odds).values.sum())
+        reward = ((bet * self.bet_size_matrix * results * odds).sum())
         expense = (bet * self.bet_size_matrix).sum()
         return reward - expense
 

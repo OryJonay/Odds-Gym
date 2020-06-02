@@ -100,7 +100,7 @@ class DailyOddsEnv(BaseOddsEnv):
 
         Returns
         -------
-        odds : dataframe of shape (max_games, n_odds)
+        odds : numpy.ndarray of shape (max_games, n_odds)
             The odds for the current step.
             If in the current step there were less then max_games, the odds
             dataframe is appended with (max_games - current_games) zeroed rows
@@ -110,7 +110,7 @@ class DailyOddsEnv(BaseOddsEnv):
         filler_odds = DataFrame(numpy.zeros(numpy.array([*self.observation_space.shape]) -
                                             numpy.array([current_odds.shape[0], 0])),
                                 columns=self._odds_columns_names)
-        return current_odds.append(filler_odds, ignore_index=True)
+        return current_odds.append(filler_odds, ignore_index=True).values
 
     def get_bet(self, action):
         """Returns the betting matrix for the action provided.
@@ -172,7 +172,7 @@ class DailyOddsEnv(BaseOddsEnv):
         zero_rows_count = numpy.sum(~results.any(1))
         if zero_rows_count > 0:
             used_results[-zero_rows_count:, :] = 0
-        reward = ((bet * self.bet_size_matrix * results * odds).values.sum())
+        reward = ((bet * self.bet_size_matrix * results * odds).sum())
         expense = (bet * used_results * self.bet_size_matrix).sum()
         return reward - expense
 

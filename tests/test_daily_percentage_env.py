@@ -39,7 +39,7 @@ def test_attributes(daily_bets_percentage_env):
 
 def test_get_odds(daily_bets_percentage_env):
     odds = daily_bets_percentage_env.get_odds()
-    assert odds.equals(DataFrame([{'w': 1, 'l': 2}, {'w': 4, 'l': 3}], dtype=numpy.float64))
+    assert numpy.array_equal(odds, DataFrame([{'w': 1, 'l': 2}, {'w': 4, 'l': 3}], dtype=numpy.float64).values)
 
 
 @pytest.mark.parametrize("actions,bets", [(array([0, 0]), array([[0, 0], [0, 0]])),
@@ -101,7 +101,7 @@ def test_attributes_of_non_uniform(daily_bets_percentage_env_non_uniform):
 def test_get_odds_non_uniform(daily_bets_percentage_env_non_uniform, current_step, excpected_odds):
     daily_bets_percentage_env_non_uniform.current_step = current_step
     odds = daily_bets_percentage_env_non_uniform.get_odds()
-    assert odds.equals(excpected_odds)
+    assert numpy.array_equal(odds, excpected_odds.values)
 
 
 @pytest.mark.parametrize("actions,bets", [(array([0]), zeros([3, 2])),

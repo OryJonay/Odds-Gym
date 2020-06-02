@@ -31,7 +31,7 @@ class BasePercentageOddsEnv(BaseOddsEnv):
             Change action space bounds to [-1, 1] and rescale the action back
             inside the step method.
 
-        The rescaling an action :math:`(a, p_0, ..., p_{N-1}) \in \\text{action_space}, -1 \\leq a, p_0, ..., p_{N-1} \\leq 1`:
+        The rescaling an action :math:`(a, p_0, ..., p_{N-1})\\in\\text{action_space}, -1 \\leq a, p_0, ..., p_{N-1} \\leq 1`:
 
         .. math::
             \\begin{cases}
