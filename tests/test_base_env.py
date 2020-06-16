@@ -12,7 +12,10 @@ def test_attributes(basic_env):
     assert numpy.array_equal(basic_env.bet_size_matrix, numpy.ones(shape=(1, 2)))
 
 
-@pytest.mark.parametrize("action,expected_reward", [(0, 0), (1, -1), (2, 1), (3, 0)])
+@pytest.mark.parametrize("action,expected_reward", [numpy.array((0, 0)),
+                                                    numpy.array((1, 1)),
+                                                    numpy.array((2, -1)),
+                                                    numpy.array((3, 0))])
 def test_step(basic_env, action, expected_reward):
     odds, reward, done, _ = basic_env.step(action)
     assert reward == expected_reward
@@ -21,12 +24,12 @@ def test_step(basic_env, action, expected_reward):
 
 
 def test_reset(basic_env):
-    odds, reward, done, _ = basic_env.step(2)
+    odds, reward, done, _ = basic_env.step(1)
     assert reward == 1
     assert basic_env.balance == basic_env.STARTING_BANK + 1
     assert not done
     assert basic_env.current_step == 1
-    odds, reward, done, _ = basic_env.step(1)
+    odds, reward, done, _ = basic_env.step(2)
     assert reward == 2
     assert done
     basic_env.reset()
@@ -51,7 +54,7 @@ def test_step_illegal_action(basic_env):
     odds, reward, done, _ = basic_env.step(3)  # illegal - making a double when when the balance is 1
     assert reward == -2
     assert not done
-    assert basic_env.current_step == 0
+    assert basic_env.current_step == 1
 
 
 @pytest.mark.parametrize("current_step,expected_results", [(0, numpy.array([[0, 1]], dtype=numpy.float64)),

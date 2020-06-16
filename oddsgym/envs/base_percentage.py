@@ -18,11 +18,10 @@ class BasePercentageOddsEnv(BaseOddsEnv):
 
     Parameters
     ----------
-    action_space : gym.spaces.Box of shape (N+1,), where N is the number of possible
+    action_space : gym.spaces.Box of shape (N,), where N is the number of possible
         outcomes for the game.
-        The (N+1)-tuple first index is the action itself and the rest of the
-        indexes are the percentage of the current balance to place on matching
-        outcome, so that action[i + 1] is the bet percentage for outcome[i].
+        The indexes are the percentage of the current balance to place on matching
+        outcome, so that action[i] is the bet percentage for outcome[i].
 
         .. versionchanged:: 0.5.0
             Change action space so that each outcome has it's own independent bet
@@ -30,6 +29,9 @@ class BasePercentageOddsEnv(BaseOddsEnv):
         .. versionchanged:: 0.6.0
             Change action space bounds to [-1, 1] and rescale the action back
             inside the step method.
+        .. versionchanged:: 0.7.0
+            Reduce dimesionality of action space, deduce the action implicitly
+            from the given percentages
 
         The rescaling an action :math:`(a, p_0, ..., p_{N-1})\\in\\text{action_space}, -1 \\leq a, p_0, ..., p_{N-1} \\leq 1`:
 
@@ -44,14 +46,11 @@ class BasePercentageOddsEnv(BaseOddsEnv):
     def __init__(self, odds, odds_column_names, results=None):
         super().__init__(odds, odds_column_names, results)
         self.bet_size_matrix = None
-        self.action_space = spaces.Box(low=numpy.array([-1] * (odds.shape[1] + 1)),
-                                       high=numpy.array([1.] * (odds.shape[1] + 1)))
+        self.action_space = spaces.Box(low=numpy.array([-1] * odds.shape[1]),
+                                       high=numpy.array([1.] * odds.shape[1]))
 
     def step(self, action):
-        form = self._rescale_form(action[0])
-        self.bet_size_matrix = self._rescale_matrix(numpy.array(action[1:])) * self.balance
+        form_binary_repr = numpy.where(action != 0, 1, 0)
+        form = form_binary_repr.dot(1 << numpy.arange(form_binary_repr.size)[::-1])
+        self.bet_size_matrix = self._rescale_matrix(action) * self.balance
         return super().step(form)
-
-    def legal_bet(self, bet):
-        legal_percentage_bet = numpy.logical_xor(bet, numpy.where(self.bet_size_matrix != 0, 1, 0)).sum() == 0
-        return legal_percentage_bet and super().legal_bet(bet)
