@@ -13,8 +13,14 @@ def test_attributes(three_way_env):
     assert numpy.array_equal(three_way_env.teams, numpy.array([['FCB', 'PSG'], ['MCB', 'MTA']]))
 
 
-@pytest.mark.parametrize("action,expected_reward", [(0, 0), (1, -1), (2, 1), (3, -1), (4, 0),
-                                                    (5, -2), (6, 0), (7, -1)])
+@pytest.mark.parametrize("action,expected_reward", [(0, 0),
+                                                    (1, -1),
+                                                    (2, 1),
+                                                    (3, 0),
+                                                    (4, -1),
+                                                    (5, -2),
+                                                    (6, 0),
+                                                    (7, -1)])
 def test_step(three_way_env, action, expected_reward):
     odds, reward, done, _ = three_way_env.step(action)
     assert reward == expected_reward
@@ -23,12 +29,12 @@ def test_step(three_way_env, action, expected_reward):
 
 
 def test_multiple_steps(three_way_env):
-    odds, reward, done, _ = three_way_env.step(3)
+    odds, reward, done, _ = three_way_env.step(1)
     assert reward == -1
     assert three_way_env.balance == three_way_env.STARTING_BANK - 1
     assert not done
     assert three_way_env.current_step == 1
-    odds, reward, done, _ = three_way_env.step(1)
+    odds, reward, done, _ = three_way_env.step(4)
     assert reward == 3
     assert three_way_env.balance == three_way_env.STARTING_BANK - 1 + 3
     assert done

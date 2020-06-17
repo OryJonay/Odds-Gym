@@ -1,7 +1,20 @@
 import gym
 import numpy
-from more_itertools import powerset
+from itertools import compress
 from pandas import DataFrame
+
+
+class ActionsDict(dict):
+    """A custom dictionary implementation to simplfy getting verbose actions"""
+
+    def __init__(self, odds_column_names, *args, **kwargs):
+        self.odds_column_names = odds_column_names
+        super().__init__(self, *args, **kwargs)
+
+    def __missing__(self, key):
+        self[key] = [list(compress(self.odds_column_names,
+                                   [int(bit) for bit in numpy.binary_repr(key, width=len(self.odds_column_names))]))]
+        return self[key]
 
 
 class BaseOddsEnv(gym.Env):
@@ -57,8 +70,7 @@ class BaseOddsEnv(gym.Env):
         self._odds = odds.copy()
         self._results = results
         self._odds_columns_names = odds_column_names
-        self._verbose_actions = {act: [verbose_act] for verbose_act, act in zip(list(powerset(odds_column_names)),
-                                                                                list(range(2 ** odds.shape[1])))}
+        self._verbose_actions = ActionsDict(self._odds_columns_names)
         self.observation_space = gym.spaces.Box(low=1., high=float('Inf'), shape=(1, odds.shape[1]))
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.STARTING_BANK
@@ -126,18 +138,17 @@ class BaseOddsEnv(gym.Env):
             done = True
         else:
             bet = self.get_bet(action)
+            info = self.create_info(action)
+            results = self.get_results()
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
-                info = self.create_info(action)
-                results = self.get_results()
                 reward = self.get_reward(bet, odds, results)
                 self.balance += reward
-                info.update({'results': results.argmax()})
-                self.current_step += 1
-                if self.finish():
-                    done = True
-                    self.current_step = 0
             else:
                 reward = -(bet * self.bet_size_matrix).sum()
+            info.update({'results': results.argmax()})
+            self.current_step += 1
+            if self.finish():
+                done = True
         return odds, reward, done, info
 
     def get_reward(self, bet, odds, results):

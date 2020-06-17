@@ -2,6 +2,7 @@ import datetime
 import pandas
 from .soccer import ThreeWaySoccerDailyPercentageOddsEnv
 
+
 class FootballDataMixin(object):
     """Mixin to creating an odds dataframe from www.football-data.co.uk"""
 
@@ -50,12 +51,13 @@ class FootballDataMixin(object):
         odds_dataframe['result'] = odds_dataframe['result'].astype(int)
         return odds_dataframe
 
+
 class FootballDataDailyPercentageEnv(FootballDataMixin, ThreeWaySoccerDailyPercentageOddsEnv):
     """Daily percentage environment that uses data from from www.football-data.co.uk
 
     .. versionadded:: 0.6.2"""
 
-    def __init__(self, country='England', league='Premier League', start=2010, end=2011):
+    def __init__(self, country='England', league='Premier League', start=2010, end=2011, *args, **kwargs):
         """Initializes a new environment
 
         Parameters
@@ -70,4 +72,4 @@ class FootballDataDailyPercentageEnv(FootballDataMixin, ThreeWaySoccerDailyPerce
             End year of the league to use.
         """
 
-        super().__init__(self._create_odds_dataframe(country, league, start, end))
+        super().__init__(self._create_odds_dataframe(country, league, start, end), *args, **kwargs)

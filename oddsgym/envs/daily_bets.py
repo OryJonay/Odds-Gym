@@ -127,7 +127,7 @@ class DailyOddsEnv(BaseOddsEnv):
             action[row] has a value of 1 and 0 otherwise.
         """
         full_actions = numpy.zeros([*self.observation_space.shape])
-        actions = numpy.concatenate([super(DailyOddsEnv, self).get_bet(numpy.floor(part_action))
+        actions = numpy.concatenate([super(DailyOddsEnv, self).get_bet(numpy.floor(part_action).astype(int))
                                      for part_action in action])
         full_actions[numpy.arange(actions.shape[0])] = actions
         return full_actions
@@ -251,7 +251,7 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
 
     Parameters
     ----------
-    action_space: gym.spaces.Box of shape (n_games * (n_odds + 1),)
+    action_space: gym.spaces.Box of shape (n_games * n_odds,)
         A vector with the action and the percentage for each outcome, so that:
 
         .. math::
@@ -267,31 +267,36 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
             Change action space bounds to [-1, 1] and rescale the action back
             inside the step method.
             For explanation on how the rescaling works, see :py:class:`~oddsgym.envs.base_percentage.BasePercentageOddsEnv`
+        .. versionchanged:: 0.7.0
+            Reduce dimesionality of action space by deducing action from
+            betting percentages
 
     """
 
     def __init__(self, odds, odds_column_names, results=None, *args, **kwargs):
         super().__init__(odds, odds_column_names, results, *args, **kwargs)
-        lower_bound = [[-1] * (self._odds.shape[1] + 1) for i in numpy.arange(self.max_number_of_games)]
-        upper_bound = [[1] * (self._odds.shape[1] + 1) for i in numpy.arange(self.max_number_of_games)]
-        vector_size = self.max_number_of_games * (self._odds.shape[1] + 1)
+        lower_bound = [[-1] * self._odds.shape[1] for i in numpy.arange(self.max_number_of_games)]
+        upper_bound = [[1] * self._odds.shape[1] for i in numpy.arange(self.max_number_of_games)]
+        vector_size = self.max_number_of_games * self._odds.shape[1]
         self.action_space = gym.spaces.Box(low=numpy.array(lower_bound).reshape(vector_size),
                                            high=numpy.array(upper_bound).reshape(vector_size))
 
     def step(self, action):
-        full_action = numpy.zeros(self.max_number_of_games * (self._odds.shape[1] + 1))
-        full_action[numpy.arange(full_action.shape[0], step=self._odds.shape[1] + 1)] = -1
+        full_action = numpy.zeros(self.max_number_of_games * (self._odds.shape[1]))
         full_action[numpy.arange(action.shape[0])] = action
-        full_action = full_action.reshape(self.max_number_of_games, (self._odds.shape[1] + 1))
+        full_action = full_action.reshape(self.max_number_of_games, (self._odds.shape[1]))
 
-        form = full_action[numpy.arange(full_action.shape[0]), 0]
-
-        current_bet_size_matrix = self._rescale_matrix(full_action[numpy.arange(full_action.shape[0]), 1:]) * self.balance
+        current_bet_size_matrix = self._rescale_matrix(full_action) * self.balance
         full_bet_size_matrix = numpy.zeros([*self.observation_space.shape])
         full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
 
         self.bet_size_matrix = full_bet_size_matrix
-        return super().step(form)
+
+        form_binary_repr = numpy.where(self.bet_size_matrix != 0, 1, 0)
+        explicit_forms = form_binary_repr.dot(1 << numpy.arange(form_binary_repr.shape[-1] - 1, -1, -1))
+        forms = numpy.array([(form / (2 ** (self._odds.shape[1] - 1)) - 1) for form in explicit_forms])
+
+        return super().step(forms)
 
     def legal_bet(self, bet):
         legal_percentage_bet = numpy.logical_xor(bet, numpy.where(self.bet_size_matrix != 0, 1, 0)).sum() == 0
