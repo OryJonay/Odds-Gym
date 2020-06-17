@@ -25,7 +25,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -398,10 +398,9 @@ differently (to accommodate that non fixed bet size).</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (N+1,), where N is the number of possible</em>) – outcomes for the game.
-The (N+1)-tuple first index is the action itself and the rest of the
-indexes are the percentage of the current balance to place on matching
-outcome, so that action[i + 1] is the bet percentage for outcome[i].</p>
+<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (N,), where N is the number of possible</em>) – outcomes for the game.
+The indexes are the percentage of the current balance to place on matching
+outcome, so that action[i] is the bet percentage for outcome[i].</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.5.0: </span>Change action space so that each outcome has it’s own independent bet
 percentage.</p>
@@ -409,6 +408,10 @@ percentage.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 0.6.0: </span>Change action space bounds to [-1, 1] and rescale the action back
 inside the step method.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.7.0: </span>Reduce dimesionality of action space, deduce the action implicitly
+from the given percentages</p>
 </div>
 <p>The rescaling an action <span class="math notranslate nohighlight">\((a, p_0, ..., p_{N-1})\in\text{action_space}, -1 \leq a, p_0, ..., p_{N-1} \leq 1\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -637,7 +640,7 @@ on a single outcome but for multiple games.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (n_games * (n_odds + 1),)</em>) – A vector with the action and the percentage for each outcome, so that:</p>
+<dd class="field-odd"><p><strong>action_space</strong> (<em>gym.spaces.Box of shape (n_games * n_odds,)</em>) – A vector with the action and the percentage for each outcome, so that:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}a[i] = \begin{cases}
     \text{the action} &amp; i\mod\text{(n_odds + 1)}\equiv 0\\
@@ -648,6 +651,10 @@ on a single outcome but for multiple games.</p>
 <p><span class="versionmodified changed">Changed in version 0.6.0: </span>Change action space bounds to [-1, 1] and rescale the action back
 inside the step method.
 For explanation on how the rescaling works, see <a class="reference internal" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="oddsgym.envs.base_percentage.BasePercentageOddsEnv"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePercentageOddsEnv</span></code></a></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 0.7.0: </span>Reduce dimesionality of action space by deducing action from
+betting percentages</p>
 </div>
 </dd>
 </dl>
@@ -767,14 +774,14 @@ date column is named “date”.</p>
 <h3>FootballDataDailyPercentageEnv<a class="headerlink" href="#footballdatadailypercentageenv" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="oddsgym.envs.footballdata.FootballDataDailyPercentageEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.footballdata.</code><code class="sig-name descname">FootballDataDailyPercentageEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.footballdata.</code><code class="sig-name descname">FootballDataDailyPercentageEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Daily percentage environment that uses data from from www.football-data.co.uk</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.6.2.</span></p>
 </div>
 <dl class="py method">
 <dt id="oddsgym.envs.footballdata.FootballDataDailyPercentageEnv.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes a new environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
