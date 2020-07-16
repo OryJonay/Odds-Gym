@@ -19,7 +19,6 @@ BasePercentageOddsEnv
 DailyOddsEnv
 ############
 .. autoclass:: oddsgym.envs.daily_bets.DailyOddsEnv
-    :members:
 
 DailyPercentageOddsEnv
 ######################
@@ -33,24 +32,30 @@ Environment that are sport specific.
 ThreeWaySoccerOddsEnv
 #####################
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerOddsEnv
-    :members:
+    :members: __init__
 
 ThreeWaySoccerPercentageOddsEnv
 ###############################
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv
-    :members:
 
 ThreeWaySoccerDailyOddsEnv
 ##########################
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv
-    :members:
 
 ThreeWaySoccerDailyPercentageOddsEnv
 ####################################
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv
-    :members:
+
+Site and Sports Specific Environments
+*************************************
+
+Environment that are site and sport specific (receives the odds data from a specific site).
+
+FootballDataDailyEnv
+####################################
+.. autoclass:: oddsgym.envs.footballdata.FootballDataDailyEnv
+    :members: __init__
 
 FootballDataDailyPercentageEnv
 ####################################
 .. autoclass:: oddsgym.envs.footballdata.FootballDataDailyPercentageEnv
-    :members:

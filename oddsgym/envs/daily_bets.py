@@ -1,5 +1,6 @@
 import gym
 import numpy
+import numexpr
 from pandas import DataFrame
 from .base import BaseOddsEnv
 
@@ -107,7 +108,7 @@ class DailyOddsEnv(BaseOddsEnv):
             (rows with only 0).
         """
         current_odds = self._odds.iloc[self._get_current_index()]
-        filler_odds = DataFrame(numpy.zeros(numpy.array([*self.observation_space.shape]) -
+        filler_odds = DataFrame(numpy.zeros(numpy.array([self.max_number_of_games, self._odds.shape[1]]) -
                                             numpy.array([current_odds.shape[0], 0])),
                                 columns=self._odds_columns_names)
         return current_odds.append(filler_odds, ignore_index=True).values
@@ -126,7 +127,7 @@ class DailyOddsEnv(BaseOddsEnv):
             The betting matrix, where for each row, each outcome specified in
             action[row] has a value of 1 and 0 otherwise.
         """
-        full_actions = numpy.zeros([*self.observation_space.shape])
+        full_actions = numpy.zeros(shape=(self.max_number_of_games, self._odds.shape[1]))
         actions = numpy.concatenate([super(DailyOddsEnv, self).get_bet(numpy.floor(part_action).astype(int))
                                      for part_action in action])
         full_actions[numpy.arange(actions.shape[0])] = actions
@@ -149,7 +150,7 @@ class DailyOddsEnv(BaseOddsEnv):
         current_results = self._results.iloc[index]
         results = numpy.zeros(shape=(current_results.shape[0], self._odds.shape[1]))
         results[numpy.arange(results.shape[0]), current_results.values] = 1
-        filler_results = numpy.zeros(numpy.array([*self.observation_space.shape]) -
+        filler_results = numpy.zeros(numpy.array([self.max_number_of_games, self._odds.shape[1]]) -
                                      numpy.array([current_results.shape[0], 0]))
         return numpy.concatenate([results, filler_results])
 
@@ -172,8 +173,9 @@ class DailyOddsEnv(BaseOddsEnv):
         zero_rows_count = numpy.sum(~results.any(1))
         if zero_rows_count > 0:
             used_results[-zero_rows_count:, :] = 0
-        reward = ((bet * self.bet_size_matrix * results * odds).sum())
-        expense = (bet * used_results * self.bet_size_matrix).sum()
+        bet_size_matrix = self.bet_size_matrix  # noqa: F841
+        reward = numexpr.evaluate('bet * bet_size_matrix * results * odds').sum()
+        expense = numexpr.evaluate('bet * used_results * bet_size_matrix').sum()
         return reward - expense
 
     def legal_bet(self, bet):
@@ -287,7 +289,7 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
         full_action = full_action.reshape(self.max_number_of_games, (self._odds.shape[1]))
 
         current_bet_size_matrix = self._rescale_matrix(full_action) * self.balance
-        full_bet_size_matrix = numpy.zeros([*self.observation_space.shape])
+        full_bet_size_matrix = numpy.zeros(shape=(self.max_number_of_games, self._odds.shape[1]))
         full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
 
         self.bet_size_matrix = full_bet_size_matrix
@@ -297,7 +299,3 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
         forms = numpy.array([(form / (2 ** (self._odds.shape[1] - 1)) - 1) for form in explicit_forms])
 
         return super().step(forms)
-
-    def legal_bet(self, bet):
-        legal_percentage_bet = numpy.logical_xor(bet, numpy.where(self.bet_size_matrix != 0, 1, 0)).sum() == 0
-        return legal_percentage_bet and super().legal_bet(bet)

@@ -1,5 +1,6 @@
 import gym
 import numpy
+import numexpr
 from itertools import compress
 from pandas import DataFrame
 
@@ -133,7 +134,7 @@ class BaseOddsEnv(gym.Env):
         reward = 0
         done = False
         info = {'current_step': self.current_step, 'starting_balance': self.balance,
-                'odds': odds, 'bet_size_matrix': self.bet_size_matrix}
+                'odds': odds, 'bet_size_matrix': self.bet_size_matrix, 'legal_bet': False}
         if self.balance < 1:  # no more money :-(
             done = True
         else:
@@ -143,12 +144,17 @@ class BaseOddsEnv(gym.Env):
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
                 reward = self.get_reward(bet, odds, results)
                 self.balance += reward
+                info.update(legal_bet=True)
             else:
                 reward = -(bet * self.bet_size_matrix).sum()
-            info.update({'results': results.argmax()})
+                info.update(legal_bet=False)
+            info.update(results=results.argmax())
             self.current_step += 1
             if self.finish():
                 done = True
+                odds = numpy.ones(shape=self.observation_space.shape)
+            else:
+                odds = self.get_odds()
         return odds, reward, done, info
 
     def get_reward(self, bet, odds, results):
@@ -166,8 +172,9 @@ class BaseOddsEnv(gym.Env):
         reward : float
             The amount of reward returned after previous action
         """
-        reward = ((bet * self.bet_size_matrix * results * odds).sum())
-        expense = (bet * self.bet_size_matrix).sum()
+        bet_size_matrix = self.bet_size_matrix  # noqa: F841
+        reward = numexpr.evaluate('bet * bet_size_matrix * results * odds').sum()
+        expense = numexpr.evaluate('bet * bet_size_matrix').sum()
         return reward - expense
 
     def reset(self):
@@ -262,7 +269,7 @@ class BaseOddsEnv(gym.Env):
     def _rescale_form(self, form):
         if form == 1:
             form -= numpy.finfo(numpy.float64).eps
-        return int(numpy.floor((form + 1) * (2 ** (self._odds.shape[1] - 1))))
+        return numpy.floor((form + 1) * (2 ** (self._odds.shape[1] - 1))).astype(int)
 
     def _rescale_matrix(self, bet_size_matrix):
         return numpy.abs(bet_size_matrix)

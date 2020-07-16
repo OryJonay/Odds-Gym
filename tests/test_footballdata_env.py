@@ -1,4 +1,5 @@
 import pytest
+import numpy
 from gym import envs
 from oddsgym.envs.footballdata import FootballDataDailyPercentageEnv
 
@@ -13,9 +14,40 @@ def test_validation(kwargs):
         FootballDataDailyPercentageEnv(**kwargs)
 
 
-def test_creation():
-    assert FootballDataDailyPercentageEnv() is not None
+@pytest.mark.parametrize('optimizer,reward1,reward2,reward3', [('balance', 1, 3.3, 3.3 - 1e-5),
+                                                               ('reward', 1, 2.3, -10 * 1e-6)])
+def test_env(optimizer, reward1, reward2, reward3):
+    env = FootballDataDailyPercentageEnv(optimize=optimizer)
+    assert env is not None
+    assert env._extra_odds is not None
+    assert env._extra_odds.shape == (380, 46)
+    for column in env.ODDS_COLUMNS:
+        assert column in env._extra_odds.columns
+    action = numpy.zeros(shape=env.action_space.shape)
+    action[0] = 0.1
+    obs, reward, done, info = env.step(action)
+    assert reward == reward1
+    assert obs.shape == (10, 3)
+    action = numpy.zeros(shape=env.action_space.shape)
+    action[1] = 1 / 11
+    obs, reward, done, info = env.step(action)
+    numpy.testing.assert_almost_equal(reward, reward2)
+    action = numpy.zeros(shape=env.action_space.shape)
+    action[:] = 0.9
+    obs, reward, done, info = env.step(action)
+    numpy.testing.assert_almost_equal(reward, reward3)
+
+
+def test_extra_env():
+    env = FootballDataDailyPercentageEnv(extra=True)
+    assert env.observation_space.shape == (10, 42)
+    action = numpy.zeros(shape=env.action_space.shape)
+    action[0] = 0.1
+    obs, reward, done, info = env.step(action)
+    assert obs.shape == (10, 42)
 
 
 def test_registeration():
-    assert 'FootballDataDailyPercent-v0' in [spec.id for spec in envs.registry.all()]
+    spec_ids = [spec.id for spec in envs.registry.all()]
+    assert 'FootballDataDaily-v0' in spec_ids
+    assert 'FootballDataDailyPercent-v0' in spec_ids
