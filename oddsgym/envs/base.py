@@ -1,6 +1,5 @@
 import gym
 import numpy
-import numexpr
 from itertools import compress
 from pandas import DataFrame
 
@@ -173,8 +172,8 @@ class BaseOddsEnv(gym.Env):
             The amount of reward returned after previous action
         """
         bet_size_matrix = self.bet_size_matrix  # noqa: F841
-        reward = numexpr.evaluate('bet * bet_size_matrix * results * odds').sum()
-        expense = numexpr.evaluate('bet * bet_size_matrix').sum()
+        reward = (bet * bet_size_matrix * results * odds).sum()
+        expense = (bet * bet_size_matrix).sum()
         return reward - expense
 
     def reset(self):

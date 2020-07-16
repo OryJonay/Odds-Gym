@@ -1,6 +1,5 @@
 import gym
 import numpy
-import numexpr
 from pandas import DataFrame
 from .base import BaseOddsEnv
 
@@ -174,8 +173,8 @@ class DailyOddsEnv(BaseOddsEnv):
         if zero_rows_count > 0:
             used_results[-zero_rows_count:, :] = 0
         bet_size_matrix = self.bet_size_matrix  # noqa: F841
-        reward = numexpr.evaluate('bet * bet_size_matrix * results * odds').sum()
-        expense = numexpr.evaluate('bet * used_results * bet_size_matrix').sum()
+        reward = (bet * bet_size_matrix * results * odds).sum()
+        expense = (bet * used_results * bet_size_matrix).sum()
         return reward - expense
 
     def legal_bet(self, bet):
