@@ -1,5 +1,6 @@
 import gym
 import numpy
+import numexpr
 from pandas import DataFrame
 from .base import BaseOddsEnv
 
@@ -34,7 +35,7 @@ class DailyOddsEnv(BaseOddsEnv):
     balance : float
         The current balance of the environment.
 
-    STARTING_BANK : int, default=10
+    starting_bank : int, default=10
         The starting bank / balance for the environment.
 
     days : array, dtype=np.datetime64
@@ -173,8 +174,8 @@ class DailyOddsEnv(BaseOddsEnv):
         if zero_rows_count > 0:
             used_results[-zero_rows_count:, :] = 0
         bet_size_matrix = self.bet_size_matrix  # noqa: F841
-        reward = (bet * bet_size_matrix * results * odds).sum()
-        expense = (bet * used_results * bet_size_matrix).sum()
+        reward = numexpr.evaluate('sum(bet * bet_size_matrix * results * odds)')
+        expense = numexpr.evaluate('sum(bet * used_results * bet_size_matrix)')
         return reward - expense
 
     def legal_bet(self, bet):
@@ -231,7 +232,7 @@ class DailyOddsEnv(BaseOddsEnv):
         info : dict
             The info dictionary.
         """
-        return {'action': [self._verbose_actions[act] for act in numpy.floor(action)],
+        return {'action': [self._verbose_actions[act] for act in numpy.floor(action).astype(int)],
                 'current_step': self.current_step,
                 'starting_balance': self.balance,
                 'odds': self.get_odds(),

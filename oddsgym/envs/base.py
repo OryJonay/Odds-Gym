@@ -1,5 +1,6 @@
 import gym
 import numpy
+import numexpr
 from itertools import compress
 from pandas import DataFrame
 
@@ -46,14 +47,13 @@ class BaseOddsEnv(gym.Env):
     balance : float
         The current balance of the environment.
 
-    STARTING_BANK : int, default=10
+    starting_bank : int, default=10
         The starting bank / balance for the environment.
     """
 
     metadata = {'render.modes': ['human']}
-    STARTING_BANK = 10
 
-    def __init__(self, odds, odds_column_names, results=None):
+    def __init__(self, odds, odds_column_names, results=None, starting_bank=10):
         """Initializes a new environment
 
         Parameters
@@ -73,7 +73,7 @@ class BaseOddsEnv(gym.Env):
         self._verbose_actions = ActionsDict(self._odds_columns_names)
         self.observation_space = gym.spaces.Box(low=1., high=float('Inf'), shape=(1, odds.shape[1]))
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
-        self.balance = self.STARTING_BANK
+        self.balance = self.starting_bank = starting_bank
         self.current_step = 0
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
@@ -101,10 +101,7 @@ class BaseOddsEnv(gym.Env):
             The betting matrix, where each outcome specified in the action
             has a value of 1 and 0 otherwise.
         """
-        verbose_actions = self._verbose_actions[action]
-        bet = numpy.array([[int(name in verbose_action) for name in self._odds_columns_names]
-                           for verbose_action in verbose_actions])
-        return bet
+        return numpy.array([[bit for bit in numpy.binary_repr(action, width=self._odds.shape[1])]]).astype(int)
 
     def step(self, action):
         """Run one timestep of the environment's dynamics. When end of episode is reached,
@@ -172,8 +169,8 @@ class BaseOddsEnv(gym.Env):
             The amount of reward returned after previous action
         """
         bet_size_matrix = self.bet_size_matrix  # noqa: F841
-        reward = (bet * bet_size_matrix * results * odds).sum()
-        expense = (bet * bet_size_matrix).sum()
+        reward = numexpr.evaluate('sum(bet * bet_size_matrix * results * odds)')
+        expense = numexpr.evaluate('sum(bet * bet_size_matrix)')
         return reward - expense
 
     def reset(self):
@@ -184,7 +181,7 @@ class BaseOddsEnv(gym.Env):
         observation : dataframe of shape (1, n_odds)
             the initial observation.
         """
-        self.balance = self.STARTING_BANK
+        self.balance = self.starting_bank
         self.current_step = 0
         return self.get_odds()
 

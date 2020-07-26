@@ -7,8 +7,8 @@ def test_attributes(basic_percentage_env):
     assert basic_percentage_env.action_space == Box(low=numpy.array([-1] * 2),
                                                     high=numpy.array([1.] * 2))
     assert basic_percentage_env.observation_space == Box(low=1., high=float('Inf'), shape=(1, 2))
-    assert basic_percentage_env.STARTING_BANK == 10
-    assert basic_percentage_env.balance == basic_percentage_env.STARTING_BANK
+    assert basic_percentage_env.starting_bank == 10
+    assert basic_percentage_env.balance == basic_percentage_env.starting_bank
     assert basic_percentage_env.current_step == 0
     assert basic_percentage_env.bet_size_matrix is None
 

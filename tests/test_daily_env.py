@@ -27,8 +27,8 @@ def test_max_number_of_games_invalid(max_number_of_games):
 def test_attributes(daily_bets_env):
     assert daily_bets_env.action_space == Box(low=-1, high=1, shape=(2,))
     assert daily_bets_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 2))
-    assert daily_bets_env.STARTING_BANK == 10
-    assert daily_bets_env.balance == daily_bets_env.STARTING_BANK
+    assert daily_bets_env.starting_bank == 10
+    assert daily_bets_env.balance == daily_bets_env.starting_bank
     assert daily_bets_env.current_step == 0
     assert numpy.array_equal(daily_bets_env.bet_size_matrix, numpy.ones(shape=(2, 2)))
     assert len(daily_bets_env.days) == 2

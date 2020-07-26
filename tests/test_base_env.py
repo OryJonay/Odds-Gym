@@ -6,8 +6,8 @@ import numpy
 def test_attributes(basic_env):
     assert basic_env.action_space.n == 2 ** 2
     assert basic_env.observation_space == Box(low=1., high=float('Inf'), shape=(1, 2))
-    assert basic_env.STARTING_BANK == 10
-    assert basic_env.balance == basic_env.STARTING_BANK
+    assert basic_env.starting_bank == 10
+    assert basic_env.balance == basic_env.starting_bank
     assert basic_env.current_step == 0
     assert numpy.array_equal(basic_env.bet_size_matrix, numpy.ones(shape=(1, 2)))
 
@@ -26,14 +26,14 @@ def test_step(basic_env, action, expected_reward):
 def test_reset(basic_env):
     odds, reward, done, _ = basic_env.step(1)
     assert reward == 1
-    assert basic_env.balance == basic_env.STARTING_BANK + 1
+    assert basic_env.balance == basic_env.starting_bank + 1
     assert not done
     assert basic_env.current_step == 1
     odds, reward, done, _ = basic_env.step(2)
     assert reward == 2
     assert done
     basic_env.reset()
-    assert basic_env.balance == basic_env.STARTING_BANK
+    assert basic_env.balance == basic_env.starting_bank
 
 
 def test_render(basic_env):

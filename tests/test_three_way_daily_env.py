@@ -11,8 +11,8 @@ def _(action):
 def test_attributes(three_way_daily_env):
     assert three_way_daily_env.action_space == Box(low=-1, high=1, shape=(2,))
     assert three_way_daily_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 3))
-    assert three_way_daily_env.STARTING_BANK == 10
-    assert three_way_daily_env.balance == three_way_daily_env.STARTING_BANK
+    assert three_way_daily_env.starting_bank == 10
+    assert three_way_daily_env.balance == three_way_daily_env.starting_bank
     assert three_way_daily_env.current_step == 0
     assert numpy.array_equal(three_way_daily_env.bet_size_matrix, numpy.ones(shape=(2, 3)))
     assert numpy.array_equal(three_way_daily_env.teams.values, numpy.array([['FCB', 'PSG'], ['MCB', 'MTA'],
@@ -54,22 +54,22 @@ def test_step_non_uniform(three_way_daily_env_non_uniform, current_step, action,
 def test_multiple_steps(three_way_daily_env):
     odds, reward, done, info = three_way_daily_env.step((_(1), _(1)))
     assert reward == -2
-    assert three_way_daily_env.balance == three_way_daily_env.STARTING_BANK - 2
+    assert three_way_daily_env.balance == three_way_daily_env.starting_bank - 2
     assert not done
     assert three_way_daily_env.current_step == 1
     odds, reward, done, info = three_way_daily_env.step((_(4), _(4)))
     assert reward == -2
-    assert three_way_daily_env.balance == three_way_daily_env.STARTING_BANK - 2 - 2
+    assert three_way_daily_env.balance == three_way_daily_env.starting_bank - 2 - 2
     assert not done
     assert three_way_daily_env.current_step == 2
     odds, reward, done, info = three_way_daily_env.step((_(2), _(2)))
     assert reward == -2
-    assert three_way_daily_env.balance == three_way_daily_env.STARTING_BANK - 2 - 2 - 2
+    assert three_way_daily_env.balance == three_way_daily_env.starting_bank - 2 - 2 - 2
     assert done
 
 
 def test_multiple_steps_non_uniform(three_way_daily_env_non_uniform):
-    current_bank = three_way_daily_env_non_uniform.STARTING_BANK
+    current_bank = three_way_daily_env_non_uniform.starting_bank
     odds, reward, done, info = three_way_daily_env_non_uniform.step(array([_(2), _(7)]))
     assert three_way_daily_env_non_uniform.balance == current_bank + 2
     assert not done

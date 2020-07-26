@@ -25,8 +25,8 @@ def test_attributes(daily_bets_percentage_env):
     assert daily_bets_percentage_env.action_space == Box(low=-ones(shape=(4,)),
                                                          high=ones(shape=(4,)))
     assert daily_bets_percentage_env.observation_space == Box(low=0., high=float('Inf'), shape=(2, 2))
-    assert daily_bets_percentage_env.STARTING_BANK == 10
-    assert daily_bets_percentage_env.balance == daily_bets_percentage_env.STARTING_BANK
+    assert daily_bets_percentage_env.starting_bank == 10
+    assert daily_bets_percentage_env.balance == daily_bets_percentage_env.starting_bank
     assert daily_bets_percentage_env.current_step == 0
     assert len(daily_bets_percentage_env.days) == 2
     assert daily_bets_percentage_env.days[0] == datetime.today().date() - timedelta(days=1)

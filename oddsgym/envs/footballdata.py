@@ -115,11 +115,11 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerDailyOddsEnv):
             obs = self.get_extra_odds()
         if self._optimize == 'balance':
             if not info['legal_bet']:
-                self.balance -= self.STARTING_BANK * 1e-6
-            reward = self.balance - self.STARTING_BANK
+                self.balance -= self.starting_bank * 1e-6
+            reward = self.balance - self.starting_bank
         else:
             if not info['legal_bet']:
-                reward = -(self.STARTING_BANK * 1e-6)
+                reward = -(self.starting_bank * 1e-6)
         return obs, reward, done, info
 
     def get_extra_odds(self):
