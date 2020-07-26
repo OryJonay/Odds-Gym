@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.7.2
+                0.7.3
               </div>
             
           
@@ -189,7 +189,7 @@
 <h3>BaseOddsEnv<a class="headerlink" href="#baseoddsenv" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="oddsgym.envs.base.BaseOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base.</code><code class="sig-name descname">BaseOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.base.</code><code class="sig-name descname">BaseOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">starting_bank</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments.</p>
 <p>Creates an OpenAI Gym environment that supports betting a fixed amount (1)
 on a single outcome for a single game.</p>
@@ -214,13 +214,13 @@ on what outcomes to place a bet by conversion to a binary representation.</p>
 </div>
 </li>
 <li><p><strong>balance</strong> (<em>float</em>) – The current balance of the environment.</p></li>
-<li><p><strong>STARTING_BANK</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
+<li><p><strong>starting_bank</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt id="oddsgym.envs.base.BaseOddsEnv.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">odds</span></em>, <em class="sig-param"><span class="n">odds_column_names</span></em>, <em class="sig-param"><span class="n">results</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">starting_bank</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes a new environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -460,7 +460,7 @@ For explanation on how the rescaling works, see <a class="reference internal" hr
 </div>
 </li>
 <li><p><strong>balance</strong> (<em>float</em>) – The current balance of the environment.</p></li>
-<li><p><strong>STARTING_BANK</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
+<li><p><strong>starting_bank</strong> (<em>int, default=10</em>) – The starting bank / balance for the environment.</p></li>
 <li><p><strong>days</strong> (<em>array, dtype=np.datetime64</em>) – Sorted array of the days.</p></li>
 </ul>
 </dd>
