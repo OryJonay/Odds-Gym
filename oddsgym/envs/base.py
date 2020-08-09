@@ -53,7 +53,7 @@ class BaseOddsEnv(gym.Env):
     """
 
     metadata = {'render.modes': ['human']}
-    headers = ['Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
+    HEADERS = ['Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
 
     def __init__(self, odds, odds_column_names, results=None, starting_bank=10):
         """Initializes a new environment
@@ -264,8 +264,8 @@ class BaseOddsEnv(gym.Env):
                 'legal_bet': False, 'results': None, 'done': False}
 
     def pretty_print_info(self, info):
-        values = [info[key.replace(' ', '_').lower()] for key in self.headers]
-        print('\n' + tabulate([values], headers=self.headers, tablefmt='orgtbl'))
+        values = [info[key.replace(' ', '_').lower()] for key in self.HEADERS]
+        print('\n' + tabulate([values], headers=self.HEADERS, tablefmt='orgtbl'))
 
     def _rescale_form(self, form):
         if form == 1:

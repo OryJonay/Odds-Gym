@@ -43,7 +43,7 @@ class DailyOddsEnv(BaseOddsEnv):
 
     """
 
-    headers = ['Date', 'Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
+    HEADERS = ['Date', 'Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
 
     def __init__(self, odds, odds_column_names, results=None, max_number_of_games='auto'):
         """Initializes a new environment.

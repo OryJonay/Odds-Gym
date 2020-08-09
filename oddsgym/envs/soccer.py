@@ -37,9 +37,9 @@ class ThreeWaySoccerOddsEnv(BaseOddsEnv):
         msg : str
             A string with the current team names, balance and step.
         """
-        return 'Home Team {} VS Away Team {}. {}'.format(self.teams[self.current_step % self._odds.shape[0]][0],
+        print('Home Team {} VS Away Team {}. {}'.format(self.teams[self.current_step % self._odds.shape[0]][0],
                                                          self.teams[self.current_step % self._odds.shape[0]][1],
-                                                         super().render(mode))
+                                                         super().render(mode)))
 
 
 class ThreeWaySoccerPercentageOddsEnv(ThreeWaySoccerOddsEnv, BasePercentageOddsEnv):
@@ -91,7 +91,7 @@ class ThreeWaySoccerDailyOddsEnv(DailyOddsEnv):
         teams_str = ', '.join(['Home Team {} VS Away Team {}'.format(row.home_team, row.away_team)
                                for row in self.teams.iloc[index].itertuples()])
         balance_str = super().render(mode)
-        return '. '.join((teams_str, balance_str))
+        print('. '.join((teams_str, balance_str)))
 
 
 class ThreeWaySoccerDailyPercentageOddsEnv(ThreeWaySoccerDailyOddsEnv, DailyPercentageOddsEnv):
