@@ -203,3 +203,18 @@ def test_get_odds_in_observation_space(daily_bets_env, current_step_value):
 def test_get_odds_in_observation_space_non_uniform(daily_bets_env_non_uniform, current_step_value):
     daily_bets_env_non_uniform.current_step = current_step_value
     assert daily_bets_env_non_uniform.observation_space.contains(daily_bets_env_non_uniform.get_odds())
+
+
+def test_info(daily_bets_env):
+    action = array([_(0), _(0)])
+    info = daily_bets_env.create_info(action)
+    assert info['current_step'] == 0
+    numpy.testing.assert_array_equal(info['odds'], numpy.array([[1., 2.], [4., 3.]]))
+    numpy.testing.assert_array_equal(info['verbose_action'], numpy.array([[['w', 'l']], [['w', 'l']]]))
+    numpy.testing.assert_array_equal(info['action'], numpy.array([_(0), _(0)]))
+    assert info['balance'] == 10
+    assert info['reward'] == 0
+    assert not info['legal_bet']
+    assert info['results'] is None
+    assert not info['done']
+    daily_bets_env.pretty_print_info(info)

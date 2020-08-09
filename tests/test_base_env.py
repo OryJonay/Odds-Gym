@@ -24,11 +24,15 @@ def test_step(basic_env, action, expected_reward):
 
 
 def test_reset(basic_env):
-    odds, reward, done, _ = basic_env.step(1)
+    odds, reward, done, info = basic_env.step(1)
     assert reward == 1
     assert basic_env.balance == basic_env.starting_bank + 1
     assert not done
     assert basic_env.current_step == 1
+    assert info['legal_bet']
+    assert info['results'] == 1
+    assert info['reward'] == 1
+    assert not info['done']
     odds, reward, done, _ = basic_env.step(2)
     assert reward == 2
     assert done
@@ -36,8 +40,18 @@ def test_reset(basic_env):
     assert basic_env.balance == basic_env.starting_bank
 
 
-def test_render(basic_env):
-    assert basic_env.render() == "Current balance at step {}: {}".format(basic_env.current_step, basic_env.balance)
+def test_info(basic_env):
+    info = basic_env.create_info(1)
+    assert info['current_step'] == 0
+    numpy.testing.assert_array_equal(info['odds'], numpy.array([[1, 2]]))
+    assert info['verbose_action'] == [['l']]
+    assert info['action'] == 1
+    assert info['balance'] == 10
+    assert info['reward'] == 0
+    assert not info['legal_bet']
+    assert info['results'] is None
+    assert not info['done']
+    basic_env.pretty_print_info(info)
 
 
 @pytest.mark.parametrize("action", range(4))

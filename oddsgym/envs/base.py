@@ -3,6 +3,7 @@ import numpy
 import numexpr
 from itertools import compress
 from pandas import DataFrame
+from tabulate import tabulate
 
 
 class ActionsDict(dict):
@@ -52,6 +53,7 @@ class BaseOddsEnv(gym.Env):
     """
 
     metadata = {'render.modes': ['human']}
+    headers = ['Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
 
     def __init__(self, odds, odds_column_names, results=None, starting_bank=10):
         """Initializes a new environment
@@ -129,13 +131,11 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
-        info = {'current_step': self.current_step, 'starting_balance': self.balance,
-                'odds': odds, 'bet_size_matrix': self.bet_size_matrix, 'legal_bet': False}
+        info = self.create_info(action)
         if self.balance < 1:  # no more money :-(
             done = True
         else:
             bet = self.get_bet(action)
-            info = self.create_info(action)
             results = self.get_results()
             if self.legal_bet(bet):  # making sure agent has enough money for the bet
                 reward = self.get_reward(bet, odds, results)
@@ -143,14 +143,15 @@ class BaseOddsEnv(gym.Env):
                 info.update(legal_bet=True)
             else:
                 reward = -(bet * self.bet_size_matrix).sum()
-                info.update(legal_bet=False)
             info.update(results=results.argmax())
+            info.update(reward=reward)
             self.current_step += 1
             if self.finish():
                 done = True
                 odds = numpy.ones(shape=self.observation_space.shape)
             else:
                 odds = self.get_odds()
+        info.update(done=done)
         return odds, reward, done, info
 
     def get_reward(self, bet, odds, results):
@@ -193,7 +194,7 @@ class BaseOddsEnv(gym.Env):
         msg : str
             A string with the current balance and the current step.
         """
-        return 'Current balance at step {}: {}'.format(self.current_step, self.balance)
+        return print('Current balance at step {}: {}'.format(self.current_step, self.balance))
 
     def finish(self):
         """Checks if the episode has reached an end.
@@ -258,9 +259,13 @@ class BaseOddsEnv(gym.Env):
         info : dict
             The info dictionary.
         """
-        return {'action': self._verbose_actions[action], 'current_step': self.current_step,
-                'starting_balance': self.balance, 'odds': self.get_odds(),
-                'bet_size_matrix': self.bet_size_matrix}
+        return {'current_step': self.current_step, 'odds': self.get_odds(), 'verbose_action': self._verbose_actions[action],
+                'action': action, 'balance': self.balance, 'reward': 0,
+                'legal_bet': False, 'results': None, 'done': False}
+
+    def pretty_print_info(self, info):
+        values = [info[key.replace(' ', '_').lower()] for key in self.headers]
+        print('\n' + tabulate([values], headers=self.headers, tablefmt='orgtbl'))
 
     def _rescale_form(self, form):
         if form == 1:
