@@ -1,6 +1,9 @@
 import pytest
 import numpy
+import io
+
 from gym.spaces import Box
+from unittest import mock
 
 
 def test_attributes(three_way_env):
@@ -38,3 +41,9 @@ def test_multiple_steps(three_way_env):
     assert reward == 3
     assert three_way_env.balance == three_way_env.starting_bank - 1 + 3
     assert done
+
+
+def test_render(three_way_env):
+    with mock.patch('sys.stdout', new=io.StringIO()) as fake_stdout:
+        three_way_env.render()
+    assert fake_stdout.getvalue() == 'Home Team FCB VS Away Team PSG.\nCurrent balance at step 0: 10\n'

@@ -1,6 +1,9 @@
+import io
 import pytest
-from gym.spaces import Box
 import numpy
+
+from unittest import mock
+from gym.spaces import Box
 
 
 def test_attributes(basic_env):
@@ -52,6 +55,12 @@ def test_info(basic_env):
     assert info['results'] is None
     assert not info['done']
     basic_env.pretty_print_info(info)
+
+
+def test_render(basic_env):
+    with mock.patch('sys.stdout', new=io.StringIO()) as fake_stdout:
+        basic_env.render()
+    assert fake_stdout.getvalue() == 'Current balance at step 0: 10\n'
 
 
 @pytest.mark.parametrize("action", range(4))

@@ -194,7 +194,7 @@ class BaseOddsEnv(gym.Env):
         msg : str
             A string with the current balance and the current step.
         """
-        return print('Current balance at step {}: {}'.format(self.current_step, self.balance))
+        print('Current balance at step {}: {}'.format(self.current_step, self.balance))
 
     def finish(self):
         """Checks if the episode has reached an end.
