@@ -43,6 +43,8 @@ class DailyOddsEnv(BaseOddsEnv):
 
     """
 
+    HEADERS = ['Date', 'Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
+
     def __init__(self, odds, odds_column_names, results=None, max_number_of_games='auto'):
         """Initializes a new environment.
 
@@ -232,11 +234,12 @@ class DailyOddsEnv(BaseOddsEnv):
         info : dict
             The info dictionary.
         """
-        return {'action': [self._verbose_actions[act] for act in numpy.floor(action).astype(int)],
-                'current_step': self.current_step,
-                'starting_balance': self.balance,
+        return {'date': self.days[self.current_step], 'current_step': self.current_step,
                 'odds': self.get_odds(),
-                'bet_size_matrix': self.bet_size_matrix}
+                'verbose_action': [self._verbose_actions[act] for act in numpy.floor(action).astype(int)],
+                'action': action,
+                'balance': self.balance, 'reward': 0,
+                'legal_bet': False, 'results': None, 'done': False}
 
     def step(self, action):
         return super().step(numpy.array([self._rescale_form(form) for form in action]))

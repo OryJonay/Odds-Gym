@@ -1,6 +1,9 @@
+import io
 import pytest
-from gym.spaces import Box
 import numpy
+
+from unittest import mock
+from gym.spaces import Box
 
 
 def test_attributes(basic_env):
@@ -24,11 +27,15 @@ def test_step(basic_env, action, expected_reward):
 
 
 def test_reset(basic_env):
-    odds, reward, done, _ = basic_env.step(1)
+    odds, reward, done, info = basic_env.step(1)
     assert reward == 1
     assert basic_env.balance == basic_env.starting_bank + 1
     assert not done
     assert basic_env.current_step == 1
+    assert info['legal_bet']
+    assert info['results'] == 1
+    assert info['reward'] == 1
+    assert not info['done']
     odds, reward, done, _ = basic_env.step(2)
     assert reward == 2
     assert done
@@ -36,8 +43,24 @@ def test_reset(basic_env):
     assert basic_env.balance == basic_env.starting_bank
 
 
+def test_info(basic_env):
+    info = basic_env.create_info(1)
+    assert info['current_step'] == 0
+    numpy.testing.assert_array_equal(info['odds'], numpy.array([[1, 2]]))
+    assert info['verbose_action'] == [['l']]
+    assert info['action'] == 1
+    assert info['balance'] == 10
+    assert info['reward'] == 0
+    assert not info['legal_bet']
+    assert info['results'] is None
+    assert not info['done']
+    basic_env.pretty_print_info(info)
+
+
 def test_render(basic_env):
-    assert basic_env.render() == "Current balance at step {}: {}".format(basic_env.current_step, basic_env.balance)
+    with mock.patch('sys.stdout', new=io.StringIO()) as fake_stdout:
+        basic_env.render()
+    assert fake_stdout.getvalue() == 'Current balance at step 0: 10\n'
 
 
 @pytest.mark.parametrize("action", range(4))
