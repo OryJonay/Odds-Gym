@@ -20,5 +20,5 @@ def test_csv_download(arguments):
         result = runner.invoke(app)
     else:
         result = runner.invoke(app, [arguments])
-    assert result.exit_code == 0
     shutil.rmtree(CSV_CACHE_PATH)
+    assert result.exit_code == 0
