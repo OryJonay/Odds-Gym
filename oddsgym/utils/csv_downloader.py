@@ -13,7 +13,7 @@ async def download_file(session, start, end, country, league):
             async with session.get(url) as response:
                 assert response.status == 200, url
                 return country, league, await response.read()
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             asyncio.sleep(1)
             pass
 
