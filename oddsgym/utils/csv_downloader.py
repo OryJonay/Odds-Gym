@@ -8,9 +8,14 @@ from oddsgym.utils.constants.football import CSV_URL, COUNTRIES, LEAGUES, CSV_CA
 
 async def download_file(session, start, end, country, league):
     url = CSV_URL.format(start=start, end=end, country=country, league=league)
-    async with session.get(url) as response:
-        assert response.status == 200, url
-        return country, league, await response.read()
+    while True:
+        try:
+            async with session.get(url) as response:
+                assert response.status == 200, url
+                return country, league, await response.read()
+        except AssertionError:
+            asyncio.sleep(1)
+            pass
 
 
 async def download_multiple(fast):
