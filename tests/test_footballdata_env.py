@@ -1,7 +1,10 @@
+import shutil
 import pytest
 import numpy
 from gym import envs
 from oddsgym.envs.footballdata import FootballDataDailyPercentageEnv
+from oddsgym.utils.constants.football import CSV_CACHE_PATH
+from oddsgym.utils.csv_downloader import create_csv_cache
 
 
 @pytest.mark.parametrize('kwargs', [{'country': 'England', 'league': 'Premier League', 'start': 1999, 'end': 2011},
@@ -51,3 +54,12 @@ def test_registeration():
     spec_ids = [spec.id for spec in envs.registry.all()]
     assert 'FootballDataDaily-v0' in spec_ids
     assert 'FootballDataDailyPercent-v0' in spec_ids
+
+
+def test_caching():
+    # cache directory is empty, so it will use the CSV from the site
+    FootballDataDailyPercentageEnv(start=2019, end=2020)
+    # create cache directory
+    create_csv_cache()
+    FootballDataDailyPercentageEnv(start=2019, end=2020)
+    shutil.rmtree(CSV_CACHE_PATH)
