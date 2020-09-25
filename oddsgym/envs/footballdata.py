@@ -4,7 +4,7 @@ import os
 import numpy
 import pandas
 import gym
-from .soccer import ThreeWaySoccerDailyPercentageOddsEnv, ThreeWaySoccerDailyOddsEnv
+from .soccer import ThreeWaySoccerOddsEnv
 from ..utils.constants.football import CSV_CACHE_PATH, CSV_URL, COUNTRIES, LEAGUES, SITES
 
 
@@ -55,10 +55,9 @@ class FootballDataMixin(object):
         return odds_dataframe
 
 
-class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerDailyOddsEnv):
-    """Daily environment that uses data from from www.football-data.co.uk
-
-    .. versionadded:: 0.8.0"""
+class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerOddsEnv):
+    sport = '3-way soccer, with odds from www.football-data.co.uk'
+    versionadded = '0.7.1'
 
     ENV_COLUMNS = ['home_team', 'away_team', 'date', 'result']
     ODDS_COLUMNS = ['home', 'draw', 'away']
@@ -119,9 +118,6 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerDailyOddsEnv):
         return extra_odds
 
 
-class FootballDataDailyPercentageEnv(FootballDataDailyEnv, ThreeWaySoccerDailyPercentageOddsEnv):
-    """Daily percentage environment that uses data from from www.football-data.co.uk
-
-    .. versionadded:: 0.6.2"""
-
-    pass
+class FootballDataDailyPercentageEnv(FootballDataDailyEnv):
+    sport = '3-way soccer, with odds from www.football-data.co.uk'
+    versionadded = '0.6.2'

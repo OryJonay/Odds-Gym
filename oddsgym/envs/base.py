@@ -79,6 +79,9 @@ class BaseOddsEnv(gym.Env):
         self.current_step = 0
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
+    def _get_current_index(self):
+        return self.current_step % self._odds.shape[0]
+
     def get_odds(self):
         """Returns the odds for the current step.
 
