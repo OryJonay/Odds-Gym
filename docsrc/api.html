@@ -552,8 +552,8 @@ columns are named “home_team, away_team” respectively.</p>
 <h3>ThreeWaySoccerDailyOddsEnv<a class="headerlink" href="#threewaysoccerdailyoddsenv" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerDailyOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Environment for 3-way soccer betting, grouped by day, with a fixed bet size.</p>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerDailyOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for 3-way soccer betting, grouped by date, with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.5.0.</span></p>
 </div>
@@ -564,7 +564,7 @@ columns are named “home_team, away_team” respectively.</p>
 <h3>ThreeWaySoccerDailyPercentageOddsEnv<a class="headerlink" href="#threewaysoccerdailypercentageoddsenv" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv">
-<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerDailyPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.soccer.</code><code class="sig-name descname">ThreeWaySoccerDailyPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soccer_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.5.0.</span></p>
@@ -581,9 +581,9 @@ columns are named “home_team, away_team” respectively.</p>
 <dl class="py class">
 <dt id="oddsgym.envs.footballdata.FootballDataDailyEnv">
 <em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.footballdata.</code><code class="sig-name descname">FootballDataDailyEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em>, <em class="sig-param"><span class="n">columns</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">extra</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">optimize</span><span class="o">=</span><span class="default_value">'reward'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyEnv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Daily environment that uses data from from www.football-data.co.uk</p>
+<dd><p>Environment for 3-way soccer, with odds from www.football-data.co.uk betting, grouped by date, with a fixed bet size.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 0.8.0.</span></p>
+<p><span class="versionmodified added">New in version 0.7.1.</span></p>
 </div>
 <dl class="py method">
 <dt id="oddsgym.envs.footballdata.FootballDataDailyEnv.__init__">
@@ -613,7 +613,7 @@ for each odd from all sites, “avg” uses the average value.</p></li>
 <dl class="py class">
 <dt id="oddsgym.envs.footballdata.FootballDataDailyPercentageEnv">
 <em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.footballdata.</code><code class="sig-name descname">FootballDataDailyPercentageEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">country</span><span class="o">=</span><span class="default_value">'England'</span></em>, <em class="sig-param"><span class="n">league</span><span class="o">=</span><span class="default_value">'Premier League'</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">2011</span></em>, <em class="sig-param"><span class="n">columns</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">extra</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">optimize</span><span class="o">=</span><span class="default_value">'reward'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Daily percentage environment that uses data from from www.football-data.co.uk</p>
+<dd><p>Environment for 3-way soccer, with odds from www.football-data.co.uk betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.6.2.</span></p>
 </div>
