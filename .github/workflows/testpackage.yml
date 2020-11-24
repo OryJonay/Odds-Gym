@@ -30,7 +30,7 @@ jobs:
     - name: Install integration tests
       run: |
         pip install .[integration]
-      if: matrix.python-version != 3.8 || matrix.python-version != 3.9
+      if: matrix.python-version != 3.8 && matrix.python-version != 3.9
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -49,4 +49,4 @@ jobs:
     - name: Run integration tests
       run: |
         pytest -v tests -k "integration" -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning
-      if: matrix.python-version != 3.8 || matrix.python-version != 3.9
+      if: matrix.python-version != 3.8 && matrix.python-version != 3.9
