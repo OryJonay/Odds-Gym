@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install integration tests apt dependencies
@@ -30,7 +30,7 @@ jobs:
     - name: Install integration tests
       run: |
         pip install .[integration]
-      if: ${{ matrix.python-version != 3.8 }}
+      if: matrix.python-version != 3.8 || matrix.python-version != 3.9
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -48,5 +48,5 @@ jobs:
         coveralls
     - name: Run integration tests
       run: |
-        pytest -v tests -k "integration" -W ignore::UserWarning
-      if: ${{ matrix.python-version != 3.8 }}
+        pytest -v tests -k "integration" -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning
+      if: matrix.python-version != 3.8 || matrix.python-version != 3.9
