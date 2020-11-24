@@ -1,11 +1,11 @@
 import pandas
 from .meta import MetaEnvBuilder
-from .daily_bets import DailyOddsEnv
 
 
 class ThreeWaySoccerOddsEnv(metaclass=MetaEnvBuilder):
     sport = '3-way soccer'
     versionadded = '0.1.0'
+    odds_column_names = ['home', 'draw', 'away']
 
     def __init__(self, soccer_bets_dataframe):
         """Initializes a new environment.
@@ -21,15 +21,13 @@ class ThreeWaySoccerOddsEnv(metaclass=MetaEnvBuilder):
                 that the results column is named "result" and that the team names
                 columns are named "home_team, away_team" respectively.
         """
-        odds_column_names = ['home', 'draw', 'away']
-        if self.daily_env:
-            odds = soccer_bets_dataframe[odds_column_names + ['date']]
-            results = soccer_bets_dataframe['result'] if soccer_bets_dataframe['result'].notna().all() else None
-        else:
-            odds = soccer_bets_dataframe[odds_column_names].values
-            results = soccer_bets_dataframe['result'].values if soccer_bets_dataframe['result'].notna().all() else None
+        odds = soccer_bets_dataframe[self.odds_columns]
+        results = soccer_bets_dataframe['result'] if soccer_bets_dataframe['result'].notna().all() else None
+        if not self.daily_env:
+            odds = odds.values
+            results = results.values
         self.teams = soccer_bets_dataframe[['home_team', 'away_team']]
-        super().__init__(odds, odds_column_names, results)
+        super().__init__(odds, self.odds_column_names, results)
 
     def render(self, mode='human'):
         """Outputs the current team names, balance and step.
@@ -50,15 +48,12 @@ class ThreeWaySoccerOddsEnv(metaclass=MetaEnvBuilder):
 
 
 class ThreeWaySoccerPercentageOddsEnv(ThreeWaySoccerOddsEnv):
-    sport = '3-way soccer'
     versionadded = '0.2.0'
 
 
 class ThreeWaySoccerDailyOddsEnv(ThreeWaySoccerOddsEnv):
-    sport = '3-way soccer'
     versionadded = '0.5.0'
 
 
 class ThreeWaySoccerDailyPercentageOddsEnv(ThreeWaySoccerOddsEnv):
-    sport = '3-way soccer'
     versionadded = '0.5.0'

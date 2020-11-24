@@ -185,7 +185,6 @@ def test_get_results_non_uniform(daily_bets_percentage_env_non_uniform, current_
                           (2, array([0, 0.1, 0.1, 0.1, 0.0, 0]), 1, True)])
 def test_step_non_uniform(daily_bets_percentage_env_non_uniform, current_step, action, expected_reward, finished):
     daily_bets_percentage_env_non_uniform.current_step = current_step
-    # import ipdb; ipdb.set_trace()
     odds, reward, done, info = daily_bets_percentage_env_non_uniform.step(action)
     assert reward == expected_reward
     assert done == finished

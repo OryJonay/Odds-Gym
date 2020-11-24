@@ -18,6 +18,14 @@ LEAGUES = {'England': {'Premier League': 0, 'Championship': 1, 'League 1': 2, 'L
            'Turkey': {'Super Lig': 1},
            'Greece': {'Super League': 1}}
 
-CSV_CACHE_PATH = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'csv_cache'))
+CSV_CACHE_PATH = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'csv_cache', 'football'))
 
 SITES = ["B365", "BS", "BW", "GB", "IW", "LB", "PS", "SO", "SB", "SJ", "SY", "VC", "WH", "P"]
+
+YEARS = range(10, 20)
+
+
+def url_kwargs():
+    for country in LEAGUES:
+        for league in LEAGUES[country].values():
+            yield {'country': COUNTRIES[country], 'league': league}
