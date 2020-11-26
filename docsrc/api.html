@@ -105,11 +105,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerpercentageoddsenv">ThreeWaySoccerPercentageOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailyoddsenv">ThreeWaySoccerDailyOddsEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailypercentageoddsenv">ThreeWaySoccerDailyPercentageOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tennisoddsenv">TennisOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tennispercentageoddsenv">TennisPercentageOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tennisdailyoddsenv">TennisDailyOddsEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tennisdailypercentageoddsenv">TennisDailyPercentageOddsEnv</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#site-and-sports-specific-environments">Site and Sports Specific Environments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#footballdatadailyenv">FootballDataDailyEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#footballdatadailypercentageenv">FootballDataDailyPercentageEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tennisdatadailyenv">TennisDataDailyEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tennisdatadailypercentageenv">TennisDataDailyPercentageEnv</a></li>
 </ul>
 </li>
 </ul>
@@ -572,6 +578,71 @@ columns are named “home_team, away_team” respectively.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="tennisoddsenv">
+<h3>TennisOddsEnv<a class="headerlink" href="#tennisoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.tennis.TennisOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.tennis.</code><code class="sig-name descname">TennisOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tennis_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for tennis betting with a fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.0.</span></p>
+</div>
+<dl class="py method">
+<dt id="oddsgym.envs.tennis.TennisOddsEnv.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tennis_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisOddsEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new environment.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tennis_bets_dataframe</strong> (<em>dataframe of shape (n_matches, n_odds + 3), n_odds == 2</em>) – A list of matches, with their betting odds, results and the players playing.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please make sure that the odds columns are named “win, lose”,
+that the results column is named “result” and that the player names
+columns are named “winner, loser” respectively.</p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tennispercentageoddsenv">
+<h3>TennisPercentageOddsEnv<a class="headerlink" href="#tennispercentageoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.tennis.TennisPercentageOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.tennis.</code><code class="sig-name descname">TennisPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tennis_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for tennis betting with a non fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.0.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="tennisdailyoddsenv">
+<h3>TennisDailyOddsEnv<a class="headerlink" href="#tennisdailyoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.tennis.TennisDailyOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.tennis.</code><code class="sig-name descname">TennisDailyOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tennis_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisDailyOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for tennis betting, grouped by date, with a fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.0.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="tennisdailypercentageoddsenv">
+<h3>TennisDailyPercentageOddsEnv<a class="headerlink" href="#tennisdailypercentageoddsenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.tennis.TennisDailyPercentageOddsEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.tennis.</code><code class="sig-name descname">TennisDailyPercentageOddsEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tennis_bets_dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisDailyPercentageOddsEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for tennis betting, grouped by date, with a non fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.0.</span></p>
+</div>
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="site-and-sports-specific-environments">
 <h2>Site and Sports Specific Environments<a class="headerlink" href="#site-and-sports-specific-environments" title="Permalink to this headline">¶</a></h2>
@@ -616,6 +687,48 @@ for each odd from all sites, “avg” uses the average value.</p></li>
 <dd><p>Environment for 3-way soccer, with odds from www.football-data.co.uk betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 0.6.2.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="tennisdatadailyenv">
+<h3>TennisDataDailyEnv<a class="headerlink" href="#tennisdatadailyenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.tennisdata.TennisDataDailyEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.tennisdata.</code><code class="sig-name descname">TennisDataDailyEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tournament</span><span class="o">=</span><span class="default_value">'ausopen'</span></em>, <em class="sig-param"><span class="n">year</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">columns</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">extra</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">optimize</span><span class="o">=</span><span class="default_value">'reward'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for Tennis, with odds from www.tennis-data.co.uk betting, grouped by date, with a fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.0.</span></p>
+</div>
+<dl class="py method">
+<dt id="oddsgym.envs.tennisdata.TennisDataDailyEnv.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tournament</span><span class="o">=</span><span class="default_value">'ausopen'</span></em>, <em class="sig-param"><span class="n">year</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">columns</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">extra</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">optimize</span><span class="o">=</span><span class="default_value">'reward'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new environment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tournament</strong> (<em>str, defaults to “ausopen”</em>) – The name of the tournament.</p></li>
+<li><p><strong>year</strong> (<em>int, defaults to 2010</em>) – Year of the tournament.</p></li>
+<li><p><strong>columns</strong> (<em>{“max”, “avg”}, defaults to “max”</em>) – Which columns to use for the odds data. “max” uses the maximum value
+for each odd from all sites, “avg” uses the average value.</p></li>
+<li><p><strong>extra</strong> (<em>bool, default to False</em>) – Use extra odds for the observation space.</p></li>
+<li><p><strong>optimize</strong> (<em>{“balance”, “reward”}, default to “balance”</em>) – Which type of optimization to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tennisdatadailypercentageenv">
+<h3>TennisDataDailyPercentageEnv<a class="headerlink" href="#tennisdatadailypercentageenv" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv">
+<em class="property">class </em><code class="sig-prename descclassname">oddsgym.envs.tennisdata.</code><code class="sig-name descname">TennisDataDailyPercentageEnv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tournament</span><span class="o">=</span><span class="default_value">'ausopen'</span></em>, <em class="sig-param"><span class="n">year</span><span class="o">=</span><span class="default_value">2010</span></em>, <em class="sig-param"><span class="n">columns</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">extra</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">optimize</span><span class="o">=</span><span class="default_value">'reward'</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment for Tennis, with odds from www.tennis-data.co.uk betting, grouped by date, with a non fixed bet size.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.8.0.</span></p>
 </div>
 </dd></dl>
 

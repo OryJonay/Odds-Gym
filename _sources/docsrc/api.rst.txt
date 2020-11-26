@@ -46,6 +46,23 @@ ThreeWaySoccerDailyPercentageOddsEnv
 ####################################
 .. autoclass:: oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv
 
+TennisOddsEnv
+#####################
+.. autoclass:: oddsgym.envs.tennis.TennisOddsEnv
+    :members: __init__
+
+TennisPercentageOddsEnv
+###############################
+.. autoclass:: oddsgym.envs.tennis.TennisPercentageOddsEnv
+
+TennisDailyOddsEnv
+##########################
+.. autoclass:: oddsgym.envs.tennis.TennisDailyOddsEnv
+
+TennisDailyPercentageOddsEnv
+####################################
+.. autoclass:: oddsgym.envs.tennis.TennisDailyPercentageOddsEnv
+
 Site and Sports Specific Environments
 *************************************
 
@@ -59,3 +76,12 @@ FootballDataDailyEnv
 FootballDataDailyPercentageEnv
 ####################################
 .. autoclass:: oddsgym.envs.footballdata.FootballDataDailyPercentageEnv
+
+TennisDataDailyEnv
+####################################
+.. autoclass:: oddsgym.envs.tennisdata.TennisDataDailyEnv
+    :members: __init__
+
+TennisDataDailyPercentageEnv
+####################################
+.. autoclass:: oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv
