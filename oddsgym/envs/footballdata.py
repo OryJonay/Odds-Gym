@@ -21,12 +21,12 @@ class FootballDataMixin(object):
         if start < 2010:
             raise ValueError(f'Start year must be greater than 2010, start year is {start}')
         if start > end:
-            raise ValueError(f'Start year can not be greater than end year')
+            raise ValueError('Start year can not be greater than end year')
         if end > datetime.datetime.today().year:
-            raise ValueError(f'End year can not be greater than current year')
+            raise ValueError('End year can not be greater than current year')
         if os.path.exists(CSV_CACHE_PATH):
             csvs = [pandas.read_csv(os.path.join(CSV_CACHE_PATH,
-                                                 f'{str(i).zfill(2)}-{str(i + 1).zfill(2)}',
+                                                 f'{str(i).zfill(2)}{str(i + 1).zfill(2)}',
                                                  f'{COUNTRIES[country]}{LEAGUES[country][league]}.csv'))
                     for i in range(int(str(start)[-2:]), int(str(end)[-2:]))]
             raw_odds_data = pandas.concat(csvs)
@@ -119,5 +119,4 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerOddsEnv):
 
 
 class FootballDataDailyPercentageEnv(FootballDataDailyEnv):
-    sport = '3-way soccer, with odds from www.football-data.co.uk'
     versionadded = '0.6.2'

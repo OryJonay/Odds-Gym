@@ -12,7 +12,9 @@ ENV_DICT = {'BaseOddsEnv': [A2C, PPO],
             'DailyOddsEnv': [A2C, PPO, SAC, TD3],
             'DailyPercentageOddsEnv': [A2C, PPO, SAC],
             'FootballDataDailyEnv': [A2C, PPO, SAC, TD3],
-            'FootballDataDailyPercentageEnv': [A2C, PPO, SAC]}
+            'FootballDataDailyPercentageEnv': [A2C, PPO, SAC],
+            'TennisDataDailyEnv': [A2C, PPO, SAC, TD3],
+            'TennisDataDailyPercentageEnv': [A2C, PPO, SAC]}
 
 
 @pytest.mark.parametrize("alg", ENV_DICT['BaseOddsEnv'])
@@ -47,5 +49,17 @@ def test_football_co_uk_daily_env_with_(alg):
 
 @pytest.mark.parametrize("alg", ENV_DICT['FootballDataDailyPercentageEnv'])
 def test_football_co_uk_daily_percentage_env_with_(alg):
+    model = alg('MlpPolicy', 'FootballDataDailyPercent-v0')
+    model.learn(total_timesteps=10)
+
+
+@pytest.mark.parametrize("alg", ENV_DICT['TennisDataDailyEnv'])
+def test_tennis_co_uk_daily_env_with_(alg):
+    model = alg('MlpPolicy', 'TennisDataDaily-v0')
+    model.learn(total_timesteps=10)
+
+
+@pytest.mark.parametrize("alg", ENV_DICT['TennisDataDailyPercentageEnv'])
+def test_tennis_co_uk_daily_percentage_env_with_(alg):
     model = alg('MlpPolicy', 'FootballDataDailyPercent-v0')
     model.learn(total_timesteps=10)

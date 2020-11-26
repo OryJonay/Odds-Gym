@@ -3,6 +3,7 @@ import pytest
 import numpy
 from gym import envs
 from oddsgym.envs.footballdata import FootballDataDailyPercentageEnv
+from oddsgym.utils.constants import SupportedSport
 from oddsgym.utils.constants.football import CSV_CACHE_PATH
 from oddsgym.utils.csv_downloader import create_csv_cache
 
@@ -60,6 +61,6 @@ def test_caching():
     # cache directory is empty, so it will use the CSV from the site
     FootballDataDailyPercentageEnv(start=2019, end=2020)
     # create cache directory
-    create_csv_cache()
+    create_csv_cache(True, SupportedSport.football)
     FootballDataDailyPercentageEnv(start=2019, end=2020)
     shutil.rmtree(CSV_CACHE_PATH)
