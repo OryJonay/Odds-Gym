@@ -63,7 +63,7 @@ jobs:
     steps:
     - name: Install integration tests dependencies
       run: |
-        pip install tensorflow pytorch ray[rllib]==${{ matrix.rllib-version }}
+        pip install tensorflow pytorch "ray[rllib]==${{ matrix.rllib-version }}"
       if: matrix.python-version == 3.6
     - name: Run integration tests
       run: |
