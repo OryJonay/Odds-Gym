@@ -60,6 +60,7 @@ jobs:
   integration_tests:
     name: Integration with rllib
     needs: test_package
+    steps:
     - name: Install integration tests dependencies
       run: |
         pip install tensorflow pytorch ray[rllib]==${{ matrix.rllib-version }}
