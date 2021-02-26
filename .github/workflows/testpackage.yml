@@ -6,8 +6,8 @@ on:
       - '!v*'
 
 jobs:
-  install_python:
-    name: Install Python
+  build_and_test:
+    name: Build and test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -31,10 +31,6 @@ jobs:
     - name: Upgrade pip
       run: |
         python -m pip install --upgrade pip
-  install_pakcage:
-    name: Install package
-    needs: install_python
-    steps:
     - name: Install package
       run: |
         pip install .[tests]
@@ -45,10 +41,6 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-  test_package:
-    name: Test with pytest
-    needs: install_pakcage
-    steps:
     - name: Test with pytest
       run: |
         pytest -v tests -k "not integration" --cov=oddsgym -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning
@@ -57,10 +49,6 @@ jobs:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
         coveralls
-  integration_tests:
-    name: Integration with rllib
-    needs: test_package
-    steps:
     - name: Install integration tests dependencies
       run: |
         pip install tensorflow pytorch "ray[rllib]==${{ matrix.rllib-version }}"
