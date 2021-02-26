@@ -12,6 +12,10 @@ jobs:
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
+        rllib-version: [1.1.0]
+        include:
+        - rllib-version: 0.8.5
+          python-version: 3.6
 
     steps:
     - uses: actions/checkout@v2
@@ -56,9 +60,6 @@ jobs:
   integration_tests:
     name: Integration with rllib
     needs: test_package
-    strategy:
-      matrix:
-        rllib-version: [0.8.5, 1.1.0]
     - name: Install integration tests dependencies
       run: |
         pip install tensorflow pytorch ray[rllib]==${{ matrix.rllib-version }}
