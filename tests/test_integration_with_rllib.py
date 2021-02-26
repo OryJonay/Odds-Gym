@@ -1,4 +1,4 @@
-tests/test_integration_with_rllib.pyimport pytest
+import pytest
 try:
     import ray
     from ray.rllib.agents.a3c import A2CTrainer, A3CTrainer
