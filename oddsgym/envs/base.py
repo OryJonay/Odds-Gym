@@ -4,6 +4,7 @@ import numexpr
 from itertools import compress
 from pandas import DataFrame
 from tabulate import tabulate
+from infi.traceback import pretty_traceback_and_exit_decorator
 
 
 class ActionsDict(dict):
@@ -108,6 +109,7 @@ class BaseOddsEnv(gym.Env):
         """
         return numpy.array([[bit for bit in numpy.binary_repr(action, width=self._odds.shape[1])]]).astype(int)
 
+    @pretty_traceback_and_exit_decorator
     def step(self, action):
         """Run one timestep of the environment's dynamics. When end of episode is reached,
         you are responsible for calling reset() to reset this environment's state.

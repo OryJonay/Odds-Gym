@@ -1,4 +1,4 @@
-import pytest
+tests/test_integration_with_rllib.pyimport pytest
 try:
     import ray
     from ray.rllib.agents.a3c import A2CTrainer, A3CTrainer
@@ -32,10 +32,16 @@ ray.init(logging_level='ERROR')
 
 
 @pytest.mark.parametrize("alg", ENV_DICT['FootballDataDailyEnv'])
-def test_football_co_uk_daily_env_with_(alg):
+@pytest.mark.parametrize("framework", ['tf', 'torch'])
+def test_football_co_uk_daily_env_with_(alg, framework):
     model_config = alg._default_config.copy()
     model_config.update(num_gpus=0, num_workers=1, log_level='ERROR', train_batch_size=10)
     model_config['model'].update(fcnet_hiddens=[3, 3])
+    if ray.__version__ <= '0.8.5':
+        if alg not in (ApexDDPGTrainer, ImpalaTrainer):
+            model_config.update(use_pytorch=framework == 'torch')
+    else:
+        model_config.update(framework=framework)
     if alg == ApexDDPGTrainer:
         model_config.update(num_workers=2)
     if alg in [PPOTrainer, APPOTrainer]:
@@ -47,10 +53,16 @@ def test_football_co_uk_daily_env_with_(alg):
 
 
 @pytest.mark.parametrize("alg", ENV_DICT['FootballDataDailyPercentageEnv'])
-def test_football_co_uk_daily_percentage_env_with_(alg):
+@pytest.mark.parametrize("framework", ['tf', 'torch'])
+def test_football_co_uk_daily_percentage_env_with_(alg, framework):
     model_config = alg._default_config.copy()
     model_config.update(num_gpus=0, num_workers=1, log_level='ERROR', train_batch_size=10)
     model_config['model'].update(fcnet_hiddens=[3, 3])
+    if ray.__version__ <= '0.8.5':
+        if alg not in (ApexDDPGTrainer, ImpalaTrainer):
+            model_config.update(use_pytorch=framework == 'torch')
+    else:
+        model_config.update(framework=framework)
     if alg == ApexDDPGTrainer:
         model_config.update(num_workers=2)
     if alg in [PPOTrainer, APPOTrainer]:
@@ -62,10 +74,16 @@ def test_football_co_uk_daily_percentage_env_with_(alg):
 
 
 @pytest.mark.parametrize("alg", ENV_DICT['TennisDataDailyEnv'])
-def test_tennis_co_uk_daily_env_with_(alg):
+@pytest.mark.parametrize("framework", ['tf', 'torch'])
+def test_tennis_co_uk_daily_env_with_(alg, framework):
     model_config = alg._default_config.copy()
     model_config.update(num_gpus=0, num_workers=1, log_level='ERROR', train_batch_size=10)
     model_config['model'].update(fcnet_hiddens=[3, 3])
+    if ray.__version__ <= '0.8.5':
+        if alg not in (ApexDDPGTrainer, ImpalaTrainer):
+            model_config.update(use_pytorch=framework == 'torch')
+    else:
+        model_config.update(framework=framework)
     if alg == ApexDDPGTrainer:
         model_config.update(num_workers=2)
     if alg in [PPOTrainer, APPOTrainer]:
@@ -77,10 +95,16 @@ def test_tennis_co_uk_daily_env_with_(alg):
 
 
 @pytest.mark.parametrize("alg", ENV_DICT['TennisDataDailyPercentageEnv'])
-def test_tennis_co_uk_daily_percentage_env_with_(alg):
+@pytest.mark.parametrize("framework", ['tf', 'torch'])
+def test_tennis_co_uk_daily_percentage_env_with_(alg, framework):
     model_config = alg._default_config.copy()
     model_config.update(num_gpus=0, num_workers=1, log_level='ERROR', train_batch_size=10)
     model_config['model'].update(fcnet_hiddens=[3, 3])
+    if ray.__version__ <= '0.8.5':
+        if alg not in (ApexDDPGTrainer, ImpalaTrainer):
+            model_config.update(use_pytorch=framework == 'torch')
+    else:
+        model_config.update(framework=framework)
     if alg == ApexDDPGTrainer:
         model_config.update(num_workers=2)
     if alg in [PPOTrainer, APPOTrainer]:
