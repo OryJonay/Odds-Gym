@@ -29,6 +29,7 @@ jobs:
         python -m pip install --upgrade pip
   install_pakcage:
     name: Install package
+    needs: install_python
     steps:
     - name: Install package
       run: |
@@ -42,6 +43,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
   test_package:
     name: Test with pytest
+    needs: install_pakcage
     steps:
     - name: Test with pytest
       run: |
@@ -53,6 +55,7 @@ jobs:
         coveralls
   integration_tests:
     name: Integration with rllib
+    needs: test_package
     strategy:
       matrix:
         rllib-version: [0.8.5, 1.1.0]
