@@ -6,8 +6,7 @@ on:
       - '!v*'
 
 jobs:
-  build_and_test:
-    name: Build and test
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
