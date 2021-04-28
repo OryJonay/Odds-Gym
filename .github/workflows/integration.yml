@@ -1,0 +1,43 @@
+name: integration
+
+on: [push]
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rl-implementation: [rllib, stable_baselines_v3]
+        python-version: [3.6, 3.7, 3.8]
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout code
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install integration tests apt dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake libopenmpi-dev python3-dev zlib1g-dev
+    - name: Upgrade pip
+      run: |
+        python -m pip install --upgrade pip
+    - name: Install package
+      run: |
+        pip install .[tests]
+
+    - name: Install integration tests dependencies
+      run: |
+        pip install tensorflow torch
+    - name: Install rllib
+      run: |
+        pip install "ray[rllib]"
+      if: matrix.rl-implementation == rllib
+    - name: Install stable-baselines-v3
+      run: |
+        pip install stable-baselines3
+      if: matrix.rl-implementation == stable_baselines_v3
+    - name: Run integration tests
+      run: |
+        pytest -v tests -k "integration and ${{ matrix.rl-implementation }}" -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning

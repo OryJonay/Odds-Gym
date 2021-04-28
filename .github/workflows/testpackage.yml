@@ -44,11 +44,3 @@ jobs:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
         coveralls
-    - name: Install integration tests dependencies
-      run: |
-        pip install tensorflow torch "ray[rllib]==${{ matrix.rllib-version }}"
-      if: matrix.python-version == 3.6
-    - name: Run integration tests
-      run: |
-        pytest -v tests -k "integration and rllib" -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning
-      if: matrix.python-version == 3.6
