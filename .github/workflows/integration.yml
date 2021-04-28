@@ -33,11 +33,11 @@ jobs:
     - name: Install rllib
       run: |
         pip install "ray[rllib]"
-      if: matrix.rl-implementation == rllib
+      if: matrix.rl-implementation == 'rllib'
     - name: Install stable-baselines-v3
       run: |
         pip install stable-baselines3
-      if: matrix.rl-implementation == stable_baselines_v3
+      if: matrix.rl-implementation == 'stable_baselines_v3'
     - name: Run integration tests
       run: |
         pytest -v tests -k "integration and ${{ matrix.rl-implementation }}" -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning
