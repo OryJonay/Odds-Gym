@@ -7,7 +7,7 @@ class ThreeWaySoccerOddsEnv(metaclass=MetaEnvBuilder):
     versionadded = '0.1.0'
     odds_column_names = ['home', 'draw', 'away']
 
-    def __init__(self, soccer_bets_dataframe):
+    def __init__(self, soccer_bets_dataframe, *args, **kwargs):
         """Initializes a new environment.
 
         Parameters
@@ -27,7 +27,7 @@ class ThreeWaySoccerOddsEnv(metaclass=MetaEnvBuilder):
             odds = odds.values
             results = results.values
         self.teams = soccer_bets_dataframe[['home_team', 'away_team']]
-        super().__init__(odds, self.odds_column_names, results)
+        super().__init__(odds, self.odds_column_names, results, *args, **kwargs)
 
     def render(self, mode='human'):
         """Outputs the current team names, balance and step.

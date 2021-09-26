@@ -7,7 +7,7 @@ class TennisOddsEnv(metaclass=MetaEnvBuilder):
     versionadded = '0.8.0'
     odds_column_names = ['win', 'lose']
 
-    def __init__(self, tennis_bets_dataframe):
+    def __init__(self, tennis_bets_dataframe, *args, **kwargs):
         """Initializes a new environment.
 
         Parameters
@@ -27,7 +27,7 @@ class TennisOddsEnv(metaclass=MetaEnvBuilder):
             odds = odds.values
             results = results.values
         self.players = tennis_bets_dataframe[['winner', 'loser']]
-        super().__init__(odds, self.odds_column_names, results)
+        super().__init__(odds, self.odds_column_names, results, *args, **kwargs)
 
     def render(self, mode='human'):
         """Outputs the current player names, balance and step.

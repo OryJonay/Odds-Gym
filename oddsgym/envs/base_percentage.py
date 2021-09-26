@@ -43,8 +43,8 @@ class BasePercentageOddsEnv(BaseOddsEnv):
 
     """
 
-    def __init__(self, odds, odds_column_names, results=None):
-        super().__init__(odds, odds_column_names, results)
+    def __init__(self, odds, odds_column_names, results=None, *args, **kwargs):
+        super().__init__(odds, odds_column_names, results, *args, **kwargs)
         self.bet_size_matrix = None
         self.action_space = spaces.Box(low=numpy.array([-1] * odds.shape[1]),
                                        high=numpy.array([1.] * odds.shape[1]))

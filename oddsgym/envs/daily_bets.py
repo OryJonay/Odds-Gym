@@ -45,7 +45,7 @@ class DailyOddsEnv(BaseOddsEnv):
 
     HEADERS = ['Date', 'Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
 
-    def __init__(self, odds, odds_column_names, results=None, max_number_of_games='auto'):
+    def __init__(self, odds, odds_column_names, results=None, max_number_of_games='auto', *args, **kwargs):
         """Initializes a new environment.
 
         We initialize the days array (because this environment doesn't iterate
@@ -74,7 +74,7 @@ class DailyOddsEnv(BaseOddsEnv):
             will support. The value 'auto' will calculate this value from the
             odds dataframe.
         """
-        super().__init__(odds.drop('date', 'columns'), odds_column_names, results)
+        super().__init__(odds.drop('date', axis='columns'), odds_column_names, results, *args, **kwargs)
         self._odds_with_dates = odds.copy()
         self.days = odds['date'].unique()
         self.days.sort()
@@ -88,7 +88,8 @@ class DailyOddsEnv(BaseOddsEnv):
                              "calculation of the maximum number of games"
                              ", or an integer higher than 0".format(max_number_of_games))
         self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
-                                                shape=(self.max_number_of_games, self._odds.shape[1]))
+                                                shape=(self.max_number_of_games, self._odds.shape[1]),
+                                                dtype=numpy.float64)
         self.action_space = gym.spaces.Box(low=-1,
                                            high=1,
                                            shape=(self.max_number_of_games,))

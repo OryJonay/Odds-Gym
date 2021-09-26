@@ -10,14 +10,14 @@ from oddsgym.envs.daily_bets import DailyPercentageOddsEnv
 @pytest.mark.parametrize("max_number_of_games", ['auto', 1])
 def test_max_number_of_games_valid(max_number_of_games):
     dataframe = DataFrame([{'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0}])
-    DailyPercentageOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'], max_number_of_games)
+    DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'], max_number_of_games)
 
 
 @pytest.mark.parametrize("max_number_of_games", [0, None, 3.5, 'some random string'])
 def test_max_number_of_games_invalid(max_number_of_games):
     dataframe = DataFrame([{'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0}])
     with pytest.raises(ValueError):
-        DailyPercentageOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'],
+        DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'],
                                max_number_of_games)
 
 
