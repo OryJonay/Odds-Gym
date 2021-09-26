@@ -31,7 +31,16 @@ jobs:
       run: |
         pip install tensorflow torch
     - name: Install rllib
+      env:
+        PY_VER: ${{ matrix.python-version }}
       run: |
+        if [ $PY_VER = "3.6" ]; then
+          pip install "https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp36-cp36m-manylinux2014_x86_64.whl"
+        elif [ $PY_VER = "3.7" ]; then
+          pip install "https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp37-cp37m-manylinux2014_x86_64.whl"
+        else
+          pip install "https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp38-cp38-manylinux2014_x86_64.whl"
+        fi
         pip install "ray[rllib]"
       if: matrix.rl-implementation == 'rllib'
     - name: Install stable-baselines-v3

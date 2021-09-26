@@ -74,7 +74,8 @@ class BaseOddsEnv(gym.Env):
         self._results = results
         self._odds_columns_names = odds_column_names
         self._verbose_actions = ActionsDict(self._odds_columns_names)
-        self.observation_space = gym.spaces.Box(low=1., high=float('Inf'), shape=(1, odds.shape[1]))
+        self.observation_space = gym.spaces.Box(low=1., high=float('Inf'),
+                                                shape=(1, odds.shape[1]), dtype=numpy.float64)
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.starting_bank = starting_bank
         self.current_step = 0

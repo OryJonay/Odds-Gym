@@ -33,7 +33,7 @@ try:
     from ray.tune.registry import register_env
 except ImportError:  # pragma: no cover
     pass
-else:
+else:  # pragma: no cover
     register_env('FootballDataDaily-ray-v0', lambda env_config: FootballDataDailyEnv(**env_config))
     register_env('FootballDataDailyPercent-ray-v0', lambda env_config: FootballDataDailyPercentageEnv(**env_config))
     register_env('TennisDataDaily-ray-v0', lambda env_config: TennisDataDailyEnv(**env_config))

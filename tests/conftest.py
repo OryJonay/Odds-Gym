@@ -46,7 +46,7 @@ def daily_bets_env(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+    return DailyOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
 
 
 @fixture()
@@ -57,7 +57,7 @@ def daily_bets_env_non_uniform(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 5, 'l': 4, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+    return DailyOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
 
 
 @fixture()
@@ -67,7 +67,7 @@ def daily_bets_percentage_env(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyPercentageOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+    return DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
 
 
 @fixture()
@@ -78,7 +78,7 @@ def daily_bets_percentage_env_non_uniform(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 5, 'l': 4, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyPercentageOddsEnv(dataframe.drop('result', 'columns'), ['w', 'l'], dataframe['result'])
+    return DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
 
 
 @fixture()
