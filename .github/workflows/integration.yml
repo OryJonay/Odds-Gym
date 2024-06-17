@@ -27,10 +27,7 @@ jobs:
         pip install .[tests]
     - name: Install integration tests dependencies
       run: |
-        pip install torch "ray[rllib]" grpcio
-        pip show grpcio
-        python -c "import multiprocessing as mp; print(mp.cpu_count())"
-        pip show torch
+        pip install torch "ray[rllib]"
     - name: Run integration tests
       run: |
         pytest -vvv -s tests -k "integration"
