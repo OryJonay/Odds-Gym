@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Theory behind the environment &mdash; oddsgym  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -28,14 +31,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> oddsgym
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            oddsgym
           </a>
               <div class="version">
-                0.8.2
+                0.9.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -71,8 +78,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Theory behind the environment</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Theory behind the environment</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/docsrc/theory.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -83,18 +90,18 @@
            <div itemprop="articleBody">
              
   <section id="theory-behind-the-environment">
-<h1>Theory behind the environment<a class="headerlink" href="#theory-behind-the-environment" title="Permalink to this headline"></a></h1>
+<h1>Theory behind the environment<a class="headerlink" href="#theory-behind-the-environment" title="Link to this heading"></a></h1>
 <section id="tl-dr-or-i-had-enough-of-math-for-a-lifetime">
-<h2>TL;DR (or, I had enough of math for a lifetime)<a class="headerlink" href="#tl-dr-or-i-had-enough-of-math-for-a-lifetime" title="Permalink to this headline"></a></h2>
+<h2>TL;DR (or, I had enough of math for a lifetime)<a class="headerlink" href="#tl-dr-or-i-had-enough-of-math-for-a-lifetime" title="Link to this heading"></a></h2>
 <p>The theory behind the environment is quite simple- placing a bet is choosing an
 possible outcome and a stake size, multiply it by the winning odds and subtract
 the initial bet and any losses.</p>
 </section>
 <section id="the-scenic-route">
-<h2>The scenic route<a class="headerlink" href="#the-scenic-route" title="Permalink to this headline"></a></h2>
+<h2>The scenic route<a class="headerlink" href="#the-scenic-route" title="Link to this heading"></a></h2>
 <p>After this (very) brief explanation, let’s get down to business:</p>
 <section id="definitions">
-<h3>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline"></a></h3>
+<h3>Definitions<a class="headerlink" href="#definitions" title="Link to this heading"></a></h3>
 <p>Let <span class="math notranslate nohighlight">\(g\)</span> be a game with <span class="math notranslate nohighlight">\(N\in\mathbb{N}\)</span> distinct possible outcomes, and let <span class="math notranslate nohighlight">\(p_i\)</span> be the probability
 of outcome <span class="math notranslate nohighlight">\(g_i\)</span>, so that <span class="math notranslate nohighlight">\(\sum\limits_{i \in N} p_i = 1\)</span>. Let <span class="math notranslate nohighlight">\(G\)</span> be the set of games so that <span class="math notranslate nohighlight">\(g_j\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> game.</p>
 <p>Let <span class="math notranslate nohighlight">\(o\)</span> be the decimal odds for a game <span class="math notranslate nohighlight">\(g\)</span>, so that <span class="math notranslate nohighlight">\(o_i\)</span> is the decimal odd for outcome <span class="math notranslate nohighlight">\(g_i\)</span>.
@@ -124,7 +131,7 @@ we’ll define <span class="math notranslate nohighlight">\(M_R\)</span> for the
 <p>So, the winnings on the set of games <span class="math notranslate nohighlight">\(G\)</span> is grand sum (the sum of all elements) of <span class="math notranslate nohighlight">\(W\)</span>.</p>
 </section>
 <section id="the-environments">
-<h3>The Environments<a class="headerlink" href="#the-environments" title="Permalink to this headline"></a></h3>
+<h3>The Environments<a class="headerlink" href="#the-environments" title="Link to this heading"></a></h3>
 <p>All the environments implemented are a subclass of an <a href="http://gym.openai.com/docs/#environments" target="_blank">OpenAI Gym envrionment</a>,
 with an observation space that equals to the odds (<span class="math notranslate nohighlight">\(O\)</span>) and an action space that equals to the bets (<span class="math notranslate nohighlight">\(B\)</span>).
 A step in the environments is simply getting the current subset of odds and placing a bet on them, calculating the reward
