@@ -1,5 +1,5 @@
 import pytest
-from gym.spaces import Box
+from gymnasium.spaces import Box
 from pandas import DataFrame
 from datetime import datetime, timedelta
 import numpy
@@ -164,7 +164,7 @@ def test_get_results_non_uniform(daily_bets_env_non_uniform, current_step, expec
                           (1, array([_(3), _(3)]), 4, True)])
 def test_step(daily_bets_env, current_step, action, expected_reward, finished):
     daily_bets_env.current_step = current_step
-    odds, reward, done, info = daily_bets_env.step(action)
+    odds, reward, done, truncated, info = daily_bets_env.step(action)
     assert reward == expected_reward
     assert done == finished
 
@@ -188,7 +188,7 @@ def test_step(daily_bets_env, current_step, action, expected_reward, finished):
                           ])
 def test_step_non_uniform(daily_bets_env_non_uniform, current_step, action, expected_reward, finished):
     daily_bets_env_non_uniform.current_step = current_step
-    odds, reward, done, info = daily_bets_env_non_uniform.step(action)
+    odds, reward, done, truncated, info = daily_bets_env_non_uniform.step(action)
     assert reward == expected_reward
     assert done == finished
 

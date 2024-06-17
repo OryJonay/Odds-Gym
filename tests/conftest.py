@@ -13,12 +13,12 @@ from oddsgym.envs.tennis import TennisDailyOddsEnv, TennisDailyPercentageOddsEnv
 
 @fixture()
 def basic_env(request):
-    return BaseOddsEnv(array([[1, 2], [3, 4]]), ['w', 'l'], [1, 0])
+    return BaseOddsEnv(array([[1, 2], [3, 4]]), ['w', 'l'], [1, 0], starting_bank=10)
 
 
 @fixture()
 def basic_percentage_env(request):
-    return BasePercentageOddsEnv(array([[2, 1]]), ['w', 'l'], [0])
+    return BasePercentageOddsEnv(array([[2, 1]]), ['w', 'l'], [0], starting_bank=10)
 
 
 @fixture()
@@ -27,7 +27,7 @@ def three_way_env(request):
                                         'home': 1, 'draw': 2, 'away': 3, 'result': 1},
                                        {'home_team': 'MCB', 'away_team': 'MTA',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 0}])
-    return ThreeWaySoccerOddsEnv(soccer_bets_dataframe)
+    return ThreeWaySoccerOddsEnv(soccer_bets_dataframe, starting_bank=10)
 
 
 @fixture()
@@ -36,7 +36,7 @@ def three_way_percentage_env(request):
                                         'home': 1, 'draw': 2, 'away': 3, 'result': 1},
                                        {'home_team': 'MCB', 'away_team': 'MTA',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 0}])
-    return ThreeWaySoccerPercentageOddsEnv(soccer_bets_dataframe)
+    return ThreeWaySoccerPercentageOddsEnv(soccer_bets_dataframe, starting_bank=10)
 
 
 @fixture()
@@ -46,7 +46,7 @@ def daily_bets_env(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
+    return DailyOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'], starting_bank=10)
 
 
 @fixture()
@@ -57,7 +57,7 @@ def daily_bets_env_non_uniform(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 5, 'l': 4, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
+    return DailyOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'], starting_bank=10)
 
 
 @fixture()
@@ -67,7 +67,7 @@ def daily_bets_percentage_env(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
+    return DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'], starting_bank=10)
 
 
 @fixture()
@@ -78,7 +78,7 @@ def daily_bets_percentage_env_non_uniform(request):
                            {'w': 4, 'l': 3, 'date': datetime.today().date(), 'result': 0},
                            {'w': 5, 'l': 4, 'date': datetime.today().date(), 'result': 0},
                            ])
-    return DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'])
+    return DailyPercentageOddsEnv(dataframe.drop('result', axis='columns'), ['w', 'l'], dataframe['result'], starting_bank=10)
 
 
 @fixture()
@@ -101,7 +101,7 @@ def three_way_daily_env(request):
                                        {'home_team': 'MTA', 'away_team': 'MCB',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 2,
                                         'date': datetime.today().date()}])
-    return ThreeWaySoccerDailyOddsEnv(soccer_bets_dataframe)
+    return ThreeWaySoccerDailyOddsEnv(soccer_bets_dataframe, starting_bank=10)
 
 
 @fixture()
@@ -124,7 +124,7 @@ def three_way_daily_env_non_uniform(request):
                                        {'home_team': 'MTA', 'away_team': 'MCB',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 2,
                                         'date': datetime.today().date()}])
-    return ThreeWaySoccerDailyOddsEnv(soccer_bets_dataframe)
+    return ThreeWaySoccerDailyOddsEnv(soccer_bets_dataframe, starting_bank=10)
 
 
 @fixture()
@@ -147,7 +147,7 @@ def three_way_daily_percentage_env(request):
                                        {'home_team': 'MTA', 'away_team': 'MCB',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 2,
                                         'date': datetime.today().date()}])
-    return ThreeWaySoccerDailyPercentageOddsEnv(soccer_bets_dataframe)
+    return ThreeWaySoccerDailyPercentageOddsEnv(soccer_bets_dataframe, starting_bank=10)
 
 
 @fixture()
@@ -170,7 +170,7 @@ def three_way_daily_percentage_env_non_uniform(request):
                                        {'home_team': 'MTA', 'away_team': 'MCB',
                                         'home': 4, 'draw': 3, 'away': 2, 'result': 2,
                                         'date': datetime.today().date()}])
-    return ThreeWaySoccerDailyPercentageOddsEnv(soccer_bets_dataframe)
+    return ThreeWaySoccerDailyPercentageOddsEnv(soccer_bets_dataframe, starting_bank=10)
 
 
 @fixture
@@ -179,7 +179,7 @@ def tennis_env(request):
                                         'win': 1.11, 'lose': 6.68, 'result': 0},
                                        {'winner': 'Berankis R.', 'loser': 'Carballes Baena R.',
                                         'win': 1.73, 'lose': 2.1, 'result': 0}])
-    return TennisOddsEnv(tennis_bets_dataframe)
+    return TennisOddsEnv(tennis_bets_dataframe, starting_bank=10)
 
 
 @fixture
@@ -188,7 +188,7 @@ def tennis_percentage_env(request):
                                         'win': 1.11, 'lose': 6.68, 'result': 0},
                                        {'winner': 'Berankis R.', 'loser': 'Carballes Baena R.',
                                         'win': 1.73, 'lose': 2.1, 'result': 0}])
-    return TennisPercentageOddsEnv(tennis_bets_dataframe)
+    return TennisPercentageOddsEnv(tennis_bets_dataframe, starting_bank=10)
 
 
 @fixture
@@ -205,7 +205,7 @@ def tennis_daily_env(request):
                                         'win': 1.39, 'lose': 2.98, 'result': 0, 'date': datetime(2020, 1, 21).date()},
                                        {'winner': 'Querrey S.', 'loser': 'Berankis R.',
                                         'win': 1.34, 'lose': 3.27, 'result': 0, 'date': datetime(2020, 1, 22).date()}])
-    return TennisDailyOddsEnv(tennis_bets_dataframe)
+    return TennisDailyOddsEnv(tennis_bets_dataframe, starting_bank=10)
 
 
 @fixture
@@ -222,4 +222,4 @@ def tennis_daily_percentage_env(request):
                                         'win': 1.39, 'lose': 2.98, 'result': 0, 'date': datetime(2020, 1, 21).date()},
                                        {'winner': 'Querrey S.', 'loser': 'Berankis R.',
                                         'win': 1.34, 'lose': 3.27, 'result': 0, 'date': datetime(2020, 1, 22).date()}])
-    return TennisDailyPercentageOddsEnv(tennis_bets_dataframe)
+    return TennisDailyPercentageOddsEnv(tennis_bets_dataframe, starting_bank=10)

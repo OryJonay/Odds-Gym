@@ -3,7 +3,7 @@ import pytest
 import numpy
 
 from unittest import mock
-from gym.spaces import Box
+from gymnasium.spaces import Box
 
 
 def test_attributes(basic_env):
@@ -20,14 +20,14 @@ def test_attributes(basic_env):
                                                     numpy.array((2, -1)),
                                                     numpy.array((3, 0))])
 def test_step(basic_env, action, expected_reward):
-    odds, reward, done, _ = basic_env.step(action)
+    odds, reward, done, *_ = basic_env.step(action)
     assert reward == expected_reward
     assert not done
     assert basic_env.current_step == 1
 
 
 def test_reset(basic_env):
-    odds, reward, done, info = basic_env.step(1)
+    odds, reward, done, truncated, info = basic_env.step(1)
     assert reward == 1
     assert basic_env.balance == basic_env.starting_bank + 1
     assert not done
@@ -36,7 +36,7 @@ def test_reset(basic_env):
     assert info['results'] == 1
     assert info['reward'] == 1
     assert not info['done']
-    odds, reward, done, _ = basic_env.step(2)
+    odds, reward, done, *_ = basic_env.step(2)
     assert reward == 2
     assert done
     basic_env.reset()
@@ -66,7 +66,7 @@ def test_render(basic_env):
 @pytest.mark.parametrize("action", range(4))
 def test_step_when_balance_is_0(basic_env, action):
     basic_env.balance = 0
-    odds, reward, done, _ = basic_env.step(action)
+    odds, reward, done, *_ = basic_env.step(action)
     assert reward == 0
     assert done
     assert basic_env.current_step == 0
@@ -74,7 +74,7 @@ def test_step_when_balance_is_0(basic_env, action):
 
 def test_step_illegal_action(basic_env):
     basic_env.balance = 1
-    odds, reward, done, _ = basic_env.step(3)  # illegal - making a double when when the balance is 1
+    odds, reward, done, *_ = basic_env.step(3)  # illegal - making a double when when the balance is 1
     assert reward == -2
     assert not done
     assert basic_env.current_step == 1

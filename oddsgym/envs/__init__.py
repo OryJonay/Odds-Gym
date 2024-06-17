@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 
 from .base import BaseOddsEnv
 from .base_percentage import BasePercentageOddsEnv
@@ -30,11 +30,11 @@ gym.register(id='TennisDataDailyPercent-v0',
 
 # register the *-data.co.uk environments in ray, only if ray is installed
 try:
-    from ray.tune.registry import register_env
+    from ray import tune
 except ImportError:  # pragma: no cover
     pass
 else:  # pragma: no cover
-    register_env('FootballDataDaily-ray-v0', lambda env_config: FootballDataDailyEnv(**env_config))
-    register_env('FootballDataDailyPercent-ray-v0', lambda env_config: FootballDataDailyPercentageEnv(**env_config))
-    register_env('TennisDataDaily-ray-v0', lambda env_config: TennisDataDailyEnv(**env_config))
-    register_env('TennisDataDailyPercent-ray-v0', lambda env_config: TennisDataDailyPercentageEnv(**env_config))
+    tune.register_env('FootballDataDaily-ray-v0', lambda env_config: gym.wrappers.FlattenObservation(FootballDataDailyEnv(env_config)))
+    tune.register_env('FootballDataDailyPercent-ray-v0', lambda env_config: gym.wrappers.FlattenObservation(FootballDataDailyPercentageEnv(env_config)))
+    tune.register_env('TennisDataDaily-ray-v0', lambda env_config: gym.wrappers.FlattenObservation(TennisDataDailyEnv(env_config)))
+    tune.register_env('TennisDataDailyPercent-ray-v0', lambda env_config: gym.wrappers.FlattenObservation(TennisDataDailyPercentageEnv(env_config)))

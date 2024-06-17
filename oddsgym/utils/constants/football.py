@@ -1,7 +1,7 @@
 import os
 
 
-CSV_URL = 'http://www.football-data.co.uk/mmz4281/{start}{end}/{country}{league}.csv'
+CSV_URL = 'https://www.football-data.co.uk/mmz4281/{start}{end}/{country}{league}.csv'
 
 COUNTRIES = {'England': 'E', 'Scotland': 'SC', 'Germany': 'D', 'Italy': 'I', 'Spain': 'SP', 'France': 'F',
              'Netherlands': 'N', 'Belgium': 'B', 'Portugal': 'P', 'Turkey': 'T', 'Greece': 'G'}

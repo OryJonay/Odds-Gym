@@ -2,7 +2,7 @@ import itertools
 import os
 import numpy
 import pandas
-import gym
+import gymnasium as gym
 from .tennis import TennisOddsEnv
 from ..utils.constants.tennis import CSV_CACHE_PATH, CSV_URL, TOURNAMENTS, SITES, YEARS
 
@@ -18,17 +18,19 @@ class TennisDataMixin(object):
         if os.path.exists(CSV_CACHE_PATH):
             csvs = [pandas.read_csv(os.path.join(CSV_CACHE_PATH,
                                                  f'{i}',
-                                                 f'{tournament}{women}.csv'))
+                                                 f'{tournament}{women}.csv'),
+                                                 on_bad_lines="warn")
                     for i in range(min(YEARS), year if year != min(YEARS) else year + 1)
                     for women in ['', 'w']]
         else:
             csvs = [pandas.read_csv(CSV_URL.format(tournament=tournament,
                                                    year=i,
-                                                   women=women))
+                                                   women=women),
+                                                   on_bad_lines="warn")
                     for i in range(min(YEARS), year if year != min(YEARS) else year + 1)
                     for women in ['', 'w']]
         raw_odds_data = pandas.concat(csvs)
-        raw_odds_data['Date'] = pandas.to_datetime(raw_odds_data['Date'], dayfirst=True)
+        raw_odds_data['Date'] = pandas.to_datetime(raw_odds_data['Date'], dayfirst=True, format="mixed")
         odds = [''.join(odd) for odd in itertools.product(SITES, ['W', 'L'])
                 if ''.join(odd) in raw_odds_data.columns]
         odds_dataframe = raw_odds_data[['Winner', 'Loser', 'Date'] + odds].copy()
@@ -52,8 +54,7 @@ class TennisDataDailyEnv(TennisDataMixin, TennisOddsEnv):
     ENV_COLUMNS = ['winner', 'loser', 'date', 'result']
     ODDS_COLUMNS = ['win', 'lose']
 
-    def __init__(self, tournament='ausopen', year=2010, columns='max', extra=False,
-                 optimize='reward', *args, **kwargs):
+    def __init__(self, config=None, *args, **kwargs):
         """Initializes a new environment
 
         Parameters
@@ -70,21 +71,27 @@ class TennisDataDailyEnv(TennisDataMixin, TennisOddsEnv):
         optimize: {"balance", "reward"}, default to "balance"
             Which type of optimization to use.
         """
+        env_config = config or {}
+        tournament = env_config.pop("tournament", "ausopen")
+        year = env_config.pop("year", 2010)
+        columns = env_config.pop("columns", "max")
+        extra = env_config.pop("extra", False)
+        optimize = env_config.pop("optimize", "reward")
         odds_dataframe = self._create_odds_dataframe(tournament, year)
         odds_dataframe.rename({f'{columns.title()}W': 'win',
                                f'{columns.title()}L': 'lose'}, axis='columns', inplace=True)
         super().__init__(odds_dataframe[self.ENV_COLUMNS + self.ODDS_COLUMNS],
-                         *args, **kwargs)
+                         *args, **env_config, **kwargs)
         self._extra_odds = odds_dataframe
         self._extra = extra
         self._optimize = optimize
         if self._extra:
-            self.observation_space = gym.spaces.Box(low=0., high='Inf',
+            self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
                                                     shape=(self.observation_space.shape[0],
                                                            self._extra_odds.shape[1] - len(self.ENV_COLUMNS)))
 
     def step(self, action):
-        obs, reward, done, info = super().step(action)
+        obs, reward, done, truncated, info = super().step(action)
         if self._extra:
             obs = self.get_extra_odds()
         if self._optimize == 'balance':
@@ -94,7 +101,7 @@ class TennisDataDailyEnv(TennisDataMixin, TennisOddsEnv):
         else:
             if not info['legal_bet']:
                 reward = -(self.starting_bank * 1e-6)
-        return obs, reward, done, info
+        return obs, reward, done, truncated, info
 
     def get_extra_odds(self):
         extra_odds = numpy.zeros([*self.observation_space.shape])

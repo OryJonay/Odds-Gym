@@ -1,6 +1,6 @@
 import pytest
 import numpy
-from gym.spaces import Box
+from gymnasium.spaces import Box
 
 
 def test_attributes(tennis_percentage_env):
@@ -16,7 +16,7 @@ def test_attributes(tennis_percentage_env):
                                                     (numpy.array((0, 0.1)), -1),
                                                     (numpy.array((0.1, 0.1)), -0.89)])
 def test_step(tennis_percentage_env, action, expected_reward):
-    odds, reward, done, _ = tennis_percentage_env.step(action)
+    odds, reward, done, *_ = tennis_percentage_env.step(action)
     numpy.testing.assert_almost_equal(reward, expected_reward, 2)
     assert not done
     assert tennis_percentage_env.current_step == 1

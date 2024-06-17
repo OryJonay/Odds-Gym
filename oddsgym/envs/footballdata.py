@@ -3,7 +3,7 @@ import itertools
 import os
 import numpy
 import pandas
-import gym
+import gymnasium as gym
 from .soccer import ThreeWaySoccerOddsEnv
 from ..utils.constants.football import CSV_CACHE_PATH, CSV_URL, COUNTRIES, LEAGUES, SITES
 
@@ -27,16 +27,18 @@ class FootballDataMixin(object):
         if os.path.exists(CSV_CACHE_PATH):
             csvs = [pandas.read_csv(os.path.join(CSV_CACHE_PATH,
                                                  f'{str(i).zfill(2)}{str(i + 1).zfill(2)}',
-                                                 f'{COUNTRIES[country]}{LEAGUES[country][league]}.csv'))
+                                                 f'{COUNTRIES[country]}{LEAGUES[country][league]}.csv'),
+                                                 on_bad_lines="warn")
                     for i in range(int(str(start)[-2:]), int(str(end)[-2:]))]
             raw_odds_data = pandas.concat(csvs)
         else:
             raw_odds_data = pandas.concat([pandas.read_csv(CSV_URL.format(country=COUNTRIES[country],
                                                                           league=LEAGUES[country][league],
                                                                           start=str(i).zfill(2),
-                                                                          end=str(i + 1).zfill(2)))
+                                                                          end=str(i + 1).zfill(2)),
+                                                                          on_bad_lines="warn")
                                            for i in range(int(str(start)[-2:]), int(str(end)[-2:]))])
-        raw_odds_data['Date'] = pandas.to_datetime(raw_odds_data['Date'], dayfirst=True)
+        raw_odds_data['Date'] = pandas.to_datetime(raw_odds_data['Date'], dayfirst=True, format="mixed")
         odds = [''.join(odd) for odd in itertools.product(SITES, ['H', 'D', 'A'])
                 if ''.join(odd) in raw_odds_data.columns]
         odds_dataframe = raw_odds_data[['HomeTeam', 'AwayTeam', 'Date'] + odds].copy()
@@ -62,8 +64,7 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerOddsEnv):
     ENV_COLUMNS = ['home_team', 'away_team', 'date', 'result']
     ODDS_COLUMNS = ['home', 'draw', 'away']
 
-    def __init__(self, country='England', league='Premier League', start=2010, end=2011, columns='max', extra=False,
-                 optimize='reward', *args, **kwargs):
+    def __init__(self, config=None, *args, **kwargs):
         """Initializes a new environment
 
         Parameters
@@ -84,22 +85,32 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerOddsEnv):
         optimize: {"balance", "reward"}, default to "balance"
             Which type of optimization to use.
         """
+        env_config = config or {}
+        import logging
+        logging.basicConfig(level=logging.INFO)
+        logging.info("Env config %s", env_config)
+        country = env_config.pop("country", "England")
+        league = env_config.pop("league", "Premier League")
+        start = env_config.pop("start", 2010)
+        end = env_config.pop("end", 2011)
+        columns = env_config.pop("columns", "max")
+        extra = env_config.pop("extra", False)
+        optimize = env_config.pop("optimize", "reward")
         odds_dataframe = self._create_odds_dataframe(country, league, start, end)
         odds_dataframe.rename({f'{columns.title()}H': 'home',
                                f'{columns.title()}D': 'draw',
                                f'{columns.title()}A': 'away'}, axis='columns', inplace=True)
-        super().__init__(odds_dataframe[self.ENV_COLUMNS + self.ODDS_COLUMNS],
-                         *args, **kwargs)
+        super().__init__(odds_dataframe[self.ENV_COLUMNS + self.ODDS_COLUMNS], **env_config)
         self._extra_odds = odds_dataframe
         self._extra = extra
         self._optimize = optimize
         if self._extra:
-            self.observation_space = gym.spaces.Box(low=0., high='Inf',
+            self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
                                                     shape=(self.observation_space.shape[0],
                                                            self._extra_odds.shape[1] - len(self.ENV_COLUMNS)))
 
     def step(self, action):
-        obs, reward, done, info = super().step(action)
+        obs, reward, done, truncated, info = super().step(action)
         if self._extra:
             obs = self.get_extra_odds()
         if self._optimize == 'balance':
@@ -109,7 +120,7 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerOddsEnv):
         else:
             if not info['legal_bet']:
                 reward = -(self.starting_bank * 1e-6)
-        return obs, reward, done, info
+        return obs, reward, done, truncated, info
 
     def get_extra_odds(self):
         extra_odds = numpy.zeros([*self.observation_space.shape])

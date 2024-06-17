@@ -2,7 +2,7 @@ import pytest
 import numpy
 import io
 
-from gym.spaces import Box
+from gymnasium.spaces import Box
 from unittest import mock
 
 
@@ -22,19 +22,19 @@ def test_attributes(tennis_env):
                                                     (2, 0.11),
                                                     (3, -0.89)])
 def test_step(tennis_env, action, expected_reward):
-    odds, reward, done, _ = tennis_env.step(action)
+    odds, reward, done, *_ = tennis_env.step(action)
     numpy.testing.assert_almost_equal(reward, expected_reward, 2)
     assert not done
     assert tennis_env.current_step == 1
 
 
 def test_multiple_steps(tennis_env):
-    odds, reward, done, _ = tennis_env.step(1)
+    odds, reward, done, *_ = tennis_env.step(1)
     assert reward == -1
     assert tennis_env.balance == tennis_env.starting_bank - 1
     assert not done
     assert tennis_env.current_step == 1
-    odds, reward, done, _ = tennis_env.step(2)
+    odds, reward, done, *_ = tennis_env.step(2)
     numpy.testing.assert_almost_equal(reward, 0.73, 2)
     numpy.testing.assert_almost_equal(tennis_env.balance, tennis_env.starting_bank - 1 + 0.73, 2)
     assert done
