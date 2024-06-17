@@ -1,7 +1,7 @@
-import gym
+import gymnasium as gym
 import numpy
 import numexpr
-from pandas import DataFrame
+from pandas import DataFrame, concat as concat_dataframes
 from .base import BaseOddsEnv
 
 
@@ -77,7 +77,7 @@ class DailyOddsEnv(BaseOddsEnv):
         super().__init__(odds.drop('date', axis='columns'), odds_column_names, results, *args, **kwargs)
         self._odds_with_dates = odds.copy()
         self.days = odds['date'].unique()
-        self.days.sort()
+        self.days = self.days[self.days.argsort()]
         self._max_number_of_games = None
         if max_number_of_games == 'auto':
             self.max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
@@ -114,7 +114,7 @@ class DailyOddsEnv(BaseOddsEnv):
         filler_odds = DataFrame(numpy.zeros(numpy.array([self.max_number_of_games, self._odds.shape[1]]) -
                                             numpy.array([current_odds.shape[0], 0])),
                                 columns=self._odds_columns_names)
-        return current_odds.append(filler_odds, ignore_index=True).values
+        return concat_dataframes([current_odds, filler_odds], ignore_index=True).values
 
     def get_bet(self, action):
         """Returns the betting matrix for the action provided.

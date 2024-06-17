@@ -2,7 +2,7 @@ import pytest
 import numpy
 import io
 
-from gym.spaces import Box
+from gymnasium.spaces import Box
 from numpy import array
 from unittest import mock
 
@@ -32,7 +32,7 @@ def test_attributes(three_way_daily_env):
                                                     ((_(6), _(6)), 2),
                                                     ((_(7), _(7)), 0)])
 def test_step(three_way_daily_env, action, expected_reward):
-    odds, reward, done, _ = three_way_daily_env.step(action)
+    odds, reward, done, *_ = three_way_daily_env.step(action)
     assert reward == expected_reward
     assert not done
     assert three_way_daily_env.current_step == 1
@@ -50,22 +50,22 @@ def test_step(three_way_daily_env, action, expected_reward):
                                                                  (2, array([_(3), _(0), _(7)]), 0)])
 def test_step_non_uniform(three_way_daily_env_non_uniform, current_step, action, expected_reward):
     three_way_daily_env_non_uniform.current_step = current_step
-    odds, reward, done, info = three_way_daily_env_non_uniform.step(action)
+    odds, reward, done, truncated, info = three_way_daily_env_non_uniform.step(action)
     assert reward == expected_reward
 
 
 def test_multiple_steps(three_way_daily_env):
-    odds, reward, done, info = three_way_daily_env.step((_(1), _(1)))
+    odds, reward, done, truncated, info = three_way_daily_env.step((_(1), _(1)))
     assert reward == -2
     assert three_way_daily_env.balance == three_way_daily_env.starting_bank - 2
     assert not done
     assert three_way_daily_env.current_step == 1
-    odds, reward, done, info = three_way_daily_env.step((_(4), _(4)))
+    odds, reward, done, truncated, info = three_way_daily_env.step((_(4), _(4)))
     assert reward == -2
     assert three_way_daily_env.balance == three_way_daily_env.starting_bank - 2 - 2
     assert not done
     assert three_way_daily_env.current_step == 2
-    odds, reward, done, info = three_way_daily_env.step((_(2), _(2)))
+    odds, reward, done, truncated, info = three_way_daily_env.step((_(2), _(2)))
     assert reward == -2
     assert three_way_daily_env.balance == three_way_daily_env.starting_bank - 2 - 2 - 2
     assert done
@@ -73,17 +73,17 @@ def test_multiple_steps(three_way_daily_env):
 
 def test_multiple_steps_non_uniform(three_way_daily_env_non_uniform):
     current_bank = three_way_daily_env_non_uniform.starting_bank
-    odds, reward, done, info = three_way_daily_env_non_uniform.step(array([_(2), _(7)]))
+    odds, reward, done, truncated, info = three_way_daily_env_non_uniform.step(array([_(2), _(7)]))
     assert three_way_daily_env_non_uniform.balance == current_bank + 2
     assert not done
     assert three_way_daily_env_non_uniform.current_step == 1
     current_bank += 2
-    odds, reward, done, info = three_way_daily_env_non_uniform.step(array([_(1), _(3), _(7)]))
+    odds, reward, done, truncated, info = three_way_daily_env_non_uniform.step(array([_(1), _(3), _(7)]))
     assert three_way_daily_env_non_uniform.balance == current_bank + 2
     assert not done
     assert three_way_daily_env_non_uniform.current_step == 2
     current_bank += 2
-    odds, reward, done, info = three_way_daily_env_non_uniform.step(array([_(2), _(4), _(1)]))
+    odds, reward, done, truncated, info = three_way_daily_env_non_uniform.step(array([_(2), _(4), _(1)]))
     assert three_way_daily_env_non_uniform.balance == current_bank + 3
     assert done
 

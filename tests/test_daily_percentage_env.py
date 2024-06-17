@@ -1,5 +1,5 @@
 import pytest
-from gym.spaces import Box
+from gymnasium.spaces import Box
 from pandas import DataFrame
 from datetime import datetime, timedelta
 import numpy
@@ -72,7 +72,7 @@ def test_get_bet(daily_bets_percentage_env, actions, bets):
                           (1, array([[0.1, 0.1], [0.1, 0.1]]).reshape(4), 4, True)])
 def test_step(daily_bets_percentage_env, current_step, action, expected_reward, finished):
     daily_bets_percentage_env.current_step = current_step
-    odds, reward, done, info = daily_bets_percentage_env.step(action)
+    odds, reward, done, truncated, info = daily_bets_percentage_env.step(action)
     assert reward == expected_reward
     assert done == finished
 
@@ -185,7 +185,7 @@ def test_get_results_non_uniform(daily_bets_percentage_env_non_uniform, current_
                           (2, array([0, 0.1, 0.1, 0.1, 0.0, 0]), 1, True)])
 def test_step_non_uniform(daily_bets_percentage_env_non_uniform, current_step, action, expected_reward, finished):
     daily_bets_percentage_env_non_uniform.current_step = current_step
-    odds, reward, done, info = daily_bets_percentage_env_non_uniform.step(action)
+    odds, reward, done, truncated, info = daily_bets_percentage_env_non_uniform.step(action)
     assert reward == expected_reward
     assert done == finished
 
@@ -208,6 +208,6 @@ def test_step_non_uniform(daily_bets_percentage_env_non_uniform, current_step, a
 def test_step_non_uniform_non_round_percentage_with_balance(daily_bets_percentage_env_non_uniform, current_step,
                                                             action, expected_reward, finished):
     daily_bets_percentage_env_non_uniform.current_step = current_step
-    odds, reward, done, info = daily_bets_percentage_env_non_uniform.step(action)
+    odds, reward, done, truncated, info = daily_bets_percentage_env_non_uniform.step(action)
     assert reward == expected_reward
     assert done == finished

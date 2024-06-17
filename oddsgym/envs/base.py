@@ -1,10 +1,11 @@
-import gym
+import gymnasium as gym
 import numpy
 import numexpr
 from itertools import compress
 from pandas import DataFrame
 from tabulate import tabulate
-from infi.traceback import pretty_traceback_and_exit_decorator
+from typing import Any
+# from infi.traceback import pretty_traceback_and_exit_decorator
 
 
 class ActionsDict(dict):
@@ -56,7 +57,7 @@ class BaseOddsEnv(gym.Env):
     metadata = {'render.modes': ['human']}
     HEADERS = ['Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
 
-    def __init__(self, odds, odds_column_names, results=None, starting_bank=10):
+    def __init__(self, odds, odds_column_names, results=None, starting_bank=300):
         """Initializes a new environment
 
         Parameters
@@ -83,6 +84,12 @@ class BaseOddsEnv(gym.Env):
 
     def _get_current_index(self):
         return self.current_step % self._odds.shape[0]
+    
+    def _get_maximum_reward(self):
+        """Returns the maximum reward possible for this environment"""
+        results = numpy.zeros(shape=self._odds.shape)
+        results[numpy.arange(self._odds.shape[0]), numpy.array(self._results)] = 1
+        return (results * self._odds).sum().sum()
 
     def get_odds(self):
         """Returns the odds for the current step.
@@ -110,7 +117,7 @@ class BaseOddsEnv(gym.Env):
         """
         return numpy.array([[bit for bit in numpy.binary_repr(action, width=self._odds.shape[1])]]).astype(int)
 
-    @pretty_traceback_and_exit_decorator
+    # @pretty_traceback_and_exit_decorator
     def step(self, action):
         """Run one timestep of the environment's dynamics. When end of episode is reached,
         you are responsible for calling reset() to reset this environment's state.
@@ -137,6 +144,7 @@ class BaseOddsEnv(gym.Env):
         odds = self.get_odds()
         reward = 0
         done = False
+        truncated = False
         info = self.create_info(action)
         if self.balance < 1:  # no more money :-(
             done = True
@@ -158,7 +166,7 @@ class BaseOddsEnv(gym.Env):
             else:
                 odds = self.get_odds()
         info.update(done=done)
-        return odds, reward, done, info
+        return odds, reward, done, truncated, info
 
     def get_reward(self, bet, odds, results):
         """ Calculates the reward
@@ -180,7 +188,7 @@ class BaseOddsEnv(gym.Env):
         expense = numexpr.evaluate('sum(bet * bet_size_matrix)')
         return reward - expense
 
-    def reset(self):
+    def reset(self, *, seed=None, options=None):
         """Resets the state of the environment and returns an initial observation.
 
         Returns
@@ -190,7 +198,7 @@ class BaseOddsEnv(gym.Env):
         """
         self.balance = self.starting_bank
         self.current_step = 0
-        return self.get_odds()
+        return self.get_odds(), {}
 
     def render(self, mode='human'):
         """Outputs the current balance and the current step.
@@ -265,7 +273,7 @@ class BaseOddsEnv(gym.Env):
         info : dict
             The info dictionary.
         """
-        return {'current_step': self.current_step, 'odds': self.get_odds(), 'verbose_action': self._verbose_actions[action],
+        return {'current_step': self.current_step, 'odds': self.get_odds().tolist(), 'verbose_action': self._verbose_actions[action],
                 'action': action, 'balance': self.balance, 'reward': 0,
                 'legal_bet': False, 'results': None, 'done': False}
 

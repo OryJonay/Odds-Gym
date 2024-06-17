@@ -7,13 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rl-implementation: [rllib, stable_baselines_v3]
-        python-version: [3.6, 3.7, 3.8]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4.1.6
       name: Checkout code
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5.1.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install integration tests apt dependencies
@@ -22,31 +21,13 @@ jobs:
         sudo apt-get install -y cmake libopenmpi-dev python3-dev zlib1g-dev
     - name: Upgrade pip
       run: |
-        python -m pip install --upgrade pip
+        pip install --upgrade pip
     - name: Install package
       run: |
         pip install .[tests]
-
     - name: Install integration tests dependencies
       run: |
-        pip install tensorflow torch
-    - name: Install rllib
-      env:
-        PY_VER: ${{ matrix.python-version }}
-      run: |
-        if [ $PY_VER = "3.6" ]; then
-          pip install "https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp36-cp36m-manylinux2014_x86_64.whl"
-        elif [ $PY_VER = "3.7" ]; then
-          pip install "https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp37-cp37m-manylinux2014_x86_64.whl"
-        else
-          pip install "https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-2.0.0.dev0-cp38-cp38-manylinux2014_x86_64.whl"
-        fi
-        pip install "ray[rllib]"
-      if: matrix.rl-implementation == 'rllib'
-    - name: Install stable-baselines-v3
-      run: |
-        pip install stable-baselines3
-      if: matrix.rl-implementation == 'stable_baselines_v3'
+        pip install torch "ray[rllib]"
     - name: Run integration tests
       run: |
-        pytest -v tests -k "integration and ${{ matrix.rl-implementation }}" -W ignore::UserWarning -W ignore::DeprecationWarning -W ignore::RuntimeWarning
+        pytest -vvv -s tests -k "integration"

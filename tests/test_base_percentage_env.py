@@ -1,6 +1,6 @@
 import pytest
 import numpy
-from gym.spaces import Box
+from gymnasium.spaces import Box
 
 
 def test_attributes(basic_percentage_env):
@@ -18,7 +18,7 @@ def test_attributes(basic_percentage_env):
                                                     (numpy.array((0., 0.25)), -2.5),
                                                     (numpy.array((0.25, 0.25)), 0)])
 def test_step(basic_percentage_env, action, expected_reward):
-    odds, reward, done, _ = basic_percentage_env.step(action)
+    odds, reward, done, *_ = basic_percentage_env.step(action)
     assert reward == expected_reward
     assert done
 
@@ -27,5 +27,5 @@ def test_step(basic_percentage_env, action, expected_reward):
                                                      (numpy.array((0.0, 1.1)), -11),
                                                      (numpy.array((0.3, 0.8)), -11)])
 def test_legal_bet(basic_percentage_env, action, expected_reward):
-    _, reward, _, _ = basic_percentage_env.step(action)
+    _, reward, _, *_ = basic_percentage_env.step(action)
     assert expected_reward == reward
