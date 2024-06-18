@@ -1,7 +1,9 @@
 import gymnasium as gym
-import numpy
 import numexpr
-from pandas import DataFrame, concat as concat_dataframes
+import numpy
+from pandas import DataFrame
+from pandas import concat as concat_dataframes
+
 from .base import BaseOddsEnv
 
 
@@ -43,9 +45,27 @@ class DailyOddsEnv(BaseOddsEnv):
 
     """
 
-    HEADERS = ['Date', 'Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
+    HEADERS = [
+        "Date",
+        "Current Step",
+        "Odds",
+        "Verbose Action",
+        "Action",
+        "Balance",
+        "Reward",
+        "Results",
+        "Done",
+    ]
 
-    def __init__(self, odds, odds_column_names, results=None, max_number_of_games='auto', *args, **kwargs):
+    def __init__(
+        self,
+        odds,
+        odds_column_names,
+        results=None,
+        max_number_of_games="auto",
+        *args,
+        **kwargs,
+    ):
         """Initializes a new environment.
 
         We initialize the days array (because this environment doesn't iterate
@@ -74,30 +94,43 @@ class DailyOddsEnv(BaseOddsEnv):
             will support. The value 'auto' will calculate this value from the
             odds dataframe.
         """
-        super().__init__(odds.drop('date', axis='columns'), odds_column_names, results, *args, **kwargs)
+        super().__init__(
+            odds.drop("date", axis="columns"),
+            odds_column_names,
+            results,
+            *args,
+            **kwargs,
+        )
         self._odds_with_dates = odds.copy()
-        self.days = odds['date'].unique()
+        self.days = odds["date"].unique()
         self.days = self.days[self.days.argsort()]
         self._max_number_of_games = None
-        if max_number_of_games == 'auto':
-            self.max_number_of_games = odds.set_index('date').groupby(by='date').size().max()
+        if max_number_of_games == "auto":
+            self.max_number_of_games = (
+                odds.set_index("date").groupby(by="date").size().max()
+            )
         elif isinstance(max_number_of_games, int) and max_number_of_games > 0:
             self.max_number_of_games = max_number_of_games
         else:
-            raise ValueError("Invalid value for max_number_of_games: {}.\nPass 'auto' for automatic "
-                             "calculation of the maximum number of games"
-                             ", or an integer higher than 0".format(max_number_of_games))
-        self.observation_space = gym.spaces.Box(low=0., high=float('Inf'),
-                                                shape=(self.max_number_of_games, self._odds.shape[1]),
-                                                dtype=numpy.float64)
-        self.action_space = gym.spaces.Box(low=-1,
-                                           high=1,
-                                           shape=(self.max_number_of_games,))
+            raise ValueError(
+                "Invalid value for max_number_of_games: {}.\nPass 'auto' for automatic "
+                "calculation of the maximum number of games"
+                ", or an integer higher than 0".format(max_number_of_games)
+            )
+        self.observation_space = gym.spaces.Box(
+            low=0.0,
+            high=float("Inf"),
+            shape=(self.max_number_of_games, self._odds.shape[1]),
+            dtype=numpy.float64,
+        )
+        self.action_space = gym.spaces.Box(
+            low=-1, high=1, shape=(self.max_number_of_games,)
+        )
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
 
     def _get_current_index(self):
         current_day = self.days[self.current_step]
-        return self._odds_with_dates[self._odds_with_dates['date'] == current_day].index
+        return self._odds_with_dates[self._odds_with_dates["date"] == current_day].index
 
     def get_odds(self):
         """Returns the odds for the current step.
@@ -111,9 +144,13 @@ class DailyOddsEnv(BaseOddsEnv):
             (rows with only 0).
         """
         current_odds = self._odds.iloc[self._get_current_index()]
-        filler_odds = DataFrame(numpy.zeros(numpy.array([self.max_number_of_games, self._odds.shape[1]]) -
-                                            numpy.array([current_odds.shape[0], 0])),
-                                columns=self._odds_columns_names)
+        filler_odds = DataFrame(
+            numpy.zeros(
+                numpy.array([self.max_number_of_games, self._odds.shape[1]])
+                - numpy.array([current_odds.shape[0], 0])
+            ),
+            columns=self._odds_columns_names,
+        )
         return concat_dataframes([current_odds, filler_odds], ignore_index=True).values
 
     def get_bet(self, action):
@@ -130,9 +167,15 @@ class DailyOddsEnv(BaseOddsEnv):
             The betting matrix, where for each row, each outcome specified in
             action[row] has a value of 1 and 0 otherwise.
         """
-        full_actions = numpy.zeros(shape=(self.max_number_of_games, self._odds.shape[1]))
-        actions = numpy.concatenate([super(DailyOddsEnv, self).get_bet(numpy.floor(part_action).astype(int))
-                                     for part_action in action])
+        full_actions = numpy.zeros(
+            shape=(self.max_number_of_games, self._odds.shape[1])
+        )
+        actions = numpy.concatenate(
+            [
+                super(DailyOddsEnv, self).get_bet(numpy.floor(part_action).astype(int))
+                for part_action in action
+            ]
+        )
         full_actions[numpy.arange(actions.shape[0])] = actions
         return full_actions
 
@@ -153,12 +196,14 @@ class DailyOddsEnv(BaseOddsEnv):
         current_results = self._results.iloc[index]
         results = numpy.zeros(shape=(current_results.shape[0], self._odds.shape[1]))
         results[numpy.arange(results.shape[0]), current_results.values] = 1
-        filler_results = numpy.zeros(numpy.array([self.max_number_of_games, self._odds.shape[1]]) -
-                                     numpy.array([current_results.shape[0], 0]))
+        filler_results = numpy.zeros(
+            numpy.array([self.max_number_of_games, self._odds.shape[1]])
+            - numpy.array([current_results.shape[0], 0])
+        )
         return numpy.concatenate([results, filler_results])
 
     def get_reward(self, bet, odds, results):
-        """ Calculates the reward, while taking to account invalid bets
+        """Calculates the reward, while taking to account invalid bets
 
         Parameters
         ----------
@@ -177,8 +222,8 @@ class DailyOddsEnv(BaseOddsEnv):
         if zero_rows_count > 0:
             used_results[-zero_rows_count:, :] = 0
         bet_size_matrix = self.bet_size_matrix  # noqa: F841
-        reward = numexpr.evaluate('sum(bet * bet_size_matrix * results * odds)')
-        expense = numexpr.evaluate('sum(bet * used_results * bet_size_matrix)')
+        reward = numexpr.evaluate("sum(bet * bet_size_matrix * results * odds)")
+        expense = numexpr.evaluate("sum(bet * used_results * bet_size_matrix)")
         return reward - expense
 
     def legal_bet(self, bet):
@@ -235,12 +280,20 @@ class DailyOddsEnv(BaseOddsEnv):
         info : dict
             The info dictionary.
         """
-        return {'date': self.days[self.current_step], 'current_step': self.current_step,
-                'odds': self.get_odds(),
-                'verbose_action': [self._verbose_actions[act] for act in numpy.floor(action).astype(int)],
-                'action': action,
-                'balance': self.balance, 'reward': 0,
-                'legal_bet': False, 'results': None, 'done': False}
+        return {
+            "date": self.days[self.current_step],
+            "current_step": self.current_step,
+            "odds": self.get_odds(),
+            "verbose_action": [
+                self._verbose_actions[act] for act in numpy.floor(action).astype(int)
+            ],
+            "action": action,
+            "balance": self.balance,
+            "reward": 0,
+            "legal_bet": False,
+            "results": None,
+            "done": False,
+        }
 
     def step(self, action):
         return super().step(numpy.array([self._rescale_form(form) for form in action]))
@@ -281,25 +334,41 @@ class DailyPercentageOddsEnv(DailyOddsEnv):
 
     def __init__(self, odds, odds_column_names, results=None, *args, **kwargs):
         super().__init__(odds, odds_column_names, results, *args, **kwargs)
-        lower_bound = [[-1] * self._odds.shape[1] for i in numpy.arange(self.max_number_of_games)]
-        upper_bound = [[1] * self._odds.shape[1] for i in numpy.arange(self.max_number_of_games)]
+        lower_bound = [
+            [-1] * self._odds.shape[1] for i in numpy.arange(self.max_number_of_games)
+        ]
+        upper_bound = [
+            [1] * self._odds.shape[1] for i in numpy.arange(self.max_number_of_games)
+        ]
         vector_size = self.max_number_of_games * self._odds.shape[1]
-        self.action_space = gym.spaces.Box(low=numpy.array(lower_bound).reshape(vector_size),
-                                           high=numpy.array(upper_bound).reshape(vector_size))
+        self.action_space = gym.spaces.Box(
+            low=numpy.array(lower_bound).reshape(vector_size),
+            high=numpy.array(upper_bound).reshape(vector_size),
+        )
 
     def step(self, action):
         full_action = numpy.zeros(self.max_number_of_games * (self._odds.shape[1]))
         full_action[numpy.arange(action.shape[0])] = action
-        full_action = full_action.reshape(self.max_number_of_games, (self._odds.shape[1]))
+        full_action = full_action.reshape(
+            self.max_number_of_games, (self._odds.shape[1])
+        )
 
         current_bet_size_matrix = self._rescale_matrix(full_action) * self.balance
-        full_bet_size_matrix = numpy.zeros(shape=(self.max_number_of_games, self._odds.shape[1]))
-        full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = current_bet_size_matrix
+        full_bet_size_matrix = numpy.zeros(
+            shape=(self.max_number_of_games, self._odds.shape[1])
+        )
+        full_bet_size_matrix[numpy.arange(current_bet_size_matrix.shape[0])] = (
+            current_bet_size_matrix
+        )
 
         self.bet_size_matrix = full_bet_size_matrix
 
         form_binary_repr = numpy.where(self.bet_size_matrix != 0, 1, 0)
-        explicit_forms = form_binary_repr.dot(1 << numpy.arange(form_binary_repr.shape[-1] - 1, -1, -1))
-        forms = numpy.array([(form / (2 ** (self._odds.shape[1] - 1)) - 1) for form in explicit_forms])
+        explicit_forms = form_binary_repr.dot(
+            1 << numpy.arange(form_binary_repr.shape[-1] - 1, -1, -1)
+        )
+        forms = numpy.array(
+            [(form / (2 ** (self._odds.shape[1] - 1)) - 1) for form in explicit_forms]
+        )
 
         return super().step(forms)

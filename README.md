@@ -1,5 +1,14 @@
-# Sports odds betting environment ![build](https://github.com/OryJonay/Odds-Gym/workflows/build/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/OryJonay/Odds-Gym/badge.svg?branch=master)](https://coveralls.io/github/OryJonay/Odds-Gym?branch=master)
-A sports betting environment for OpenAI Gym.
+# Sports odds betting environment 
+[![PyPI version](https://badge.fury.io/py/oddsgym.svg)](https://badge.fury.io/py/oddsgym)
+![build](https://github.com/OryJonay/Odds-Gym/workflows/build/badge.svg) 
+[![Coverage Status](https://coveralls.io/repos/github/OryJonay/Odds-Gym/badge.svg?branch=master)](https://coveralls.io/github/OryJonay/Odds-Gym?branch=master)
+[![Hatch project](https://img.shields.io/badge/tool-%F0%9F%A5%9A%20Hatch-4051b5.svg)](https://github.com/pypa/hatch) 
+[![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastral-sh%2Fruff%2Fmain%2Fassets%2Fbadge%2Fv2.json&label=linting)](https://github.com/astral-sh/ruff) 
+[![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/) 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/) 
+
+A sports betting environment for [Farma Foundation Gymnasium](https://gymnasium.farama.org/) based environments.
 
 ## Installation
 

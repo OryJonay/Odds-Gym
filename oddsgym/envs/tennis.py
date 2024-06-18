@@ -1,11 +1,12 @@
 import pandas
+
 from .meta import MetaEnvBuilder
 
 
 class TennisOddsEnv(metaclass=MetaEnvBuilder):
-    sport = 'tennis'
-    versionadded = '0.8.0'
-    odds_column_names = ['win', 'lose']
+    sport = "tennis"
+    versionadded = "0.8.0"
+    odds_column_names = ["win", "lose"]
 
     def __init__(self, tennis_bets_dataframe, *args, **kwargs):
         """Initializes a new environment.
@@ -22,14 +23,18 @@ class TennisOddsEnv(metaclass=MetaEnvBuilder):
                 columns are named "winner, loser" respectively.
         """
         odds = tennis_bets_dataframe[self.odds_columns]
-        results = tennis_bets_dataframe['result'] if tennis_bets_dataframe['result'].notna().all() else None
+        results = (
+            tennis_bets_dataframe["result"]
+            if tennis_bets_dataframe["result"].notna().all()
+            else None
+        )
         if not self.daily_env:
             odds = odds.values
             results = results.values
-        self.players = tennis_bets_dataframe[['winner', 'loser']]
+        self.players = tennis_bets_dataframe[["winner", "loser"]]
         super().__init__(odds, self.odds_column_names, results, *args, **kwargs)
 
-    def render(self, mode='human'):
+    def render(self, mode="human"):
         """Outputs the current player names, balance and step.
 
         Returns
@@ -39,9 +44,12 @@ class TennisOddsEnv(metaclass=MetaEnvBuilder):
         """
         index = self._get_current_index()
         players = self.players.iloc[index]
-        players = players.itertuples() if isinstance(players, pandas.DataFrame) else [players]
-        players_str = ', '.join(['Player {} VS Player {}'.format(row.winner, row.loser)
-                                 for row in players])
+        players = (
+            players.itertuples() if isinstance(players, pandas.DataFrame) else [players]
+        )
+        players_str = ", ".join(
+            ["Player {} VS Player {}".format(row.winner, row.loser) for row in players]
+        )
         players_str = players_str + "."
         print(players_str)
         super().render(mode)
