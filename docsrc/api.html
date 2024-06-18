@@ -1,171 +1,395 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Documentation &mdash; oddsgym  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="../_static/js/theme.js"></script>
+
+  <link rel="stylesheet" href="../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>API Documentation &#8212; oddsgym  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../_static/material.css?v=79c92029" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Project Roadmap" href="roadmap.html" />
-    <link rel="prev" title="Theory behind the environment" href="theory.html" /> 
-</head>
+    <link rel="prev" title="Theory behind the environment" href="theory.html" />
+  
+   
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue data-md-color-accent=light-blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#docsrc/api" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../index.html" title="oddsgym  documentation"
+           class="md-header-nav__button md-logo">
           
+            &nbsp;
           
-          <a href="../index.html" class="icon icon-home">
-            oddsgym
-          </a>
-              <div class="version">
-                0.9.1
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory behind the environment</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#generic-environments">Generic Environments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#baseoddsenv">BaseOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.base.BaseOddsEnv"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#basepercentageoddsenv">BasePercentageOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv"><code class="docutils literal notranslate"><span class="pre">BasePercentageOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#dailyoddsenv">DailyOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.daily_bets.DailyOddsEnv"><code class="docutils literal notranslate"><span class="pre">DailyOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#dailypercentageoddsenv">DailyPercentageOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.daily_bets.DailyPercentageOddsEnv"><code class="docutils literal notranslate"><span class="pre">DailyPercentageOddsEnv</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sports-specific-environments">Sports Specific Environments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#threewaysocceroddsenv">ThreeWaySoccerOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#threewaysoccerpercentageoddsenv">ThreeWaySoccerPercentageOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerPercentageOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailyoddsenv">ThreeWaySoccerDailyOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerDailyOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#threewaysoccerdailypercentageoddsenv">ThreeWaySoccerDailyPercentageOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerDailyPercentageOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tennisoddsenv">TennisOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.tennis.TennisOddsEnv"><code class="docutils literal notranslate"><span class="pre">TennisOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tennispercentageoddsenv">TennisPercentageOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.tennis.TennisPercentageOddsEnv"><code class="docutils literal notranslate"><span class="pre">TennisPercentageOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tennisdailyoddsenv">TennisDailyOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.tennis.TennisDailyOddsEnv"><code class="docutils literal notranslate"><span class="pre">TennisDailyOddsEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tennisdailypercentageoddsenv">TennisDailyPercentageOddsEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.tennis.TennisDailyPercentageOddsEnv"><code class="docutils literal notranslate"><span class="pre">TennisDailyPercentageOddsEnv</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#site-and-sports-specific-environments">Site and Sports Specific Environments</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#footballdatadailyenv">FootballDataDailyEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.footballdata.FootballDataDailyEnv"><code class="docutils literal notranslate"><span class="pre">FootballDataDailyEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#footballdatadailypercentageenv">FootballDataDailyPercentageEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv"><code class="docutils literal notranslate"><span class="pre">FootballDataDailyPercentageEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tennisdatadailyenv">TennisDataDailyEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv"><code class="docutils literal notranslate"><span class="pre">TennisDataDailyEnv</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tennisdatadailypercentageenv">TennisDataDailyPercentageEnv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv"><code class="docutils literal notranslate"><span class="pre">TennisDataDailyPercentageEnv</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Project Roadmap</a></li>
-</ul>
-
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">OddsGym</span>
+          <span class="md-header-nav__topic"> API Documentation </span>
         </div>
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">oddsgym</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">API Documentation</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/docsrc/api.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            <a href="https://github.com/OryJonay/Odds-Gym" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Odds-Gym
+  </div>
+</a>
+          </div>
+        </div>
+      
+      
+  
+  <script src="../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../"versions.json"",
+        target_loc = "../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">oddsgym  documentation</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../index.html" title="oddsgym documentation" class="md-nav__button md-logo">
+      
+        <img src="../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../index.html"
+       title="oddsgym documentation">OddsGym</a>
+  </label>
+    <div class="md-nav__source">
+      <a href="https://github.com/OryJonay/Odds-Gym" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Odds-Gym
+  </div>
+</a>
+    </div>
+  
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#docsrc-api--page-root" class="md-nav__link">API Documentation</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#generic-environments" class="md-nav__link">Generic Environments</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#baseoddsenv" class="md-nav__link">BaseOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.__init__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.__init__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.create_info" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.create_info()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.finish" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.finish()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.get_bet" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.get_bet()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.get_odds" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.get_odds()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.get_results" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.get_results()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.get_reward" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.get_reward()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.legal_bet" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.legal_bet()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.render" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.render()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.reset" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.reset()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#oddsgym.envs.base.BaseOddsEnv.step" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseOddsEnv.step()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#basepercentageoddsenv" class="md-nav__link">BasePercentageOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BasePercentageOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#dailyoddsenv" class="md-nav__link">DailyOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.daily_bets.DailyOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DailyOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#dailypercentageoddsenv" class="md-nav__link">DailyPercentageOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.daily_bets.DailyPercentageOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DailyPercentageOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#sports-specific-environments" class="md-nav__link">Sports Specific Environments</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#threewaysocceroddsenv" class="md-nav__link">ThreeWaySoccerOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerOddsEnv</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerOddsEnv.__init__()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#threewaysoccerpercentageoddsenv" class="md-nav__link">ThreeWaySoccerPercentageOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerPercentageOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#threewaysoccerdailyoddsenv" class="md-nav__link">ThreeWaySoccerDailyOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerDailyOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#threewaysoccerdailypercentageoddsenv" class="md-nav__link">ThreeWaySoccerDailyPercentageOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">ThreeWaySoccerDailyPercentageOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#tennisoddsenv" class="md-nav__link">TennisOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennis.TennisOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisOddsEnv</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennis.TennisOddsEnv.__init__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisOddsEnv.__init__()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#tennispercentageoddsenv" class="md-nav__link">TennisPercentageOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennis.TennisPercentageOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisPercentageOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#tennisdailyoddsenv" class="md-nav__link">TennisDailyOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennis.TennisDailyOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisDailyOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#tennisdailypercentageoddsenv" class="md-nav__link">TennisDailyPercentageOddsEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennis.TennisDailyPercentageOddsEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisDailyPercentageOddsEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#site-and-sports-specific-environments" class="md-nav__link">Site and Sports Specific Environments</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#footballdatadailyenv" class="md-nav__link">FootballDataDailyEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.footballdata.FootballDataDailyEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FootballDataDailyEnv</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.footballdata.FootballDataDailyEnv.__init__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FootballDataDailyEnv.__init__()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#footballdatadailypercentageenv" class="md-nav__link">FootballDataDailyPercentageEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FootballDataDailyPercentageEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#tennisdatadailyenv" class="md-nav__link">TennisDataDailyEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennisdata.TennisDataDailyEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisDataDailyEnv</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennisdata.TennisDataDailyEnv.__init__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisDataDailyEnv.__init__()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#tennisdatadailypercentageenv" class="md-nav__link">TennisDataDailyPercentageEnv</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TennisDataDailyPercentageEnv</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../_sources/docsrc/api.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
   <section id="api-documentation">
-<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Link to this heading"></a></h1>
+<h1 id="docsrc-api--page-root">API Documentation<a class="headerlink" href="#docsrc-api--page-root" title="Link to this heading">¶</a></h1>
 <section id="generic-environments">
-<h2>Generic Environments<a class="headerlink" href="#generic-environments" title="Link to this heading"></a></h2>
+<h2 id="generic-environments">Generic Environments<a class="headerlink" href="#generic-environments" title="Link to this heading">¶</a></h2>
 <p>Environment that are agnostic to the sport game of chance.</p>
 <section id="baseoddsenv">
-<h3>BaseOddsEnv<a class="headerlink" href="#baseoddsenv" title="Link to this heading"></a></h3>
+<h3 id="baseoddsenv">BaseOddsEnv<a class="headerlink" href="#baseoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.base.</span></span><span class="sig-name descname"><span class="pre">BaseOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_bank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.base.</span></span><span class="sig-name descname"><span class="pre">BaseOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_bank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments.</p>
 <p>Creates an OpenAI Gym environment that supports betting a fixed amount (1)
 on a single outcome for a single game.</p>
@@ -196,7 +420,7 @@ on what outcomes to place a bet by conversion to a binary representation.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_bank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_bank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes a new environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -208,10 +432,9 @@ on what outcomes to place a bet by conversion to a binary representation.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.create_info">
-<span class="sig-name descname"><span class="pre">create_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.create_info" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.create_info" title="Link to this definition">¶</a></dt>
 <dd><p>Creates the info dictionary for the given action.</p>
 <dl class="simple">
 <dt>The info dictionary holds the following information:</dt><dd><ul class="simple">
@@ -232,10 +455,9 @@ on what outcomes to place a bet by conversion to a binary representation.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.finish">
-<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.finish" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.finish" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if the episode has reached an end.</p>
 <p>The episode has reached an end if there are no more games to bet.</p>
 <dl class="field-list simple">
@@ -244,10 +466,9 @@ on what outcomes to place a bet by conversion to a binary representation.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.get_bet">
-<span class="sig-name descname"><span class="pre">get_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_bet" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_bet" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the betting matrix for the action provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -259,10 +480,9 @@ has a value of 1 and 0 otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.get_odds">
-<span class="sig-name descname"><span class="pre">get_odds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_odds" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_odds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_odds" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the odds for the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -270,10 +490,9 @@ has a value of 1 and 0 otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.get_results">
-<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_results" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_results" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the results matrix for the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -282,10 +501,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.get_reward">
-<span class="sig-name descname"><span class="pre">get_reward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_reward" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_reward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.get_reward" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the reward</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -300,10 +518,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.legal_bet">
-<span class="sig-name descname"><span class="pre">legal_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.legal_bet" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">legal_bet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bet</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.legal_bet" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if the bet is legal.</p>
 <p>Checks that the bet does not exceed the current balance.</p>
 <dl class="field-list simple">
@@ -315,10 +532,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'human'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.render" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'human'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.render" title="Link to this definition">¶</a></dt>
 <dd><p>Outputs the current balance and the current step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -326,10 +542,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.reset" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.reset" title="Link to this definition">¶</a></dt>
 <dd><p>Resets the state of the environment and returns an initial observation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -337,10 +552,9 @@ value is 1 and the rest of the indexes values are 0.</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.base.BaseOddsEnv.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.step" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base.BaseOddsEnv.step" title="Link to this definition">¶</a></dt>
 <dd><p>Run one timestep of the environment’s dynamics. When end of episode is reached,
 you are responsible for calling reset() to reset this environment’s state.</p>
 <p>Accepts an action and returns a tuple (observation, reward, done, info).</p>
@@ -359,15 +573,13 @@ you are responsible for calling reset() to reset this environment’s state.</p>
 </dd>
 </dl>
 </dd></dl>
-
 </dd></dl>
-
 </section>
 <section id="basepercentageoddsenv">
-<h3>BasePercentageOddsEnv<a class="headerlink" href="#basepercentageoddsenv" title="Link to this heading"></a></h3>
+<h3 id="basepercentageoddsenv">BasePercentageOddsEnv<a class="headerlink" href="#basepercentageoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.base_percentage.BasePercentageOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.base_percentage.</span></span><span class="sig-name descname"><span class="pre">BasePercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.base_percentage.</span></span><span class="sig-name descname"><span class="pre">BasePercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.base_percentage.BasePercentageOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments with non fixed bet size.</p>
 <p>Creates an OpenAI Gym environment that supports betting a non fixed amount
 on a single outcome for a single game.</p>
@@ -405,13 +617,12 @@ from the given percentages</p>
 </dd>
 </dl>
 </dd></dl>
-
 </section>
 <section id="dailyoddsenv">
-<h3>DailyOddsEnv<a class="headerlink" href="#dailyoddsenv" title="Link to this heading"></a></h3>
+<h3 id="dailyoddsenv">DailyOddsEnv<a class="headerlink" href="#dailyoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.daily_bets.DailyOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.daily_bets.</span></span><span class="sig-name descname"><span class="pre">DailyOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_number_of_games</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.daily_bets.</span></span><span class="sig-name descname"><span class="pre">DailyOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_number_of_games</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments multiple games with a fixed
 bet size.</p>
 <p>Creates an OpenAI Gym environment that supports betting a fixed amount (1)
@@ -442,13 +653,12 @@ For explanation on how the rescaling works, see <a class="reference internal" hr
 </dd>
 </dl>
 </dd></dl>
-
 </section>
 <section id="dailypercentageoddsenv">
-<h3>DailyPercentageOddsEnv<a class="headerlink" href="#dailypercentageoddsenv" title="Link to this heading"></a></h3>
+<h3 id="dailypercentageoddsenv">DailyPercentageOddsEnv<a class="headerlink" href="#dailypercentageoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.daily_bets.DailyPercentageOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.daily_bets.</span></span><span class="sig-name descname"><span class="pre">DailyPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyPercentageOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.daily_bets.</span></span><span class="sig-name descname"><span class="pre">DailyPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odds_column_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.daily_bets.DailyPercentageOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Base class for sports betting environments multiple games with a non fixed
 bet size.</p>
 <p>Creates an OpenAI Gym environment that supports betting a non fixed amount
@@ -477,24 +687,23 @@ betting percentages</p>
 </dd>
 </dl>
 </dd></dl>
-
 </section>
 </section>
 <section id="sports-specific-environments">
-<h2>Sports Specific Environments<a class="headerlink" href="#sports-specific-environments" title="Link to this heading"></a></h2>
+<h2 id="sports-specific-environments">Sports Specific Environments<a class="headerlink" href="#sports-specific-environments" title="Link to this heading">¶</a></h2>
 <p>Environment that are sport specific.</p>
 <section id="threewaysocceroddsenv">
-<h3>ThreeWaySoccerOddsEnv<a class="headerlink" href="#threewaysocceroddsenv" title="Link to this heading"></a></h3>
+<h3 id="threewaysocceroddsenv">ThreeWaySoccerOddsEnv<a class="headerlink" href="#threewaysocceroddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.soccer.ThreeWaySoccerOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.1.0.</span></p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerOddsEnv.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes a new environment.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -508,58 +717,53 @@ columns are named “home_team, away_team” respectively.</p>
 </dd>
 </dl>
 </dd></dl>
-
 </dd></dl>
-
 </section>
 <section id="threewaysoccerpercentageoddsenv">
-<h3>ThreeWaySoccerPercentageOddsEnv<a class="headerlink" href="#threewaysoccerpercentageoddsenv" title="Link to this heading"></a></h3>
+<h3 id="threewaysoccerpercentageoddsenv">ThreeWaySoccerPercentageOddsEnv<a class="headerlink" href="#threewaysoccerpercentageoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerPercentageOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.2.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 <section id="threewaysoccerdailyoddsenv">
-<h3>ThreeWaySoccerDailyOddsEnv<a class="headerlink" href="#threewaysoccerdailyoddsenv" title="Link to this heading"></a></h3>
+<h3 id="threewaysoccerdailyoddsenv">ThreeWaySoccerDailyOddsEnv<a class="headerlink" href="#threewaysoccerdailyoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerDailyOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerDailyOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting, grouped by date, with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.5.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 <section id="threewaysoccerdailypercentageoddsenv">
-<h3>ThreeWaySoccerDailyPercentageOddsEnv<a class="headerlink" href="#threewaysoccerdailypercentageoddsenv" title="Link to this heading"></a></h3>
+<h3 id="threewaysoccerdailypercentageoddsenv">ThreeWaySoccerDailyPercentageOddsEnv<a class="headerlink" href="#threewaysoccerdailypercentageoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerDailyPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.soccer.</span></span><span class="sig-name descname"><span class="pre">ThreeWaySoccerDailyPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soccer_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.soccer.ThreeWaySoccerDailyPercentageOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.5.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 <section id="tennisoddsenv">
-<h3>TennisOddsEnv<a class="headerlink" href="#tennisoddsenv" title="Link to this heading"></a></h3>
+<h3 id="tennisoddsenv">TennisOddsEnv<a class="headerlink" href="#tennisoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.tennis.TennisOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for tennis betting with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.0.</span></p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.tennis.TennisOddsEnv.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisOddsEnv.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisOddsEnv.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes a new environment.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -573,62 +777,57 @@ columns are named “winner, loser” respectively.</p>
 </dd>
 </dl>
 </dd></dl>
-
 </dd></dl>
-
 </section>
 <section id="tennispercentageoddsenv">
-<h3>TennisPercentageOddsEnv<a class="headerlink" href="#tennispercentageoddsenv" title="Link to this heading"></a></h3>
+<h3 id="tennispercentageoddsenv">TennisPercentageOddsEnv<a class="headerlink" href="#tennispercentageoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.tennis.TennisPercentageOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisPercentageOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisPercentageOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for tennis betting with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 <section id="tennisdailyoddsenv">
-<h3>TennisDailyOddsEnv<a class="headerlink" href="#tennisdailyoddsenv" title="Link to this heading"></a></h3>
+<h3 id="tennisdailyoddsenv">TennisDailyOddsEnv<a class="headerlink" href="#tennisdailyoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.tennis.TennisDailyOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisDailyOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisDailyOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisDailyOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisDailyOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for tennis betting, grouped by date, with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 <section id="tennisdailypercentageoddsenv">
-<h3>TennisDailyPercentageOddsEnv<a class="headerlink" href="#tennisdailypercentageoddsenv" title="Link to this heading"></a></h3>
+<h3 id="tennisdailypercentageoddsenv">TennisDailyPercentageOddsEnv<a class="headerlink" href="#tennisdailypercentageoddsenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.tennis.TennisDailyPercentageOddsEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisDailyPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisDailyPercentageOddsEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennis.</span></span><span class="sig-name descname"><span class="pre">TennisDailyPercentageOddsEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tennis_bets_dataframe</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennis.TennisDailyPercentageOddsEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for tennis betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 </section>
 <section id="site-and-sports-specific-environments">
-<h2>Site and Sports Specific Environments<a class="headerlink" href="#site-and-sports-specific-environments" title="Link to this heading"></a></h2>
+<h2 id="site-and-sports-specific-environments">Site and Sports Specific Environments<a class="headerlink" href="#site-and-sports-specific-environments" title="Link to this heading">¶</a></h2>
 <p>Environment that are site and sport specific (receives the odds data from a specific site).</p>
 <section id="footballdatadailyenv">
-<h3>FootballDataDailyEnv<a class="headerlink" href="#footballdatadailyenv" title="Link to this heading"></a></h3>
+<h3 id="footballdatadailyenv">FootballDataDailyEnv<a class="headerlink" href="#footballdatadailyenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.footballdata.FootballDataDailyEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.footballdata.</span></span><span class="sig-name descname"><span class="pre">FootballDataDailyEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.footballdata.</span></span><span class="sig-name descname"><span class="pre">FootballDataDailyEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer, with odds from www.football-data.co.uk betting, grouped by date, with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.7.1.</span></p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.footballdata.FootballDataDailyEnv.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyEnv.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyEnv.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes a new environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -645,34 +844,31 @@ for each odd from all sites, “avg” uses the average value.</p></li>
 </dd>
 </dl>
 </dd></dl>
-
 </dd></dl>
-
 </section>
 <section id="footballdatadailypercentageenv">
-<h3>FootballDataDailyPercentageEnv<a class="headerlink" href="#footballdatadailypercentageenv" title="Link to this heading"></a></h3>
+<h3 id="footballdatadailypercentageenv">FootballDataDailyPercentageEnv<a class="headerlink" href="#footballdatadailypercentageenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.footballdata.FootballDataDailyPercentageEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.footballdata.</span></span><span class="sig-name descname"><span class="pre">FootballDataDailyPercentageEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.footballdata.</span></span><span class="sig-name descname"><span class="pre">FootballDataDailyPercentageEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.footballdata.FootballDataDailyPercentageEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for 3-way soccer, with odds from www.football-data.co.uk betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.6.2.</span></p>
 </div>
 </dd></dl>
-
 </section>
 <section id="tennisdatadailyenv">
-<h3>TennisDataDailyEnv<a class="headerlink" href="#tennisdatadailyenv" title="Link to this heading"></a></h3>
+<h3 id="tennisdatadailyenv">TennisDataDailyEnv<a class="headerlink" href="#tennisdatadailyenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.tennisdata.TennisDataDailyEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennisdata.</span></span><span class="sig-name descname"><span class="pre">TennisDataDailyEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennisdata.</span></span><span class="sig-name descname"><span class="pre">TennisDataDailyEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for Tennis, with odds from www.tennis-data.co.uk betting, grouped by date, with a fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.0.</span></p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="oddsgym.envs.tennisdata.TennisDataDailyEnv.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyEnv.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes a new environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -687,54 +883,78 @@ for each odd from all sites, “avg” uses the average value.</p></li>
 </dd>
 </dl>
 </dd></dl>
-
 </dd></dl>
-
 </section>
 <section id="tennisdatadailypercentageenv">
-<h3>TennisDataDailyPercentageEnv<a class="headerlink" href="#tennisdatadailypercentageenv" title="Link to this heading"></a></h3>
+<h3 id="tennisdatadailypercentageenv">TennisDataDailyPercentageEnv<a class="headerlink" href="#tennisdatadailypercentageenv" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennisdata.</span></span><span class="sig-name descname"><span class="pre">TennisDataDailyPercentageEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oddsgym.envs.tennisdata.</span></span><span class="sig-name descname"><span class="pre">TennisDataDailyPercentageEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oddsgym.envs.tennisdata.TennisDataDailyPercentageEnv" title="Link to this definition">¶</a></dt>
 <dd><p>Environment for Tennis, with odds from www.tennis-data.co.uk betting, grouped by date, with a non fixed bet size.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.0.</span></p>
 </div>
 </dd></dl>
-
 </section>
 </section>
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="theory.html" class="btn btn-neutral float-left" title="Theory behind the environment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="roadmap.html" class="btn btn-neutral float-right" title="Project Roadmap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2020, Ory Jonay.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </article>
         </div>
       </div>
-    </section>
+    </main>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="theory.html" title="Theory behind the environment"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> Theory behind the environment </span>
+              </div>
+            </a>
+          
+          
+            <a href="roadmap.html" title="Project Roadmap"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> Project Roadmap </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, Ory Jonay.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
 </html>
