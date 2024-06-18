@@ -1,10 +1,11 @@
-import gymnasium as gym
-import numpy
-import numexpr
 from itertools import compress
+
+import gymnasium as gym
+import numexpr
+import numpy
 from pandas import DataFrame
 from tabulate import tabulate
-from typing import Any
+
 # from infi.traceback import pretty_traceback_and_exit_decorator
 
 
@@ -16,8 +17,19 @@ class ActionsDict(dict):
         super().__init__(self, *args, **kwargs)
 
     def __missing__(self, key):
-        self[key] = [list(compress(self.odds_column_names,
-                                   [int(bit) for bit in numpy.binary_repr(key, width=len(self.odds_column_names))]))]
+        self[key] = [
+            list(
+                compress(
+                    self.odds_column_names,
+                    [
+                        int(bit)
+                        for bit in numpy.binary_repr(
+                            key, width=len(self.odds_column_names)
+                        )
+                    ],
+                )
+            )
+        ]
         return self[key]
 
 
@@ -54,8 +66,17 @@ class BaseOddsEnv(gym.Env):
         The starting bank / balance for the environment.
     """
 
-    metadata = {'render.modes': ['human']}
-    HEADERS = ['Current Step', 'Odds', 'Verbose Action', 'Action', 'Balance', 'Reward', 'Results', 'Done']
+    metadata = {"render.modes": ["human"]}
+    HEADERS = [
+        "Current Step",
+        "Odds",
+        "Verbose Action",
+        "Action",
+        "Balance",
+        "Reward",
+        "Results",
+        "Done",
+    ]
 
     def __init__(self, odds, odds_column_names, results=None, starting_bank=300):
         """Initializes a new environment
@@ -75,8 +96,9 @@ class BaseOddsEnv(gym.Env):
         self._results = results
         self._odds_columns_names = odds_column_names
         self._verbose_actions = ActionsDict(self._odds_columns_names)
-        self.observation_space = gym.spaces.Box(low=1., high=float('Inf'),
-                                                shape=(1, odds.shape[1]), dtype=numpy.float64)
+        self.observation_space = gym.spaces.Box(
+            low=1.0, high=float("Inf"), shape=(1, odds.shape[1]), dtype=numpy.float64
+        )
         self.action_space = gym.spaces.Discrete(2 ** odds.shape[1])
         self.balance = self.starting_bank = starting_bank
         self.current_step = 0
@@ -84,7 +106,7 @@ class BaseOddsEnv(gym.Env):
 
     def _get_current_index(self):
         return self.current_step % self._odds.shape[0]
-    
+
     def _get_maximum_reward(self):
         """Returns the maximum reward possible for this environment"""
         results = numpy.zeros(shape=self._odds.shape)
@@ -115,7 +137,9 @@ class BaseOddsEnv(gym.Env):
             The betting matrix, where each outcome specified in the action
             has a value of 1 and 0 otherwise.
         """
-        return numpy.array([[bit for bit in numpy.binary_repr(action, width=self._odds.shape[1])]]).astype(int)
+        return numpy.array(
+            [[bit for bit in numpy.binary_repr(action, width=self._odds.shape[1])]]
+        ).astype(int)
 
     # @pretty_traceback_and_exit_decorator
     def step(self, action):
@@ -169,7 +193,7 @@ class BaseOddsEnv(gym.Env):
         return odds, reward, done, truncated, info
 
     def get_reward(self, bet, odds, results):
-        """ Calculates the reward
+        """Calculates the reward
 
         Parameters
         ----------
@@ -184,8 +208,8 @@ class BaseOddsEnv(gym.Env):
             The amount of reward returned after previous action
         """
         bet_size_matrix = self.bet_size_matrix  # noqa: F841
-        reward = numexpr.evaluate('sum(bet * bet_size_matrix * results * odds)')
-        expense = numexpr.evaluate('sum(bet * bet_size_matrix)')
+        reward = numexpr.evaluate("sum(bet * bet_size_matrix * results * odds)")
+        expense = numexpr.evaluate("sum(bet * bet_size_matrix)")
         return reward - expense
 
     def reset(self, *, seed=None, options=None):
@@ -200,7 +224,7 @@ class BaseOddsEnv(gym.Env):
         self.current_step = 0
         return self.get_odds(), {}
 
-    def render(self, mode='human'):
+    def render(self, mode="human"):
         """Outputs the current balance and the current step.
 
         Returns
@@ -208,7 +232,7 @@ class BaseOddsEnv(gym.Env):
         msg : str
             A string with the current balance and the current step.
         """
-        print('Current balance at step {}: {}'.format(self.current_step, self.balance))
+        print("Current balance at step {}: {}".format(self.current_step, self.balance))
 
     def finish(self):
         """Checks if the episode has reached an end.
@@ -232,8 +256,10 @@ class BaseOddsEnv(gym.Env):
             value is 1 and the rest of the indexes values are 0.
         """
         result = numpy.zeros(shape=self.observation_space.shape)
-        result[numpy.arange(result.shape[0], dtype=numpy.int32),
-               numpy.array([self._results[self.current_step]], dtype=numpy.int32)] = 1
+        result[
+            numpy.arange(result.shape[0], dtype=numpy.int32),
+            numpy.array([self._results[self.current_step]], dtype=numpy.int32),
+        ] = 1
         return result
 
     def legal_bet(self, bet):
@@ -273,13 +299,21 @@ class BaseOddsEnv(gym.Env):
         info : dict
             The info dictionary.
         """
-        return {'current_step': self.current_step, 'odds': self.get_odds().tolist(), 'verbose_action': self._verbose_actions[action],
-                'action': action, 'balance': self.balance, 'reward': 0,
-                'legal_bet': False, 'results': None, 'done': False}
+        return {
+            "current_step": self.current_step,
+            "odds": self.get_odds().tolist(),
+            "verbose_action": self._verbose_actions[action],
+            "action": action,
+            "balance": self.balance,
+            "reward": 0,
+            "legal_bet": False,
+            "results": None,
+            "done": False,
+        }
 
     def pretty_print_info(self, info):
-        values = [info[key.replace(' ', '_').lower()] for key in self.HEADERS]
-        print('\n' + tabulate([values], headers=self.HEADERS, tablefmt='orgtbl'))
+        values = [info[key.replace(" ", "_").lower()] for key in self.HEADERS]
+        print("\n" + tabulate([values], headers=self.HEADERS, tablefmt="orgtbl"))
 
     def _rescale_form(self, form):
         if form == 1:

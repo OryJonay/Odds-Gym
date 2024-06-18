@@ -1,19 +1,17 @@
 from enum import Enum
-from . import football
-from . import tennis
 
+from . import football, tennis
 
-SPORT_CSV_URLS = {"football": football.CSV_URL,
-                  "tennis": tennis.CSV_URL}
+SPORT_CSV_URLS = {"football": football.CSV_URL, "tennis": tennis.CSV_URL}
 
-SPORT_CSV_CACHE_PATHS = {"football": football.CSV_CACHE_PATH,
-                         "tennis": tennis.CSV_CACHE_PATH}
+SPORT_CSV_CACHE_PATHS = {
+    "football": football.CSV_CACHE_PATH,
+    "tennis": tennis.CSV_CACHE_PATH,
+}
 
-SPORT_YEARS = {"football": football.YEARS,
-               "tennis": tennis.YEARS}
+SPORT_YEARS = {"football": football.YEARS, "tennis": tennis.YEARS}
 
-SPORT_KWARGS = {"football": football.url_kwargs,
-                "tennis": tennis.url_kwargs}
+SPORT_KWARGS = {"football": football.url_kwargs, "tennis": tennis.url_kwargs}
 
 
 class SupportedSport(str, Enum):
