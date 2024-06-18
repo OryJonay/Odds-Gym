@@ -48,6 +48,7 @@ Homepage = "https://github.com/OryJonay/Odds-Gym"
 [tool.hatch.version]
 source = "regex_commit"
 path = "oddsgym/__init__.py"
+tag_sign = false
 
 [tool.hatch.build.targets.sdist]
 include = [
