@@ -32,28 +32,22 @@ class ThreeWaySoccerOddsEnv(metaclass=MetaEnvBuilder):
             odds = odds.values
             results = results.values
         self.teams = soccer_bets_dataframe[["home_team", "away_team"]]
+        self.HEADERS.insert(2, "Teams")
         super().__init__(odds, self.odds_column_names, results, *args, **kwargs)
 
-    def render(self, mode="human"):
-        """Outputs the current team names, balance and step.
-
-        Returns
-        -------
-        msg : str
-            A string with the current team names, balance and step.
-        """
+    def create_info(self, action):
+        info = super().create_info(action)
         index = self._get_current_index()
         teams = self.teams.iloc[index]
         teams = teams.itertuples() if isinstance(teams, pandas.DataFrame) else [teams]
-        teams_str = ", ".join(
+        teams_str = "\n".join(
             [
-                "Home Team {} VS Away Team {}".format(row.home_team, row.away_team)
+                f"[blue]{row.home_team}[/] VS [magenta]{row.away_team}[/]"
                 for row in teams
             ]
         )
-        teams_str = teams_str + "."
-        print(teams_str)
-        super().render(mode)
+        info.update(teams=teams_str)
+        return info
 
 
 class ThreeWaySoccerPercentageOddsEnv(ThreeWaySoccerOddsEnv):

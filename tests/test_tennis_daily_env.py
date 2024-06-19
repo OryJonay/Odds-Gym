@@ -67,8 +67,4 @@ def test_multiple_steps(tennis_daily_env):
 def test_render(tennis_daily_env):
     with mock.patch("sys.stdout", new=io.StringIO()) as fake_stdout:
         tennis_daily_env.render()
-    assert fake_stdout.getvalue() == (
-        "Player Berrettini M. VS Player Harris A., "
-        "Player Berankis R. VS Player Carballes Baena R.."
-        "\nCurrent balance at step 0: 10\n"
-    )
+    assert fake_stdout.getvalue() == ""

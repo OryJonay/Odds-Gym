@@ -123,7 +123,4 @@ def test_multiple_steps_non_uniform(three_way_daily_env_non_uniform):
 def test_render(three_way_daily_env_non_uniform):
     with mock.patch("sys.stdout", new=io.StringIO()) as fake_stdout:
         three_way_daily_env_non_uniform.render()
-    assert (
-        fake_stdout.getvalue() == "Home Team FCB VS Away Team PSG, "
-        "Home Team MCB VS Away Team MTA.\nCurrent balance at step 0: 10\n"
-    )
+    assert fake_stdout.getvalue() == ""

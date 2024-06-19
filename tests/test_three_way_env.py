@@ -46,7 +46,4 @@ def test_multiple_steps(three_way_env):
 def test_render(three_way_env):
     with mock.patch("sys.stdout", new=io.StringIO()) as fake_stdout:
         three_way_env.render()
-    assert (
-        fake_stdout.getvalue()
-        == "Home Team FCB VS Away Team PSG.\nCurrent balance at step 0: 10\n"
-    )
+    assert fake_stdout.getvalue() == ""
