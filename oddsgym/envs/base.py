@@ -4,6 +4,8 @@ import gymnasium as gym
 import numexpr
 import numpy
 from pandas import DataFrame
+from rich.live import Live
+from rich.table import Table
 from tabulate import tabulate
 
 # from infi.traceback import pretty_traceback_and_exit_decorator
@@ -66,7 +68,7 @@ class BaseOddsEnv(gym.Env):
         The starting bank / balance for the environment.
     """
 
-    metadata = {"render.modes": ["human"]}
+    metadata = {"render_modes": [None, "human"]}
     HEADERS = [
         "Current Step",
         "Odds",
@@ -78,7 +80,9 @@ class BaseOddsEnv(gym.Env):
         "Done",
     ]
 
-    def __init__(self, odds, odds_column_names, results=None, starting_bank=300):
+    def __init__(
+        self, odds, odds_column_names, results=None, starting_bank=300, render_mode=None
+    ):
         """Initializes a new environment
 
         Parameters
@@ -90,7 +94,6 @@ class BaseOddsEnv(gym.Env):
         results: list of int, default=None
             A list of the results, where results[i] is the outcome of odds[i].
         """
-
         super().__init__()
         self._odds = odds.copy()
         self._results = results
@@ -103,6 +106,15 @@ class BaseOddsEnv(gym.Env):
         self.balance = self.starting_bank = starting_bank
         self.current_step = 0
         self.bet_size_matrix = numpy.ones(shape=self.observation_space.shape)
+        self.setup_render_mode(render_mode)
+
+    def setup_render_mode(self, render_mode):
+        self.render_mode = render_mode
+        if self.render_mode == "human":
+            self.live = Live(vertical_overflow="visible")
+
+    def create_rich_table(self):
+        self.table = Table(title="Odds Gym", expand=True, *self.HEADERS)
 
     def _get_current_index(self):
         return self.current_step % self._odds.shape[0]
@@ -181,8 +193,10 @@ class BaseOddsEnv(gym.Env):
                 info.update(legal_bet=True)
             else:
                 reward = -(bet * self.bet_size_matrix).sum()
-            info.update(results=results.argmax())
+            info.update(results=results)
             info.update(reward=reward)
+            self.last_info = info
+            self.render()
             self.current_step += 1
             if self.finish():
                 done = True
@@ -190,6 +204,8 @@ class BaseOddsEnv(gym.Env):
             else:
                 odds = self.get_odds()
         info.update(done=done)
+        if done and self.render_mode == "human":
+            self.live.stop()
         return odds, reward, done, truncated, info
 
     def get_reward(self, bet, odds, results):
@@ -222,9 +238,15 @@ class BaseOddsEnv(gym.Env):
         """
         self.balance = self.starting_bank
         self.current_step = 0
+        self.last_info = {}
+        if self.render_mode == "human":
+            if self.live.is_started:
+                self.live.stop()
+            self.live.start()
+            self.create_rich_table()
         return self.get_odds(), {}
 
-    def render(self, mode="human"):
+    def render(self):
         """Outputs the current balance and the current step.
 
         Returns
@@ -232,7 +254,15 @@ class BaseOddsEnv(gym.Env):
         msg : str
             A string with the current balance and the current step.
         """
-        print("Current balance at step {}: {}".format(self.current_step, self.balance))
+        if self.render_mode is None:
+            return
+        if self.render_mode == "human":
+            info = self.last_info
+            info.update(odds=self.pretty_odds(info))
+            self.table.add_row(
+                *[str(info[key.lower().replace(" ", "_")]) for key in self.HEADERS]
+            )
+            self.live.update(self.table)
 
     def finish(self):
         """Checks if the episode has reached an end.
@@ -301,9 +331,10 @@ class BaseOddsEnv(gym.Env):
         """
         return {
             "current_step": self.current_step,
-            "odds": self.get_odds().tolist(),
+            "odds": self.get_odds(),
             "verbose_action": self._verbose_actions[action],
             "action": action,
+            "bet": self.get_bet(action),
             "balance": self.balance,
             "reward": 0,
             "legal_bet": False,
@@ -314,6 +345,29 @@ class BaseOddsEnv(gym.Env):
     def pretty_print_info(self, info):
         values = [info[key.replace(" ", "_").lower()] for key in self.HEADERS]
         print("\n" + tabulate([values], headers=self.HEADERS, tablefmt="orgtbl"))
+
+    def pretty_odds(self, info):
+        odds = info["odds"]
+        final_odds = ""
+        noop_color = "[gray]"
+        failure_color = "[red]"
+        for i, row in enumerate(odds):
+            if row.any():
+                if numpy.count_nonzero(info["bet"][i]) == 1:
+                    success_color = "[green]"
+                else:
+                    success_color = "[yellow]"
+                for j, value in enumerate(row):
+                    value_color = noop_color
+                    if info["bet"][i][j]:
+                        value_color = (
+                            success_color
+                            if info["bet"][i][j] == info["results"][i][j]
+                            else failure_color
+                        )
+                    final_odds += f"{value_color}{value}[/] "
+                final_odds += "\n"
+        return final_odds
 
     def _rescale_form(self, form):
         if form == 1:

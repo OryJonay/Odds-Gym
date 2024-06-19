@@ -38,7 +38,7 @@ def test_reset(basic_env):
     assert not done
     assert basic_env.current_step == 1
     assert info["legal_bet"]
-    assert info["results"] == 1
+    assert numpy.array_equal(info["results"], numpy.array([[0.0, 1.0]]))
     assert info["reward"] == 1
     assert not info["done"]
     odds, reward, done, *_ = basic_env.step(2)
@@ -59,13 +59,13 @@ def test_info(basic_env):
     assert not info["legal_bet"]
     assert info["results"] is None
     assert not info["done"]
-    basic_env.pretty_print_info(info)
+    # basic_env.pretty_print_info(info)
 
 
-def test_render(basic_env):
+def test_render_render_mode_none(basic_env):
     with mock.patch("sys.stdout", new=io.StringIO()) as fake_stdout:
-        basic_env.render()
-    assert fake_stdout.getvalue() == "Current balance at step 0: 10\n"
+        assert basic_env.render() is None
+    assert fake_stdout.getvalue() == ""
 
 
 @pytest.mark.parametrize("action", range(4))

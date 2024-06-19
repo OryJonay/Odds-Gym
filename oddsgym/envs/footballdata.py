@@ -150,7 +150,7 @@ class FootballDataDailyEnv(FootballDataMixin, ThreeWaySoccerOddsEnv):
             inplace=True,
         )
         super().__init__(
-            odds_dataframe[self.ENV_COLUMNS + self.ODDS_COLUMNS], **env_config
+            odds_dataframe[self.ENV_COLUMNS + self.ODDS_COLUMNS], **env_config, **kwargs
         )
         self._extra_odds = odds_dataframe
         self._extra = extra

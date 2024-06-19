@@ -32,27 +32,24 @@ class TennisOddsEnv(metaclass=MetaEnvBuilder):
             odds = odds.values
             results = results.values
         self.players = tennis_bets_dataframe[["winner", "loser"]]
+        self.HEADERS.insert(2, "Players")
         super().__init__(odds, self.odds_column_names, results, *args, **kwargs)
 
-    def render(self, mode="human"):
-        """Outputs the current player names, balance and step.
-
-        Returns
-        -------
-        msg : str
-            A string with the current player names, balance and step.
-        """
+    def create_info(self, action):
+        info = super().create_info(action)
         index = self._get_current_index()
         players = self.players.iloc[index]
         players = (
             players.itertuples() if isinstance(players, pandas.DataFrame) else [players]
         )
-        players_str = ", ".join(
-            ["Player {} VS Player {}".format(row.winner, row.loser) for row in players]
+        players_str = "\n".join(
+            [
+                "[blue]{}[/] VS [magenta]{}[/]".format(row.winner, row.loser)
+                for row in players
+            ]
         )
-        players_str = players_str + "."
-        print(players_str)
-        super().render(mode)
+        info.update(players=players_str)
+        return info
 
 
 class TennisPercentageOddsEnv(TennisOddsEnv):

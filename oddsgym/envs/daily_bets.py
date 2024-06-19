@@ -49,12 +49,8 @@ class DailyOddsEnv(BaseOddsEnv):
         "Date",
         "Current Step",
         "Odds",
-        "Verbose Action",
-        "Action",
         "Balance",
         "Reward",
-        "Results",
-        "Done",
     ]
 
     def __init__(
@@ -281,13 +277,14 @@ class DailyOddsEnv(BaseOddsEnv):
             The info dictionary.
         """
         return {
-            "date": self.days[self.current_step],
+            "date": self.days[self.current_step].strftime("%Y-%m-%d"),
             "current_step": self.current_step,
             "odds": self.get_odds(),
             "verbose_action": [
                 self._verbose_actions[act] for act in numpy.floor(action).astype(int)
             ],
             "action": action,
+            "bet": self.get_bet(action),
             "balance": self.balance,
             "reward": 0,
             "legal_bet": False,

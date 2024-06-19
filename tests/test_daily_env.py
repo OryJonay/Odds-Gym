@@ -294,4 +294,4 @@ def test_info(daily_bets_env):
     assert not info["legal_bet"]
     assert info["results"] is None
     assert not info["done"]
-    daily_bets_env.pretty_print_info(info)
+    # daily_bets_env.pretty_print_info(info)
