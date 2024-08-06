@@ -9,35 +9,22 @@ description = "A sports betting environment for OpenAI Gym"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.8"
-authors = [
-    { name = "Ory Jonay" },
-]
+authors = [{ name = "Ory Jonay" }]
 dependencies = [
-    'gymnasium', 
-    'more-itertools', 
-    'pandas', 
-    'numexpr', 
-    'tabulate', 
-    'aiohttp', 
-    'typer',
-    'numpy<2',
+  'gymnasium',
+  'more-itertools',
+  'pandas',
+  'numexpr',
+  'tabulate',
+  'aiohttp',
+  'typer',
+  'numpy<2',
 ]
 
 [project.optional-dependencies]
-tests = [
-    'pytest', 
-    'pytest-cov', 
-    'coveralls',
-]
-examples = [
-    'jupyter', 
-    'notebook', 
-    'stable-baselines',
-]
-integration = [
-    'torch', 
-    'ray[rllib]',
-]
+tests = ['pytest', 'pytest-cov', 'coveralls']
+examples = ['jupyter', 'notebook', 'stable-baselines']
+integration = ['torch', 'ray[rllib]']
 
 [project.scripts]
 create-csv-cache = "oddsgym.utils.csv_downloader:main"
@@ -51,18 +38,16 @@ path = "oddsgym/__init__.py"
 tag_sign = false
 
 [tool.hatch.build.targets.sdist]
-include = [
-    "/oddsgym",
-]
+include = ["/oddsgym"]
 
 
-[[tool.hatch.envs.default.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+# [[tool.hatch.envs.default.matrix]]
+# python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
 [tool.hatch.envs.hatch-test]
 extra-dependencies = [
   "ray[rllib]; python_version != '3.12' and python_version != '3.9'",
-  "torch; python_version != '3.12' and python_version != '3.9'"
+  "torch; python_version != '3.12' and python_version != '3.9'",
 ]
 
 [[tool.hatch.envs.hatch-test.matrix]]
@@ -76,12 +61,13 @@ format-check = [
   "black --check --diff {args:.}",
   "isort --check-only --profile black --diff {args:.}",
 ]
-format-fix = [
-  "isort --profile black {args:.}",
-  "black {args:.}",
-]
+format-fix = ["isort --profile black {args:.}", "black {args:.}"]
 lint-check = "ruff check {args:.}"
 lint-fix = "lint-check --fix"
 
 [tool.hatch.envs.docs]
 extra-dependencies = ["Sphinx", "sphinx-material"]
+
+[tool.hatch.envs.integration]
+extra-dependencies = ['torch', 'ray[rllib]', 'ipython']
+python = "3.11"
